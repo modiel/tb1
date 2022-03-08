@@ -219,7 +219,7 @@ namespace tb.Web.Controllers
 
         // POST /Student/createProgressLog
         [HttpPost]
-        public IActionResult CreateProgressLog ([Bind("StudentId, Progress")]ProgressLog pl)
+        public IActionResult CreateProgressLog (ProgressLog pl)
         {
             var s = svc.GetStudent(pl.StudentId);
              // check the returned Student is not null and if so alert
@@ -231,7 +231,7 @@ namespace tb.Web.Controllers
             
             Alert($"ProgressLog for {s.FirstName} {s.LastName} created successfully", AlertType.success);   
             // create the ProgressLog view model and populate the StudentId property
-            svc.AddProgressLog(pl);
+            svc.AddProgressLog(new ProgressLog { StudentId = pl.StudentId, Progress = pl.Progress});
  
             return RedirectToAction("Details", new { Id = pl.StudentId });
         }
