@@ -1,0 +1,41 @@
+@model ProgressLog
+
+<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/student", "Students"),
+    ($"/student/details/{Model.StudentId}",$"{Model.StudentId}"), ("","DeleteProgressLog") })>
+
+
+
+    <div>
+        <!-- display the review using a <dl> as per Details.cshtml -->
+        <div class="col card rounded shadow pt-3">
+
+            <h3 class="mb-4">Delete Progress Log</h3>
+
+            <h5 class="mb-4">Are you sure you want to delete this Progress Log?</h4>
+
+                <dl class="row">
+
+                    <dt class="col-5">Created On</dt>
+                    <dd class="col-7">@Model.CreatedOn</dd>
+
+                    <dt class="col-5">Comment</dt>
+                    <dd class="col-7">@Model.Progress</dd>
+
+                </dl>
+        </div>
+
+        <div class="mt-4">
+            <!-- form to submit post request to DeleteProgressLogConfirm action  
+            student Id should be a hidden input field Titled 'Id" in the form       
+            add type submit input button                                   
+            add cancel link which calls Index action -->
+            <form asp-controller="Student" asp-action="DeleteProgressLogConfirm" type="post">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="StudentId" />
+                <input type="submit" value="Confirm" class="btn btn-danger" />
+                <a class="btn btn-link" asp-controller="Student" asp-route-id=@Model.StudentId
+                    asp-action="Details">Cancel</a>
+            </form>
+        </div>
+
+    </div>

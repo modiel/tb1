@@ -1,0 +1,27 @@
+@model QuerySearchViewModel
+
+<!-- search form calls Index POST action -->
+<form asp-controller="Query" asp-action="Index" class="form-inline">
+
+    <!--  radio inputs and labels for ALL, CLOSED and OPEN range options -->
+    <div class="form-check mr-1">
+        <!-- ALL -->
+        <input class="form-check-input" type="radio" asp-for="Range" value="@QueryRange.ALL">
+        <label class="form-check-label" for= "Range">All</label>
+    </div>
+    <div class="form-check mr-1">
+        <!-- CLOSED -->
+        <input class="form-check-input" type="radio" asp-for="Range" value="@QueryRange.CLOSED">
+        <label class="form-check-label" for= "Range">Closed</label>
+    </div>
+    <div class="form-check mr-1">
+        <!-- OPEN -->
+        <input class="form-check-input" type="radio" asp-for="Range" value="@QueryRange.OPEN">
+        <label class="form-check-label" for= "Range">Open</label>
+    </div>
+
+    <!--  add text input for Query -->
+    <input class= "form-control mr-sm-2" asp-for="Query" placeholder="Search...">
+   
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>

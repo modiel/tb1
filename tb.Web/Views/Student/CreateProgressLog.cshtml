@@ -1,0 +1,34 @@
+@model ProgressLog
+
+
+<partial name="_Breadcrumbs" model=@(new [] {
+    ("/", "Home"), 
+    ("/student", "Students"),
+    ($"/student/details/{Model.StudentId}",$"{Model.StudentId}"), 
+    ("","AddProgressLog") 
+})>
+
+
+<h3 class="mt-4 mb-4">Add Progress Log</h3>
+<div class="card rounded shadow p-3">
+    <form asp-action="CreateProgressLog">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input type="hidden" asp-for="StudentId" class="form-control"/> 
+       <div class="form-group">
+            <label asp-for="Progress" class="control-label"></label>      
+            <textarea rows="5" asp-for="Progress" class="form-control" placeholder="Add progress/notes here" ></textarea>
+            <span asp-validation-for="Progress" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group">
+          <input type="submit" value="Create Progress Log" class="btn btn-primary"/>
+          <a class="btn btn-secondary" asp-action="Details" asp-route-id=@Model.StudentId>Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

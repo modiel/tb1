@@ -1,0 +1,53 @@
+@model IList<Student>
+
+<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/student", "Students"), ("","Index") })>
+
+<h3 class="mb-3">Student List</h3>
+
+
+
+<!-- note use of ClaimsPrincipal extension method HasOneOfRoles (found in Extensions) -->
+<!-- without this extension we must write condition as follows                        -->
+@* asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager"))                *@   
+<a asp-condition=@User.HasOneOfRoles("Admin,Tutor") class="btn btn-sm btn-primary my-3" asp-controller="Student" asp-action="Create" >Create</a>     
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Instrument 1</th>
+            <th>Instrument 2</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var s in Model) {
+                <tr>
+                    <td>@s.Id</td>
+                    <td>@s.FirstName</td>
+                    <td>@s.LastName</td>
+                    <td>@s.InstrumentOne</td>
+                    <td>@s.InstrumentTwo</td>   
+                    <td>
+                        <!-- Add View link -->
+                        <a asp-controller="Student" asp-action="Details" asp-route-id=@s.Id><i class="bi bi-book"></i></a>                      
+                        
+                        <!-- Add edit link  -->
+                        <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Edit" asp-route-id=@s.Id><i class="bi bi-pen"></i></a>   
+                        
+                        <!-- Add delete link -->
+                        <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Delete" asp-route-id=@s.Id><i class="bi bi-trash"></i></a>
+
+                        @* <!-- custom anchor tag that links to a custom delete modal for the current student  --> *@
+                        <!-- Note how we create a unique modal id using 's.Id' and use this as the anchor tag href -->
+                        @* <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal" href="#deleteModal-@s.Id"><i class="bi bi-trash"></i></a>
+                        <!-- custom modal defined for each student - note we pass the current student 's' as a model to the modal -->
+                        <partial name="_DeleteModal" model="s"/>        *@
+                    </td>
+                </tr>
+            }
+        
+        </tbody>
+</table>

@@ -1,0 +1,23 @@
+<h5 class="mt-2 text-info">Queries</h5>
+<table class="table">
+    <thead>
+        <tr>           
+            <th style="width: 65%">Issue</th>
+            <th style="width: 25%">Created</th>  
+            <th style="width: 10%">Active</th>       
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var t in Model.Queries) {
+            <tr>              
+                <td>@t.Issue</td>
+                <td>@t.CreatedOn</td>  
+                <td>
+                    @* use asp-condition tag helper to remove need for @if/else razor block *@
+                    <i asp-condition="@t.Active" class="bi bi-toggle-on"></i>
+                    <i asp-condition="@(!t.Active)" class="bi bi-toggle-off"></i>                   
+                </td>
+            </tr>   
+        }
+    </tbody>
+</table>

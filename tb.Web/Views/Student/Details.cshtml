@@ -1,0 +1,168 @@
+@model Student
+
+<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/student", "Students"), ("","Details") })>
+
+<h3 class="mt-4 mb-4">Student Details</h3>
+
+<div class="card shadow rounded p-3">
+    <div class="row pl-3">
+        <!-- Details -->
+        <div class="col-8 pt-3">
+            <dl class="row">       
+            <dt class="col-7">First Name</dt>
+            <dd class="col-5">@Model.FirstName</dd>
+
+            <dt class="col-7">Last Name</dt>
+            <dd class="col-5">@Model.LastName</dd>
+
+            <dt class="col-7">Contact Name (if under 18)</dt>
+            <dd class="col-5">@Model.ContactName</dd>
+            
+            <dt class="col-7">Email</dt>
+            <dd class="col-5">@Model.Email</dd>
+
+            <dt class="col-7">Phone Number</dt>
+            <dd class="col-5">@Model.Phone</dd>
+            
+            <dt class="col-7">Alternative Phone</dt>
+            <dd class="col-5">@Model.AltPhone</dd>
+
+            <dt class="col-7">Address Line 1 </dt>
+            <dd class="col-5">@Model.AddressLineOne</dd>
+
+            <dt class="col-7">Address Line 2 </dt>
+            <dd class="col-5">@Model.AddressLineTwo</dd>
+        
+            <dt class="col-7">Address Line 3 </dt>
+            <dd class="col-5">@Model.AddressLineThree</dd>
+
+            <dt class="col-7">Postcode </dt>
+            <dd class="col-5">@Model.Postcode</dd>
+
+            <dt class="col-7">Age</dt>
+            <dd class="col-5">@Model.Age</dd>
+
+            <dt class="col-7">Dob</dt>
+            <dd class="col-5">@Model.Dob</dd>
+
+            <dt class="col-7">Gender</dt>
+            <dd class="col-5">@Model.Gender</dd>
+
+            <dt class="col-7">Allergies</dt>
+            <dd class="col-5">@Model.Allergies</dd>
+
+            <dt class="col-7">Additional Needs/Conditions</dt>
+            <dd class="col-5">@Model.AdditionalNeeds</dd>
+
+            <dt class="col-7">Instrument 1</dt>
+            <dd class="col-5">@Model.InstrumentOne</dd>
+
+            <dt class="col-7">Current Grade Instrument 1</dt>
+            <dd class="col-5">@Model.CurrentGradeInstOne</dd>
+
+            <dt class="col-7">Instrument 2 (if applicable)</dt>
+            <dd class="col-5">@Model.InstrumentTwo</dd>
+
+            <dt class="col-7">Current Grade Instrument 2</dt>
+            <dd class="col-5">@Model.CurrentGradeInstTwo</dd>
+  
+            <dt class="col-7">Current Theory Grade (if applicable)</dt>
+            <dd class="col-5">@Model.CurrentTheoryGrade</dd>
+
+            <dt class="col-7">Aurals Required?</dt>
+            <dd class="col-5">@Model.Aurals</dd>
+
+            <dt class="col-7">Lesson Format</dt>
+            <dd class="col-5">@Model.LessonFormat</dd>
+
+            <dt class="col-7">Usual Day-Lesson 1</dt>
+            <dd class="col-5">@Model.LessonOneDay</dd>
+
+            <dt class="col-7">Usual Day-Lesson 2 (if applicable)</dt>
+            <dd class="col-5">@Model.LessonTwoDay</dd>
+
+            <dt class="col-7">#Progress Log</dt>
+            <dd class="col-5">@Model.ProgressLogs.Count</dd>
+            </dl>              
+        </div>
+
+        @* <!-- Photo -->
+        <div class="col-4">
+            <img src="@Model.PhotoUrl" class="img-fluid">//DIANE COME BACK HERE
+        </div> *@
+    </div>
+
+    <!-- action options -->
+    <div class="row pl-3"> 
+
+        <!-- add navigation link to CreateQuery action, passing correct route parameter --> 
+        <a asp-action="CreateQuery" asp-route-id="@Model.Id" class="btn btn-sm btn-info mr-2">
+            <i class="bi bi-plus-square-dotted mr-1"></i>Add Query
+        </a> 
+
+          <a asp-action="CreateProgressLog" asp-route-id="@Model.Id" class="btn btn-sm btn-info mr-2">
+            <i class="bi bi-plus-square-dotted mr-1"></i>Add Progress Log
+        </a> 
+
+
+        <!-- add navigation link to Details action, passing the correct route id parameter --> 
+        <!-- note use of ClaimsPrincipal extension method HasOneOfRoles (found in Extensions) -->
+
+        <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-light mr-2">
+            <i class="bi bi-pencil-square mr-1"></i>Edit Student
+        </a>  
+
+        <!-- add navigation link to redirect to Index action -->
+        <a asp-controller="Student" asp-action="Index" class="btn btn-sm btn-light mr-4">
+            <i class="bi bi-card-list"></i>Student List
+        </a> 
+
+        <!-- Add delete link -->
+        @* <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Delete" asp-route-id=@Model.Id><i class="bi bi-trash"></i>Delete Student</a> *@
+
+         <!-- add navigation link to Delete action, passing the correct route id parameter --> 
+        <button asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-sm  btn-link ml-4">
+            <i class="bi bi-trash mr-1"></i>Delete Student
+        </button>
+        
+     
+    </div>
+    <partial name="_DeleteModal" />
+    
+
+    <!-- Progress Log -->   
+   
+    <!-- Display Progress Logs for current progress (Model.ProgressLog) -->
+    <table class= "table table-sm">
+        <thead>
+            <tr>
+                <th>Log Id</th>
+                <th>Date Created</th>
+                <th>Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+             <!-- Use a table and foreach loop - check Index.cshtml for example --> 
+            @foreach(var pl in Model.ProgressLogs)
+            {
+                <tr>
+                    <td>@pl.Id</td>
+                    <td>@pl.CreatedOn</td>
+                    <td>@pl.Progress</td>
+        
+                    <!-- Add delete link -->
+                    <td><a asp-controller="Student" asp-action="DeleteProgressLog" asp-route-id=@pl.Id><i class="bi-trash"></i> Delete Progress</a></td>   
+                    
+                </tr>
+            }            
+        </tbody>  
+    </table>  
+
+        <!-- Queries -->   
+    <div class="row p-3">
+        <partial name="_Queries" />
+    </div>
+
+    
+</div>
+

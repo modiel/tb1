@@ -1,0 +1,35 @@
+@model QueryCreateViewModel
+
+<partial name="_Breadcrumbs" model=@(new [] { 
+    ("/", "Home"), 
+    ("/student", "Students"),
+    ($"/student/details/{Model.StudentId}", $"{Model.StudentId}"), 
+    ("","Create Query") })>
+
+<h3 class="mt-4 mb-4">Create Query</h3>
+
+<form asp-action="CreateQuery">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <!-- we hide the Model StudentId as its not user editable but needs to be in the form  -->
+    <!-- to ensure the Query passed to the controller is complete.                        --> 
+    <input type="hidden" asp-for="StudentId" class="form-control"/>
+
+    <!-- CreatedOn and Active are not required in the form and are set in contoller before -->
+    <!-- passing to service. Issue should be a TextArea input  with 5 rows                 -->
+    <div class="form-group">
+        <label asp-for="Issue" class="control-label"></label>      
+        <textarea rows="5" asp-for="Issue" class="form-control"></textarea>
+        <span asp-validation-for="Issue" class="text-danger"></span>
+    </div>
+   
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary"/>
+        <a class="btn btn-secondary" asp-action="Details" asp-route-id=@Model.StudentId>Cancel</a>
+    </div>
+
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
