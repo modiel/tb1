@@ -27,8 +27,8 @@ namespace tb.Data.Repositories
                 .UseSqlite("Filename=data.db")
                 // .UseMySQL("server=localhost; port=3306; database=xxx; user=xxx; password=xxx")
                 //.UseNpgsql("host=localhost; port=5432; database=xxx; username=xxx; password=xxx")
-                .LogTo(Console.WriteLine, LogLevel.Information) // remove in production
-                .EnableSensitiveDataLogging()                   // remove in production
+                // .LogTo(Console.WriteLine, LogLevel.Information) // remove in production
+                // .EnableSensitiveDataLogging()                   // remove in production
                 ;
         }
 
