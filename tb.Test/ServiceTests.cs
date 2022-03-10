@@ -800,6 +800,99 @@ namespace tb.Test
             Assert.Equal(1, queries.Count);
         }
 
+        [Fact]
+        public void Query_DeleteQuery_WhenDeleted_ShouldDeleteQuery()
+        {
+            // arrange
+            //create dummy student to add to the service
+            var ns = new Student
+            {
+                FirstName = "XXX",
+                LastName = "XXXX",
+                Email = "XXX@email.com",
+                Phone = "xxxxxxxxxxxx",
+                AltPhone = "yyyyyyyyyyy",
+                AddressLineOne = "1 Test Way",
+                AddressLineTwo = "Test Street",
+                AddressLineThree = "",
+                Postcode = "XXXX YYY",
+                Age = 15,
+                Dob = "01/01/1965",
+                Gender = Gender.Female,
+                Allergies = "xxx",
+                AdditionalNeeds = "ADD",
+                InstrumentOne = "yyy",
+                InstrumentTwo = "",
+                CurrentGradeInstOne = 3,
+                CurrentGradeInstTwo = 0,
+                CurrentTheoryGrade = 1,
+                Aurals = Aurals.Yes,
+                LessonFormat = LessonFormat.InPersonOnly,
+                LessonOneDay = DaysOfWeek.Monday,
+                LessonTwoDay = DaysOfWeek.NA
+            };
+            var s = service.AddStudent(ns);
+
+            //create query
+            var t1 = service.CreateQuery(s.Id, "Dummy Query 1");
+
+            var deleted = service.DeleteQuery(t1.Id);
+
+            //attempt to retrieve query from database
+            service.GetQuery(t1.Id);
+
+            //assert
+            Assert.True(deleted);
+        }
+
+        [Fact]
+        public void Query_DeleteQuery_WhenDeleted_ShouldReduceQueryCountByOne()
+        {
+            //arrange
+            //create dummy student to add to the service
+            var ns = new Student
+            {
+                FirstName = "XXX",
+                LastName = "XXXX",
+                Email = "XXX@email.com",
+                Phone = "xxxxxxxxxxxx",
+                AltPhone = "yyyyyyyyyyy",
+                AddressLineOne = "1 Test Way",
+                AddressLineTwo = "Test Street",
+                AddressLineThree = "",
+                Postcode = "XXXX YYY",
+                Age = 15,
+                Dob = "01/01/1965",
+                Gender = Gender.Female,
+                Allergies = "xxx",
+                AdditionalNeeds = "ADD",
+                InstrumentOne = "yyy",
+                InstrumentTwo = "",
+                CurrentGradeInstOne = 3,
+                CurrentGradeInstTwo = 0,
+                CurrentTheoryGrade = 1,
+                Aurals = Aurals.Yes,
+                LessonFormat = LessonFormat.InPersonOnly,
+                LessonOneDay = DaysOfWeek.Monday,
+                LessonTwoDay = DaysOfWeek.NA
+            };
+
+            //add student to service
+            var student = service.AddStudent(ns);
+
+            //add queries to student
+            var query1 = service.CreateQuery(student.Id,"Dummy Query 1" );
+            var query2 = service.CreateQuery(student.Id,"Dummy Query 2" );
+
+            //act
+            var deleted = service.DeleteQuery(student.Id);
+            var queries = service.GetAllQueries(); //retrieve list of students to confirm student is deleted
+
+            //assert
+            Assert.Equal(1, queries.Count); //confirm queries count is 1
+
+
+        }
         // =================  ProgressLog Tests ====================
         [Fact]
         public void ProgressLog_AddProgressLogToStudent_WhenCreated_ShouldReturnProgressLog()
