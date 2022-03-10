@@ -1,4 +1,5 @@
-﻿@{
+﻿@using tb.Web.Views.Shared.Components
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -13,6 +14,10 @@
 <div style="text-align: center;">
     <img src="https://live.staticflickr.com/65535/51910895650_d07163b8ba_b.jpg" title="touchBass logo" alt="music logo" style="width:30%;height:auto;"class="img-fluid">
 </div>
+
+<div >
+    @(await Html.RenderComponentAsync<Component>(RenderMode.ServerPrerendered,new {  Data= " Hello World " }))
+ </div> 
 
 
 
