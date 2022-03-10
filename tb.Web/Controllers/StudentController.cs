@@ -239,9 +239,9 @@ namespace tb.Web.Controllers
            // GET / ProgressLog/delete/{id}
         public IActionResult DeleteProgressLog(int id)
         {
-            // load the student using the service
+            // load the ProgressLog using the service
             var pl = svc.GetProgressLogById(id);
-            // check the returned student is not null and if so alert
+            // check the returned ProgressLog is not null and if so alert
             if (pl == null)
             {
                 Alert($"No such ProgressLog {pl.Id}", AlertType.warning);          

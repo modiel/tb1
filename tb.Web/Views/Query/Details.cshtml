@@ -3,17 +3,16 @@
 <!-- Breadcrumbs using partial view -->
 <partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/query", "Queries"), ("","Close") })>
 
-    <!--  -->
     <!--    include button to call _CloseQuery modal (see Student Details view) -->
     <h3 class="mt-4 mb-4">Query</h3>
 
     <div class="card shadow rounded p-3">
         <dl class="row">
             <dt class="col-4">Query Id</dt>
-            <dd class="col-8">@Model.Id</dd> 
+            <dd class="col-8">@Model.Id</dd>
 
             <dt class="col-4">Name of Student</dt>
-            <dd class="col-4">@Model.Student.FirstName</dd>
+            <dd class="col-2">@Model.Student.FirstName</dd>
             <dd class="col-4">@Model.Student.LastName</dd>
 
             <dt class="col-4">Created On</dt>
@@ -21,10 +20,10 @@
 
             <dt class="col-4">Issue</dt>
             <dd class="col-8">@Model.Issue</dd>
-       
+
             <dt class="col-4">Resolved On</dt>
             <dd class="col-8">
-                <span asp-condition=@(Model.Active)>Unresolved</span> 
+                <span asp-condition=@(Model.Active)>Unresolved</span>
                 <span asp-condition=@(!Model.Active)>@(Model.ResolvedOn)</span>
             </dd>
 
@@ -33,12 +32,27 @@
         </dl>
     </div>
 
-    <div class="mt-4">
-        <button asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal" data-bs-target="#closeModal" class="btn btn-sm btn-danger">
-            <i class="bi bi-trash mr-1">Close</i>
+    <div class="mt-3">
+        <button asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal" data-bs-target="#closeModal"
+            class="btn btn-sm btn-dark"><i class="bi bi-question-diamond"></i>Resolve
         </button>
+        <button asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal"data-bs-target="#deleteQueryModal" 
+            class="btn btn-sm btn-danger"><i class="bi bi-trash mr-1"></i>Delete
+        </button>
+
+        @* <form asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Query" asp-action="DeleteQueryConfirm"
+            type="post" class="btn btn-sm btn-danger">
+            <i class="bi bi-trash mr-1"></i>Delete
+            </form> *@
+
         <a class="btn btn-link" asp-action="Index">Cancel</a>
     </div>
-</div> 
+    
 
-<partial name="_CloseModal" />
+    <div>
+        <partial name="_CloseModal" />
+    </div>
+
+    <div>
+        <partial name="_DeleteQueryModal" />
+    </div>

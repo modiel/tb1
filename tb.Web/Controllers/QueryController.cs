@@ -118,5 +118,38 @@ namespace tb.Web.Controllers
             return View(qvm);
         }
 
+           // GET / Query/delete/{id}
+        [Authorize(Roles="Admin,Tutor")]
+        public IActionResult DeleteQuery(int id)
+        {
+            // load the query using the service
+            var query = svc.GetQuery(id);
+            if (query == null)
+            {
+                Alert("Query Not Found", AlertType.warning);  
+                return RedirectToAction(nameof(Index));             
+            }
+            
+            // pass Query to view for deletion confirmation
+            return View(query);
+        }
+
+        // POST /ProgressLog/delete/{id}
+        [HttpPost]
+        [Authorize(Roles="Admin,Tutor")]
+        public IActionResult DeleteQueryConfirm(int id, int studentId)
+        {
+            // delete Query via service
+            svc.DeleteQuery(id);
+         
+            Alert($"Query {id} deleted successfully", AlertType.success);
+            
+            // redirect to the details view
+           return RedirectToAction(nameof(Index), new { Id = studentId });
+            
+        
+        }
+
+
     }
 }
