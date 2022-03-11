@@ -18,7 +18,7 @@ builder.Services.AddControllersWithViews();
 
 //To enable Blazor server side
 builder.Services.AddServerSideBlazor();
-builder.Services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+builder.Services.AddMvc();//.SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
 
 var app = builder.Build();
 

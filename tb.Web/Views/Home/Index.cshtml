@@ -15,8 +15,11 @@
     <img src="https://live.staticflickr.com/65535/51910895650_d07163b8ba_b.jpg" title="touchBass logo" alt="music logo" style="width:30%;height:auto;"class="img-fluid">
 </div>
 
-<div >
-    @(await Html.RenderComponentAsync<Component>(RenderMode.ServerPrerendered,new {  Data= " Hello World " }))
+
+ <h3>This is a row component</h3>
+
+ <div >
+     @(await Html.RenderComponentAsync<Row>(RenderMode.ServerPrerendered, new{ChildContent="This is a row from a component"}))
  </div> 
 
 
