@@ -16,6 +16,10 @@ builder.Services.AddHttpContextAccessor();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//To enable Blazor server side
+builder.Services.AddServerSideBlazor();
+builder.Services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,3 +52,10 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+//Mapping SignalR hub for Blazor
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapBlazorHub();
+});
