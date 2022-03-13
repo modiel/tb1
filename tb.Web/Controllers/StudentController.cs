@@ -259,7 +259,7 @@ namespace tb.Web.Controllers
             // delete ProgressLog via service
              svc.DeleteProgressLog(id);
          
-            Alert($"Progress Log {id} for deleted successfully", AlertType.success);
+            Alert($"Progress Log {id} deleted successfully", AlertType.success);
             
             // redirect to the details view
            return RedirectToAction(nameof(Details), new { Id = studentId });

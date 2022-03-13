@@ -9,7 +9,7 @@
 <!-- note use of ClaimsPrincipal extension method HasOneOfRoles (found in Extensions) -->
 <!-- without this extension we must write condition as follows                        -->
 @* asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager"))                *@   
-<a asp-condition=@User.HasOneOfRoles("Admin,Tutor") class="btn btn-sm btn-primary my-3" asp-controller="Student" asp-action="Create" >Create</a>     
+<a asp-condition=@User.HasOneOfRoles("Admin,Tutor") class="btn btn-sm btn-primary my-3" asp-controller="Student" asp-action="Create" title="Create new student">Create <i class="bi bi-person-plus-fill"></i></a>     
 
 <table class="table">
     <thead>
@@ -32,13 +32,14 @@
                     <td>@s.InstrumentTwo</td>   
                     <td>
                         <!-- Add View link -->
-                        <a asp-controller="Student" asp-action="Details" asp-route-id=@s.Id><i class="bi bi-book"></i></a>                      
+                        <a asp-controller="Student" asp-action="Details" asp-route-id=@s.Id title="View"><i class="bi bi-book"></i></a>                      
                         
                         <!-- Add edit link  -->
-                        <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Edit" asp-route-id=@s.Id><i class="bi bi-pen"></i></a>   
+                        <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Edit" asp-route-id=@s.Id title="Edit"><i class="bi bi-pen" ></i></a>
+                        
                         
                         <!-- Add delete link -->
-                        <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Delete" asp-route-id=@s.Id><i class="bi bi-trash"></i></a>
+                        <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Delete" asp-route-id=@s.Id title="Delete"><i class="bi bi-trash"></i></a>
 
                         @* <!-- custom anchor tag that links to a custom delete modal for the current student  --> *@
                         <!-- Note how we create a unique modal id using 's.Id' and use this as the anchor tag href -->
