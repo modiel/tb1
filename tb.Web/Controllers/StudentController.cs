@@ -22,6 +22,7 @@ namespace tb.Web.Controllers
         }
         
         // GET /student/index
+        [Authorize(Roles="Admin,Tutor,Parent,AdultStudent,Pupil")]
         public IActionResult Index()
         {
             var students = svc.GetStudents();
@@ -40,7 +41,7 @@ namespace tb.Web.Controllers
             if (s == null)
             {
                 Alert("Student Not Found", AlertType.warning);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { Id = id });
             }
 
             // pass student as parameter to the view
@@ -75,7 +76,7 @@ namespace tb.Web.Controllers
             {
                 // pass data to service to store 
                 var added = svc.AddStudent(s);
-                Alert("Student created successfully", AlertType.info);
+                Alert($"Student {s.FirstName} {s.LastName} created successfully", AlertType.info);
                 
                 return RedirectToAction(nameof(Index));
             }
@@ -84,7 +85,7 @@ namespace tb.Web.Controllers
         }
 
         // GET /student/edit/{id}
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Admin,Tutor,Parent,AdultStudent")]
         public IActionResult Edit(int id)
         {
             // load the student using the service
@@ -94,7 +95,7 @@ namespace tb.Web.Controllers
             if (s == null)
             {
                 Alert($"No such student {id}", AlertType.warning); 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { Id = id });
             }   
 
             // pass student to view for editing
@@ -104,7 +105,7 @@ namespace tb.Web.Controllers
         // POST /student/edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Admin,Tutor,Parent,AdultStudent")]
         public IActionResult Edit(int id, Student s)
         {
             // check email is unique for this student
@@ -155,11 +156,11 @@ namespace tb.Web.Controllers
          
             Alert($"Student {id} deleted successfully", AlertType.success);
             // redirect to the index view
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { Id = id });
         }
 
          // GET /student/createQuery
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Admin,Tutor,Parent,AdultStudent,Pupil")]
         public IActionResult CreateQuery(int id)
         {
             var s = svc.GetStudent(id);
@@ -181,7 +182,7 @@ namespace tb.Web.Controllers
         // POST /student/createQuery
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Admin,Tutor,Parent,AdultStudent,Pupil")]
         public IActionResult CreateQuery([Bind("StudentId, Issue")]QueryCreateViewModel qvm)
         {
             var s = svc.GetStudent(qvm.StudentId);
@@ -200,6 +201,7 @@ namespace tb.Web.Controllers
         }
 
         // GET /Student/createProgressLog
+        [Authorize(Roles="Admin,Tutor")]
         public IActionResult CreateProgressLog(int id)
         {
             var s = svc.GetStudent(id);
@@ -219,6 +221,7 @@ namespace tb.Web.Controllers
 
         // POST /Student/createProgressLog
         [HttpPost]
+        [Authorize(Roles="Admin,Tutor")]
         public IActionResult CreateProgressLog (ProgressLog pl)
         {
             var s = svc.GetStudent(pl.StudentId);
@@ -237,6 +240,7 @@ namespace tb.Web.Controllers
         }
 
            // GET / ProgressLog/delete/{id}
+        [Authorize(Roles="Admin,Tutor")]
         public IActionResult DeleteProgressLog(int id)
         {
             // load the ProgressLog using the service
@@ -254,6 +258,7 @@ namespace tb.Web.Controllers
 
         // POST /ProgressLog/delete/{id}
         [HttpPost]
+        [Authorize(Roles="Admin,Tutor")]
         public IActionResult DeleteProgressLogConfirm(int id, int studentId)
         {
             // delete ProgressLog via service

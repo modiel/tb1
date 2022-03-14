@@ -25,6 +25,7 @@ namespace tb.Web.Controllers
         }
         
         // GET /Query/index
+        [Authorize(Roles="Admin,Tutor")]
         public IActionResult Index()
         {
             // retrieve all OPEN Queries   
@@ -35,7 +36,8 @@ namespace tb.Web.Controllers
         }  
 
         // POST /Query/index   
-        [HttpPost]    
+        [HttpPost] 
+    
         public IActionResult Index(QuerySearchViewModel search)
         {            
             // perform search query and assign results to viewmodel Queries property
@@ -55,6 +57,7 @@ namespace tb.Web.Controllers
         }     
              
         // GET/Query/{id}
+        [Authorize(Roles="Admin,Tutor,Parent,Adult Student,Pupil")]
         public IActionResult Details(int id)
         {
             var query = svc.GetQuery(id);
@@ -88,7 +91,7 @@ namespace tb.Web.Controllers
         }
        
         // GET /Query/create
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Admin,Tutor,Parent,Adult Student,Pupil")]
         public IActionResult Create()
         {
             var students = svc.GetStudents();
@@ -103,7 +106,7 @@ namespace tb.Web.Controllers
        
         // POST /Query/create
         [HttpPost]
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Admin,Tutor,Parent,Adult Student,Pupil")]
         public IActionResult Create(QueryCreateViewModel qvm)
         {
             if (ModelState.IsValid)
