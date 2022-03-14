@@ -78,6 +78,34 @@ namespace tb.Web.Controllers
             return RedirectToAction(nameof(Login));
         }
 
+
+         // GET /user/index
+        [Authorize(Roles="Admin,Tutor")]
+        public IActionResult Index()
+        {
+            var users = _svc.GetUsers();
+           
+            return View(users);
+        }
+
+         // GET /user/details/{id}
+        [Authorize]
+        public IActionResult UserDetails(int id)
+        {
+            // retrieve the student with specified id from the service
+            var u = _svc.GetUser(id);
+
+            // check if s is null and return NotFound()
+            if (u == null)
+            {
+                Alert("User Not Found", AlertType.warning);
+                return RedirectToAction(nameof(Index), new { Id = id });
+            }
+
+            // pass user as parameter to the view
+            return View(u);
+        }
+
         [Authorize]
         public IActionResult UpdateProfile()
         {
@@ -137,6 +165,37 @@ namespace tb.Web.Controllers
             };
             return View(passwordViewModel);
         }
+        // GET / user/delete/{id}
+        [Authorize(Roles="Admin,Tutor")]       
+        public IActionResult DeleteUser(int id)
+        {
+            // load the student using the service
+            var u = _svc.GetUser(id);
+            // check the returned student is not null and if so return NotFound()
+            if (u == null)
+            {
+                Alert("User Not Found", AlertType.warning);
+                return RedirectToAction(nameof(Index));
+            }     
+            
+            // pass user to view for deletion confirmation
+            return View(u);
+        }
+
+        // POST /user/delete/{id}
+        [HttpPost]
+        [Authorize(Roles="Admin,Tutor")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteUserConfirm(int id)
+        {
+            // delete student via service
+            _svc.DeleteUser(id);
+         
+            Alert($"User {id} deleted successfully", AlertType.success);
+            // redirect to the index view
+            return RedirectToAction(nameof(Index), new { Id = id });
+        }
+
 
         [Authorize]
         [HttpPost]

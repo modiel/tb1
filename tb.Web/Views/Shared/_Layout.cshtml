@@ -24,13 +24,15 @@
                         
                         <a class="nav-link text-dark active" asp-controller="Home" asp-action="Index">Home</a>
                 
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Secure">Secure</a>
-                        
+                        @* <a class="nav-link text-dark" asp-controller="Home" asp-action="Secure">Secure</a> *@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Student" asp-action="Index">Students</a>
+                        <a class="nav-link text-dark" asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="Index">Users</a> 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Query" asp-action="Index">Queries</a>
+                            <a class="nav-link text-dark" asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Index">Students</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Query" asp-action="Index">Queries</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="About">About</a>

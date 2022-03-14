@@ -1,0 +1,45 @@
+@model IList<User>
+
+<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/user", "Users"), ("","Index") })>
+
+<h3 class="mb-3">User List</h3>
+
+
+<!-- note use of ClaimsPrincipal extension method HasOneOfRoles (found in Extensions) -->
+  
+<a asp-condition=@User.HasOneOfRoles("Admin,Tutor") class="btn btn-sm btn-primary my-3" asp-controller="User" asp-action="Register" title="Register new user">Register User<i class="bi bi-person-plus-fill"></i></a>     
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Role</th>  
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var u in Model) {
+            <tr>
+
+                <td>@u.Id</td>
+                <td>@u.Name</td>
+                <td>@u.Role</td>
+ 
+                <td>
+                    <!-- Add View link -->
+                    <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="UserDetails" asp-route-id=@u.Id title="View User"><i class="bi bi-book"></i></a>                      
+                        
+                    <!-- Add edit link  -->
+                    <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="UpdateProfile" asp-route-id=@u.Id title="Edit User"><i class="bi bi-pen" ></i></a>
+                
+                    <!-- Add delete link -->
+                    <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="DeleteUser" asp-route-id=@u.Id title="Delete User"><i class="bi bi-trash"></i></a>
+
+                </td>
+            </tr>
+        }
+        
+    </tbody>
+</table>
+

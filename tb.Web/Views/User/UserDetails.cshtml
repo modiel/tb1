@@ -1,0 +1,80 @@
+@model User
+
+<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/user", "Users"), ("","UserDetails") })>
+
+    <h3 class="mt-4 mb-4" id="top">User Details</h3>
+   
+    <!-- action options -->
+    <div class="container">
+        <div class="col">
+
+        
+
+            <!-- add navigation link to CreateQuery action, passing correct route parameter -->
+            <a asp-action="CreateQuery" asp-route-id="@Model.Id" class="btn btn-sm btn-info mr-2">
+                <i class="bi bi-plus-square-dotted p-1"></i>Add Query
+            </a>
+
+            <!-- add navigation link to Edit action, passing the correct route id parameter -->
+            <!-- note use of ClaimsPrincipal extension method HasOneOfRoles (found in Extensions) -->
+
+            <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="UpdateProfile"
+                asp-route-id="@Model.Id" class="btn btn-sm btn-outline-success mr-2">
+                <i class="bi bi-pencil-square p-1"></i>Update User
+            </a>
+
+            <!-- add navigation link to redirect to Index action -->
+            <a asp-controller="User" asp-action="Index" class="btn btn-sm btn-light mr-2">
+                <i class="bi bi-card-list p-1"></i>User List
+            </a>
+
+            <!-- Add delete link -->
+            @* <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Delete"
+                asp-route-id=@Model.Id><i class="bi bi-trash"></i>Delete Student</a> *@
+
+            <!-- add navigation link to Delete action, passing the correct route id parameter -->
+             <button asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal"
+                data-bs-target="#deleteUserModal" class="btn btn-sm btn-outline-danger ml-2">
+                <i class="bi bi-trash mr-1"></i>Delete User
+            </button> 
+        <div>
+        
+    </div>
+         
+
+    <div class="card shadow rounded p-3">
+        <div class="row pl-3">
+            <!-- Details -->
+            <div class="col pt-3">
+                <dl class="row">
+                    <dt class="col-7">Id</dt>
+                    <dd class="col-5">@Model.Id</dd>
+
+                    <dt class="col-7">Name</dt>
+                    <dd class="col-5">@Model.Name</dd>
+
+                    <dt class="col-7">Email</dt>
+                    <dd class="col-5">@Model.Email</dd>
+
+                    <dt class="col-7">Role</dt>
+                    <dd class="col-5">@Model.Role</dd>
+                    
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <p><a href="#top">Top of page</a></p>
+    </div>
+
+<partial name="_DeleteUserModal" />
+
+    @* <div class="card shadow rounded mt-5">
+        <!-- Queries -->
+        <div class="row p-3" id="q">
+            <partial name="_Queries" />
+        </div>
+        <p><a href="#top">Top of page</a></p>
+    </div>  *@
+

@@ -31,7 +31,7 @@ namespace tb.Data.Services
             return ctx.Users.ToList();
         }
 
-        // Retrive User by Id 
+        // Retrieve User by Id 
         public User GetUser(int id)
         {
             return ctx.Users.FirstOrDefault(s => s.Id == id);

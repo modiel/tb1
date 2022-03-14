@@ -1,0 +1,27 @@
+@model User
+
+
+<form asp-action="DeleteUserConfirm">
+<div class="modal fade" tabindex="-1" id="deleteUserModal" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="closeModalLabel">Delete User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete user @Model.Name? </p>
+      </div>
+      <div class="modal-footer">
+        <form asp-controller="User" asp-action="DeleteUserConfirm">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Confirm" class="btn btn-danger" />
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>           
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
