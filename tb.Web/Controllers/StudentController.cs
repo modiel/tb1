@@ -22,7 +22,7 @@ namespace tb.Web.Controllers
         }
         
         // GET /student/index
-        [Authorize(Roles="Admin,Tutor,Parent,AdultStudent,Pupil")]
+        [Authorize(Roles="Admin,Tutor")]
         public IActionResult Index()
         {
             var students = svc.GetStudents();
