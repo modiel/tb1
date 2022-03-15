@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-custom border-bottom box-shadow mb-3">
             <div class="container">
 
                 <a id='short' class="navbar-brand"  asp-controller="Home" asp-action="Index" ><img src="https://live.staticflickr.com/65535/51910895650_d07163b8ba_b.jpg" title="home" alt="music logo"  width="90" height="60"></a>
@@ -26,7 +26,7 @@
                 
                         @* <a class="nav-link text-dark" asp-controller="Home" asp-action="Secure">Secure</a> *@
                         <li class="nav-item">
-                        <a class="nav-link text-dark" asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="Index">Users</a> 
+                        <a class="nav-link text-dark " asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="Index">Users</a> 
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Index">Students</a>
@@ -36,6 +36,10 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="About">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-condition=@User.HasOneOfRoles("Admin,Tutor,Parent,AdultStudent,Pupil") asp-controller="Student" asp-action="Details" asp-route-id="
+                            ">MyStudent</a>
                         </li>
 
                     <!--  The login partial is added here for authentication flex-sm-row-reverse-->

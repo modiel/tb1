@@ -19,5 +19,11 @@ namespace tb.Web.ViewModels
         [Required]
         public Role Role { get; set; }
 
+        // Navigation property
+        public Student Student { get; set; }
+
+        //DM - this may be redundant
+        public IList<Student> UsersStudents { get; set; } = new List<Student>();
+
     }
 }
