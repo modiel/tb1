@@ -37,12 +37,12 @@
         <div class="form-group mt-3">
             <label asp-for="Role" class="control-label"><i class="bi-person-badge-fill"></i> Role</label>
             <select asp-for="Role"  class="form-control">
-                @* asp-items="Html.GetEnumSelectList<Role>() *@
+                
                     @* DM- potential to change below to allow admin and tutor roles to be added server side *@
                 <option>Select Role</option>
                 <option value="Parent">Parent</option>
                 <option value="AdultStudent">Adult Student</option>
-                <option value="AdultStudent">Pupil</option>
+                <option value="Pupil">Pupil</option>
             </select>
             <span asp-validation-for="Role" class="text-danger"></span>
         </div>

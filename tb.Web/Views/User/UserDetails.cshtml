@@ -8,37 +8,30 @@
     <div class="container">
         <div class="col">
 
-        
-
             <!-- add navigation link to CreateQuery action, passing correct route parameter -->
-            <a asp-action="CreateQuery" asp-route-id="@Model.Id" class="btn btn-sm btn-info mr-2">
+            @* <a asp-action="CreateQuery" asp-route-id="@Model.Id" class="btn btn-sm btn-info mr-2">
                 <i class="bi bi-plus-square-dotted p-1"></i>Add Query
-            </a>
+            </a> *@
 
             <!-- add navigation link to Edit action, passing the correct route id parameter -->
             <!-- note use of ClaimsPrincipal extension method HasOneOfRoles (found in Extensions) -->
-
+@* 
             <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="UpdateProfile"
                 asp-route-id="@Model.Id" class="btn btn-sm btn-outline-success mr-2">
                 <i class="bi bi-pencil-square p-1"></i>Update User
-            </a>
+            </a> *@
 
             <!-- add navigation link to redirect to Index action -->
             <a asp-controller="User" asp-action="Index" class="btn btn-sm btn-light mr-2">
                 <i class="bi bi-card-list p-1"></i>User List
             </a>
 
-            <!-- Add delete link -->
-            @* <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Delete"
-                asp-route-id=@Model.Id><i class="bi bi-trash"></i>Delete Student</a> *@
-
             <!-- add navigation link to Delete action, passing the correct route id parameter -->
              <button asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal"
                 data-bs-target="#deleteUserModal" class="btn btn-sm btn-outline-danger ml-2">
                 <i class="bi bi-trash mr-1"></i>Delete User
             </button> 
-        <div>
-        
+        <div>      
     </div>
          
 

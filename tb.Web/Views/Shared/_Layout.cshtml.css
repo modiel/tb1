@@ -3,8 +3,17 @@ for details on configuring this project to bundle and minify static web assets. 
 
 body
 {
-background-color: rgba(100,100,180,0.1);
+/* background-color: rgba(100,100,180,0.1);  */
+background-color:hsla(199, 85%, 45%, 0.863); 
 
+}
+
+/* Modify the background color */
+.navbar-custom {
+  /* background-color: #348EA9; */
+  background-color:hsla(199, 50%, 42%, 0.664);
+  color: #f5b00096;
+	
 }
 
 a.navbar-brand {
@@ -12,6 +21,9 @@ a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+  color: #f5b000e1;
+  background-color:hsla(199, 50%, 42%, 0.664);
+  /* background-color:#045076; */
 }
 
 img{
@@ -60,4 +72,6 @@ button.accept-policy {
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
+  background-color:hsla(199, 50%, 42%, 0.178);
+
 }

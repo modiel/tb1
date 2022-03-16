@@ -165,6 +165,7 @@ namespace tb.Web.Controllers
             };
             return View(passwordViewModel);
         }
+        
         // GET / user/delete/{id}
         [Authorize(Roles="Admin,Tutor")]       
         public IActionResult DeleteUser(int id)

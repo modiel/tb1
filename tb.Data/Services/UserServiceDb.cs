@@ -34,7 +34,9 @@ namespace tb.Data.Services
         // Retrieve User by Id 
         public User GetUser(int id)
         {
-            return ctx.Users.FirstOrDefault(s => s.Id == id);
+            return ctx.Users
+            // .Include(u => u.UsersStudents)
+            .FirstOrDefault(u => u.Id == id);
         }
 
         // Add a new User checking a User with same email does not exist
