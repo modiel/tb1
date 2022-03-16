@@ -2,9 +2,21 @@
 
 <partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/student", "Students"), ("","Details") })>
 
-    <h3 class="mt-4 mb-4" id="top">Student Details</h3>
-    <p><a href="#pl">Progress Logs</a></p>
-    <p><a href="#q">Queries</a></p>
+<h3 class="mt-4 mb-4" id="top">Student Details: @Model.FirstName @Model.LastName</h3>
+
+<div class="card text-center">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="true" href="#pl">Progress Logs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="true" href="#q">Queries</a>
+      </li>   
+    </ul>
+  </div>
+
+
     <!-- action options -->
     <div class="container">
         <div class="col">
@@ -15,7 +27,7 @@
             </a>
 
             <!-- add navigation link to CreateQuery action, passing correct route parameter -->
-            <a asp-action="CreateQuery" asp-route-id="@Model.Id" class="btn btn-sm btn-info mr-2">
+            <a asp-action="CreateQuery" asp-route-id="@Model.Id" class="btn btn-sm btn-warning mr-2">
                 <i class="bi bi-plus-square-dotted p-1"></i>Add Query
             </a>
 
@@ -44,6 +56,7 @@
             </button>
         </div>
     </div>
+</div>
 
     <div class="card shadow rounded p-3">
         <div class="row pl-3">
@@ -134,21 +147,21 @@
         </div>
     </div>
 
-    <div class="container">
+    
 
-        <h3 class="mt-4 mb-2" id="pl">Progress Logs</h3>
+        <h3 class="mt-3" id="pl">Progress Logs</h3>
         <!-- Progress Log button added to avoid rescrolling -->
         <a asp-action="CreateProgressLog" asp-route-id="@Model.Id" class="btn btn-sm btn-info">
-            <i class="bi bi-plus-square-dotted mr-1"></i>Add Progress Log
+            <i class="bi bi-plus-square-dotted ml-1"></i>Add Progress Log
         </a>
-    </div>
+   
 
-    <div class="card shadow rounded p-3">
+    <div class="card shadow rounded bg-light p-4">
         <!-- Progress Log -->
 
         <!-- Display Progress Logs for current progress (Model.ProgressLog) -->
         <div class="row p3">
-            <table class="table table-sm p-3">
+            <table class="table table-sm p-3 table-striped">
                 <thead>
                     <tr>
                         <th>Date Created</th>
@@ -176,12 +189,16 @@
         <p><a href="#top">Top of page</a></p>
     </div>
 
-    <div class="card shadow rounded mt-5">
-        <!-- Queries -->
-        <div class="row p-3" id="q">
-            <partial name="_Queries" />
+    <h3 class="mt-3">Queries</h3>
+    <a asp-action="CreateQuery" asp-route-id="@Model.Id" class="btn btn-sm btn-warning">
+                <i class="bi bi-plus-square-dotted p-1"></i>Add Query
+            </a>
+        <div class="card shadow rounded">
+            <!-- Queries -->
+            <div class="row p-3" id="q">
+                <partial name="_Queries" />
+            </div>
+            <p><a href="#top"> Top of page</a></p>
         </div>
-        <p><a href="#top">Top of page</a></p>
-    </div>
 
     <partial name="_DeleteModal" />

@@ -4,7 +4,7 @@
 <partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/query", "Queries"), ("","Close") })>
 
     <!--    include button to call _CloseQuery modal (see Student Details view) -->
-    <h3 class="mt-4 mb-4">Query</h3>
+    <h3 class="mt-4 mb-4">Query from @Model.Student.FirstName @Model.Student.LastName </h3>
 
     <div class="card shadow rounded p-3">
         <dl class="row">
