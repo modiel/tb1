@@ -34,10 +34,39 @@ namespace tb.Data.Services
         // Retrieve User by Id 
         public User GetUser(int id)
         {
-            return ctx.Users
-            // .Include(u => u.UsersStudents)
-            .FirstOrDefault(u => u.Id == id);
+            return ctx.Users.FirstOrDefault(s => s.Id == id);
+            // var u1 = ctx.Users
+            //         .Include ( u => u.UserStudents)
+            //         .Where(u => u.Student.ContactName.ToLower() == u.Name);
+            // var u2 = ctx.Users
+            //         .Include ( u => u.UserStudents)
+            //         .Where (u => u.Student.Email.ToLower() == u.Email);
+
+            // return u1.Union(u2)
+            // .Include(u => u.UserStudents.ToList())
+            // .FirstOrDefault(u => u.Id == id);
         }
+
+        //retrieve student(s) associated with user
+        public IList<User> GetUserStudents()
+        {
+            //Retrieve User by Id
+            // var user = GetUser(id);
+
+            // if (user != null)
+            // {
+            //     return null;
+            // } 
+
+            //retrieve students
+            
+
+            //if Student ContactName equals User Name || Student email = User Email
+
+            return ctx.UserStudents.ToList();
+        }
+
+
 
         // Add a new User checking a User with same email does not exist
         public User AddUser(string name, string email, string password, Role role)
