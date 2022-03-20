@@ -399,6 +399,23 @@ namespace tb.Data.Services
             return pl; //return new progresslog to student
         }
 
+         public ProgressLog UpdateProgressLog(ProgressLog pl)
+        {
+            // verify the progresLog exists
+            var progressLog = GetProgressLogById(pl.Id);
+           
+            if (progressLog == null)
+            {
+                return null;
+            }
+            // update the details of the student retrieved and save
+            progressLog.CreatedOn = pl.CreatedOn;
+            progressLog.Progress = pl.Progress;
+
+            ctx.SaveChanges(); // write to database
+            return progressLog;
+        }
+
         public bool DeleteProgressLog(int id)
         {
             // find progress log

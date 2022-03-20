@@ -239,6 +239,47 @@ namespace tb.Web.Controllers
             return RedirectToAction("Details", new { Id = pl.StudentId });
         }
 
+        // GET /progressLog/edit/{id}
+        [Authorize(Roles="Admin,Tutor")]
+        public IActionResult EditProgressLog(int id)
+        {
+            // load the student using the service
+            var pl = svc.GetProgressLogById(id);
+
+            // check if s is null and return NotFound()
+            if (pl == null)
+            {
+                Alert($"No such progress log {id}", AlertType.warning); 
+                return RedirectToAction(nameof(Details), new { Id = id });
+            }   
+
+            // pass student to view for editing
+            return View(pl);
+        }
+
+        // POST /progressLog/edit/{id}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles="Admin,Tutor")]
+        public IActionResult EditProgressLog(int id, ProgressLog pl)
+        {
+            
+            // validate progressLog
+            if (ModelState.IsValid)
+            {
+                // pass data to service to update
+                svc.UpdateProgressLog(pl);
+                Alert($"Progress log {id} saved", AlertType.info);
+                return RedirectToAction(nameof(Details), new { Id = id }); 
+            }
+
+            // redisplay the form for editing as validation errors
+            return View(pl);
+        }
+
+        // GET / student/delete/{id}
+        [Authorize(Roles="Admin,Tutor")]       
+
            // GET / ProgressLog/delete/{id}
         [Authorize(Roles="Admin,Tutor")]
         public IActionResult DeleteProgressLog(int id)

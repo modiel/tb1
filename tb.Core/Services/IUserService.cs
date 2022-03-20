@@ -36,6 +36,7 @@ namespace tb.Core.Services
         
         ProgressLog GetProgressLogById(int id);
         ProgressLog AddProgressLog(ProgressLog pl);
+        ProgressLog UpdateProgressLog(ProgressLog pl);
         bool DeleteProgressLog(int id);
 
        

@@ -162,6 +162,12 @@
                         <tr>
                             <td>@pl.CreatedOn</td>
                             <td>@pl.Progress</td>
+                            
+                            <!-- Add edit link -->
+                        <td><a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student"
+                                asp-action="EditProgressLog" asp-route-id=@pl.Id><i class="bi-trash"></i> Edit
+                                    Progress</a></td>
+
 
                             <!-- Add delete link -->
                         <td><a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student"
