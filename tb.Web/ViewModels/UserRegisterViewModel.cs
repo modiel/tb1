@@ -17,7 +17,7 @@ namespace tb.Web.ViewModels
         [Required]
         public string Password { get; set; }
 
-        [Compare("Password", ErrorMessage = "Confirm password doesn't match, Please try again")]
+        [Compare("Password", ErrorMessage = "Confirm password doesn't match. Please try again")]
         public string PasswordConfirm  { get; set; }
 
         [Required]

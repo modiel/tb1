@@ -2,61 +2,61 @@
 
 <partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/student", "Students"), ("","Details") })>
 
-<h3 class="mt-4 mb-4" id="top">Student Details: @Model.FirstName @Model.LastName</h3>
+    <h3 class="mt-4 mb-4" id="top">Student Details: @Model.FirstName @Model.LastName</h3>
 
-<div class="card text-center">
-  <div class="card-header">
-    <ul class="nav nav-tabs card-header-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="true" href="#pl">Progress Logs</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="true" href="#q">Queries</a>
-      </li>   
-    </ul>
-  </div>
-
-
-    <!-- action options -->
-    <div class="container">
-        <div class="col">
-
-            <!-- add navigation link to AddProgressLog action, passing correct route parameter -->
-            <a asp-action="CreateProgressLog" asp-route-id="@Model.Id" class="btn btn-sm btn-info">
-                <i class="bi bi-plus-square-dotted p-1"></i>Add Progress Log
-            </a>
-
-            <!-- add navigation link to CreateQuery action, passing correct route parameter -->
-            <a asp-action="CreateQuery" asp-route-id="@Model.Id" class="btn btn-sm btn-warning mr-2">
-                <i class="bi bi-plus-square-dotted p-1"></i>Add Query
-            </a>
+    <div class="card text-center">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="true" href="#pl">Progress Logs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="true" href="#q">Queries</a>
+                </li>
+            </ul>
+        </div>
 
 
-            <!-- add navigation link to Edit action, passing the correct route id parameter -->
-            <!-- note use of ClaimsPrincipal extension method HasOneOfRoles (found in Extensions) -->
+        <!-- action options -->
+        <div class="container">
+            <div class="col">
 
-            <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Edit"
-                asp-route-id="@Model.Id" class="btn btn-sm btn-outline-success mr-2">
-                <i class="bi bi-pencil-square p-1"></i>Edit Student
-            </a>
+                <!-- add navigation link to AddProgressLog action, passing correct route parameter -->
+                <a asp-action="CreateProgressLog" asp-route-id="@Model.Id" class="btn btn-sm btn-info">
+                    <i class="bi bi-plus-square-dotted p-1"></i>Add Progress Log
+                </a>
 
-            <!-- add navigation link to redirect to Index action -->
-            <a asp-controller="Student" asp-action="Index" class="btn btn-sm btn-light mr-2">
-                <i class="bi bi-card-list p-1"></i>Student List
-            </a>
+                <!-- add navigation link to CreateQuery action, passing correct route parameter -->
+                <a asp-action="CreateQuery" asp-route-id="@Model.Id" class="btn btn-sm btn-warning mr-2">
+                    <i class="bi bi-plus-square-dotted p-1"></i>Add Query
+                </a>
 
-            <!-- Add delete link -->
-            @* <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Delete"
-                asp-route-id=@Model.Id><i class="bi bi-trash"></i>Delete Student</a> *@
 
-            <!-- add navigation link to Delete action, passing the correct route id parameter -->
-            <button asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal"
-                data-bs-target="#deleteModal" class="btn btn-sm btn-outline-danger ml-2">
-                <i class="bi bi-trash mr-1"></i>Delete Student
-            </button>
+                <!-- add navigation link to Edit action, passing the correct route id parameter -->
+                <!-- note use of ClaimsPrincipal extension method HasOneOfRoles (found in Extensions) -->
+
+                <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Edit"
+                    asp-route-id="@Model.Id" class="btn btn-sm btn-outline-success mr-2">
+                    <i class="bi bi-pencil-square p-1"></i>Edit Student
+                </a>
+
+                <!-- add navigation link to redirect to Index action -->
+                <a asp-controller="Student" asp-action="Index" class="btn btn-sm btn-light mr-2">
+                    <i class="bi bi-card-list p-1"></i>Student List
+                </a>
+
+                <!-- Add delete link -->
+                @* <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Delete"
+                    asp-route-id=@Model.Id><i class="bi bi-trash"></i>Delete Student</a> *@
+
+                <!-- add navigation link to Delete action, passing the correct route id parameter -->
+                <button asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal"
+                    data-bs-target="#deleteModal" class="btn btn-sm btn-outline-danger ml-2">
+                    <i class="bi bi-trash mr-1"></i>Delete Student
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
     <div class="card shadow rounded p-3">
         <div class="row pl-3">
@@ -147,14 +147,14 @@
         </div>
     </div>
 
-    
 
-        <h3 class="mt-3" id="pl">Progress Logs</h3>
-        <!-- Progress Log button added to avoid rescrolling -->
-        <a asp-action="CreateProgressLog" asp-route-id="@Model.Id" class="btn btn-sm btn-info">
-            <i class="bi bi-plus-square-dotted ml-1"></i>Add Progress Log
-        </a>
-   
+
+    <h3 class="mt-3" id="pl">Progress Logs</h3>
+    <!-- Progress Log button added to avoid rescrolling -->
+    <a asp-action="CreateProgressLog" asp-route-id="@Model.Id" class="btn btn-sm btn-info">
+        <i class="bi bi-plus-square-dotted ml-1"></i>Add Progress Log
+    </a>
+
 
     <div class="card shadow rounded bg-light p-4">
         <!-- Progress Log -->
@@ -175,17 +175,18 @@
                         <tr>
                             <td>@pl.CreatedOn</td>
                             <td>@pl.Progress</td>
-                            
+
                             <!-- Add edit link -->
                         <td><a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student"
-                                asp-action="EditProgressLog" asp-route-id=@pl.Id><i class="bi-trash"></i> Edit
+                                asp-action="EditProgressLog" asp-route-id=@pl.Id><i class="bi-pen"></i> Edit
                                     Progress</a></td>
 
 
                             <!-- Add delete link -->
                         <td><a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student"
                                 asp-action="DeleteProgressLog" asp-route-id=@pl.Id><i class="bi-trash"></i> Delete
-                                    Progress</a></td>
+                                    Progress</a>
+                        </td>
 
                         </tr>
                     }
@@ -197,14 +198,15 @@
 
     <h3 class="mt-3">Queries</h3>
     <a asp-action="CreateQuery" asp-route-id="@Model.Id" class="btn btn-sm btn-warning">
-                <i class="bi bi-plus-square-dotted p-1"></i>Add Query
-            </a>
-        <div class="card shadow rounded">
-            <!-- Queries -->
-            <div class="row p-3" id="q">
-                <partial name="_Queries" />
-            </div>
+        <i class="bi bi-plus-square-dotted p-1"></i>Add Query
+    </a>
+    <div class="card shadow rounded">
+        <!-- Queries -->
+        <div class="row p-3" id="q">
+            <partial name="_Queries" />          
             <p><a href="#top"> Top of page</a></p>
         </div>
+        
+    </div>
 
     <partial name="_DeleteModal" />

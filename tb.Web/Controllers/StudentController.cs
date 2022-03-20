@@ -236,7 +236,7 @@ namespace tb.Web.Controllers
             // create the ProgressLog view model and populate the StudentId property
             svc.AddProgressLog(new ProgressLog { StudentId = pl.StudentId, Progress = pl.Progress});
  
-            return RedirectToAction("Details", new { Id = pl.StudentId });
+            return RedirectToAction(nameof(Details), new { Id = pl.StudentId });
         }
 
         // GET /progressLog/edit/{id}
@@ -250,7 +250,7 @@ namespace tb.Web.Controllers
             if (pl == null)
             {
                 Alert($"No such progress log {id}", AlertType.warning); 
-                return RedirectToAction(nameof(Details), new { Id = id });
+                return RedirectToAction(nameof(Details), new { Id = pl.StudentId });
             }   
 
             // pass student to view for editing
@@ -269,8 +269,10 @@ namespace tb.Web.Controllers
             {
                 // pass data to service to update
                 svc.UpdateProgressLog(pl);
-                Alert($"Progress log {id} saved", AlertType.info);
-                return RedirectToAction(nameof(Details), new { Id = id }); 
+                Alert($"Progress log {id} changes saved", AlertType.info);
+                
+                return RedirectToAction(nameof(Details), new { Id = pl.StudentId });
+                
             }
 
             // redisplay the form for editing as validation errors

@@ -511,6 +511,7 @@ namespace tb.Test
             Assert.Equal("", ns.AddressLineThree);
             Assert.Equal(6, ns.Age);
             Assert.Equal("01/01/1965", ns.Dob);
+            Assert.Equal(Gender.SelfDescribe, ns.Gender);
             Assert.Equal("Bees", ns.Allergies);
             Assert.Equal("ADHD", ns.AdditionalNeeds);
             Assert.Equal("yyy", ns.InstrumentOne);

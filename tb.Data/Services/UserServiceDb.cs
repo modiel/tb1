@@ -223,6 +223,7 @@ namespace tb.Data.Services
             student.Postcode = u.Postcode;
             student.Age = u.Age;
             student.Dob = u.Dob;
+            student.Gender = u.Gender;
             student.Allergies = u.Allergies;
             student.AdditionalNeeds = u.AdditionalNeeds;
             student.InstrumentOne = u.InstrumentOne;
