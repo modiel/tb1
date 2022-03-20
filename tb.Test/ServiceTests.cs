@@ -1009,6 +1009,62 @@ namespace tb.Test
             Assert.Equal(2, s.ProgressLogs.Count); //2 progress logs should exist
         }
 
+        [Fact]
+        public void ProgressLog_UpdateProgressLog_WhenUpdated_ShouldUpdate()
+        {
+            //arrange - create test student
+            var ns = new Student
+
+            {
+                FirstName = "XXX",
+                LastName = "XXXX",
+                Email = "XXX@email.com",
+                Phone = "xxxxxxxxxxxx",
+                AltPhone = "yyyyyyyyyyy",
+                AddressLineOne = "1 Test Way",
+                AddressLineTwo = "Test Street",
+                AddressLineThree = "",
+                Postcode = "XXXX YYY",
+                Age = 15,
+                Dob = "01/01/1965",
+                Gender = Gender.Female,
+                Allergies = "xxx",
+                AdditionalNeeds = "ADD",
+                InstrumentOne = "yyy",
+                InstrumentTwo = "",
+                CurrentGradeInstOne = 3,
+                CurrentGradeInstTwo = 0,
+                CurrentTheoryGrade = 1,
+                Aurals = Aurals.Yes,
+                LessonFormat = LessonFormat.InPersonOnly,
+                LessonOneDay = DaysOfWeek.Monday,
+                LessonTwoDay = DaysOfWeek.NA
+            };
+
+            //add progress log to student
+
+            var student = service.AddStudent(ns);
+
+            //create test progress log and add to database
+            var pl = new ProgressLog
+            {
+                Progress = "Practise more",
+                StudentId = ns.Id,
+            };
+
+            //add progress log to student 
+            var spl1 = service.AddProgressLog(pl); 
+
+            //act- overwrite the attributes
+            pl.Progress = "Practise for 30 minutes each day";
+        
+            //act - update progress log
+            service.UpdateProgressLog(pl);
+
+            //assert updated
+            Assert.Equal("Practise for 30 minutes each day", pl.Progress);
+            
+        }
 
         [Fact]
         public void Student_DeleteStudent_WhenDeleted_ShouldAlsoDeleteProgressLog()

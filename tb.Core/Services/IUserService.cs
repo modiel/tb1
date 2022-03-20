@@ -11,6 +11,7 @@ namespace tb.Core.Services
 
         // ---------------- User Management --------------
         IList<User> GetUsers();
+        IList<User> GetUserStudents();
         User GetUser(int id);
         User GetUserByEmail(string email);
         bool IsEmailAvailable(string email, int userId);
@@ -35,6 +36,7 @@ namespace tb.Core.Services
         
         ProgressLog GetProgressLogById(int id);
         ProgressLog AddProgressLog(ProgressLog pl);
+        ProgressLog UpdateProgressLog(ProgressLog pl);
         bool DeleteProgressLog(int id);
 
        

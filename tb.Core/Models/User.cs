@@ -18,14 +18,13 @@ namespace tb.Core.Models
         // User role within application
         public Role Role { get; set; }
 
-        // // EF Dependant Relationship Student belongs to a User
-        // public int StudentId { get; set; }
 
         // Navigation property
         public Student Student { get; set; }
 
         //DM - this may be redundant
-        public IList<Student> UsersStudents { get; set; } = new List<Student>();
+        // 1-N relationship 
+        public IList<User> UserStudents { get; set; } = new List<User>();
 
 
     
