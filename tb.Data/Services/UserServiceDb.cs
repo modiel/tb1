@@ -181,7 +181,7 @@ namespace tb.Data.Services
             if (existing != null)
             {
                 return null; // email in use so we cannot create student
-            } 
+            } //s.User= new User {Name = s.FullName, FullName,}
             // email is unique so create student
             ctx.Students.Add(s);
             ctx.SaveChanges(); // write to database
