@@ -19,11 +19,13 @@
                     <i asp-condition="@t.Active" class="bi bi-toggle-on"></i>
                     <i asp-condition="@(!t.Active)" class="bi bi-toggle-off"></i>                   
                 </td>
+ 
                 @* add Details link to resolve Query *@
-                <td>
+                 <td>
                     <a asp-controller="Query" asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-action="Details" asp-route-id="@t.Id"><i class="bi bi-lightbulb"></i> Details</a>                                          
-                </td>
+                </td> 
             </tr>   
         }
     </tbody>
 </table>
+<partial name="_ResolveQueryModal" /> 

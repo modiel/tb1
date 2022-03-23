@@ -1,27 +1,31 @@
-@model Query
-
+@* 
 <!-- add modal containing a form to submit Resolution text to Close action -->
 <!-- review student _Delete modal -->
 <form asp-action="Close">
-<div class="modal fade" id="closeModal" tabindex="-1" aria-labelledby="closeModalLabel" aria-hidden="true">
+<div class="modal fade" id="resolveQueryModal" tabindex="-1" aria-labelledby="resolveQueryModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="closeModalLabel">Resolve Query for @Model.Student.FirstName @Model.Student.LastName</h5>
+        <h5 class="modal-title" id="closeModalLabel">Resolve Query </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">   
-        <input type="hidden" asp-for="Id" />
+
+        
+        <input type="hidden" asp-for="Id" class="form-control"/>            
+        <input type="hidden" asp-for="StudentId" />
         <div class="mt-2">
             <label asp-for="Resolution" class="form-label"></label>
             <textarea rows="7" asp-for="Resolution" class="form-control"></textarea>
         </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
+          
   </div>
 </div>
 </form>
-
+ *@

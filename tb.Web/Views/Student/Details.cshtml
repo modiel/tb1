@@ -200,8 +200,10 @@
     <a asp-action="CreateQuery" asp-route-id="@Model.Id" class="btn btn-sm btn-warning">
         <i class="bi bi-plus-square-dotted p-1"></i>Add Query
     </a>
-    <div class="card shadow rounded">
+
         <!-- Queries -->
+    <div class="card shadow rounded">
+        
         <div class="row p-3" id="q">
             <partial name="_Queries" />          
             <p><a href="#top"> Top of page</a></p>
