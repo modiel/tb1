@@ -1,3 +1,23 @@
+
+
+h1,h2,h3
+{
+  color:#0d5b80;
+}
+
+h2 .logoTouch{
+  color: #289dd2;
+  font-family: 'bahij-janna-bold',sans-serif ;
+}
+
+h2 .logoBass
+{
+  color: #ffbd59;
+  font-family: 'bahij-janna-bold', sans-serif ;
+}
+
+
+
 html {
   font-size: 14px;
 }
@@ -16,7 +36,7 @@ html {
 body {
   margin-bottom: 60px;
   background-color:hsla(199, 49%, 36%, 0.096);
-  /* background-color: #045076f8; */
+  /* background-color: #87bfdb; */
 
 
 }

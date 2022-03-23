@@ -27,11 +27,14 @@ a.navbar-brand {
 }
 
 img{
+  display: flex; 
   width:100%;
 }
   
 #short{
-    width:2.5%;
+
+  align-self: flex-start; 
+    width: 65px;
 }
 
 a {
