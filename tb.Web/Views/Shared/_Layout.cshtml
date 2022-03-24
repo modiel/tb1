@@ -31,10 +31,10 @@
                         <a class="nav-link text-dark " asp-condition=@User.HasOneOfRoles("Admin,Tutor,Parent,AdultStudent,Pupil") asp-controller="FullCalendar" asp-action="Index">FullCalendar</a> 
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link text-dark " asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="Index">Users</a> 
+                        <a class="nav-link text-dark" asp-condition=@User.IsInRole("Admin")  asp-controller="User" asp-action="Index">Users</a> 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Index">Students</a>
+                            <a class="nav-link text-dark" asp-condition=@User.HasOneOfRoles("Admin,Tutor,Parent") asp-controller="Student" asp-action="Index">Students</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Query" asp-action="Index">Queries</a>
@@ -43,9 +43,8 @@
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="About">About</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-condition=@User.HasOneOfRoles("Admin,Tutor,Parent,AdultStudent,Pupil") asp-controller="User"
-                             asp-action="Details">MyStudent</a>
-                        </li> @*-DM KEEP WORKING*@
+                            <a class="nav-link text-dark" asp-condition=@User.IsInRole("Pupil") asp-controller="Student" asp-action="UserDetails">UserDetails</a>
+                        </li>
 
                     <!--  The login partial is added here for authentication flex-sm-row-reverse-->
                     <partial name="_LoginPartial" />      

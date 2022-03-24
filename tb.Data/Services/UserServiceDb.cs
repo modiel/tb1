@@ -35,43 +35,21 @@ namespace tb.Data.Services
         public User GetUser(int id)
         {
             return ctx.Users.FirstOrDefault(s => s.Id == id);
-            // var u1 = ctx.Users
-            //         .Include ( u => u.UserStudents)
-            //         .Where(u => u.Student.ContactName.ToLower() == u.Name);
-            // var u2 = ctx.Users
-            //         .Include ( u => u.UserStudents)
-            //         .Where (u => u.Student.Email.ToLower() == u.Email);
-
-            // return u1.Union(u2)
-            // .Include(u => u.UserStudents.ToList())
-            // .FirstOrDefault(u => u.Id == id);
         }
 
-        //retrieve student(s) associated with user
-        public IList<User> GetUserStudents()
+        public User GetUserWithStudents(int id)
         {
-            //Retrieve User by Id
-            // var user = GetUser(id);
-
-            // if (user != null)
-            // {
-            //     return null;
-            // } 
-
-            //retrieve students
-            
-
-            //if Student ContactName equals User Name || Student email = User Email
-
-            return ctx.UserStudents.ToList();
+            return ctx.Users
+                      .Include(u => u.UserStudents)
+                      .ThenInclude(us => us.Student)
+                      .FirstOrDefault(s => s.Id == id);
         }
-
 
 
         // Add a new User checking a User with same email does not exist
-        public User AddUser(string name, string email, string password, Role role)
+        public User AddUser(User u)
         {     
-            var existing = GetUserByEmail(email);
+            var existing = GetUserByEmail(u.Email);
             if (existing != null)
             {
                 return null;
@@ -79,10 +57,19 @@ namespace tb.Data.Services
 
             var user = new User
             {            
-                Name = name,
-                Email = email,
-                Password = Hasher.CalculateHash(password), // can hash if required 
-                Role = role              
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                ContactName = u.ContactName,
+                Phone = u.Phone,
+                AltPhone = u.AltPhone,
+                AddressLineOne = u.AddressLineOne,
+                AddressLineTwo = u.AddressLineTwo,
+                AddressLineThree = u.AddressLineThree,
+                Dob = u.Dob,
+                Gender = u.Gender,
+                Email = u.Email,
+                Password = Hasher.CalculateHash(u.Password), // can hash if required 
+                Role = u.Role              
             };
             ctx.Users.Add(user);
             ctx.SaveChanges();
@@ -116,11 +103,21 @@ namespace tb.Data.Services
             {
                 return null;
             }
+
             // update the details of the User retrieved and save
-            User.Name = updated.Name;
+            User.FirstName = updated.FirstName;
+            User.LastName = updated.LastName;
+            User.ContactName = updated.ContactName;
+            User.Phone = updated.Phone;
+            User.AltPhone = updated.AltPhone;
+            User.AddressLineOne = updated.AddressLineOne;
+            User.AddressLineTwo = updated.AddressLineTwo;
+            User.AddressLineThree = updated.AddressLineThree;
+            User.Dob = updated.Dob;
+            User.Gender = updated.Gender;
             User.Email = updated.Email;
-            User.Password = Hasher.CalculateHash(updated.Password);  
-            User.Role = updated.Role; 
+            User.Password = Hasher.IsHashed(updated.Password) ? updated.Password : Hasher.CalculateHash(updated.Password); // hash only if not already hashed 
+            User.Role = updated.Role;       
 
             ctx.SaveChanges();          
             return User;
@@ -164,34 +161,149 @@ namespace tb.Data.Services
 
 
         // Retrieve student by Id 
-        public Student GetStudent(int id)
+        public Student GetStudentById(int id)
         {
             return ctx.Students
+                    .Include(s => s.User)
                     .Include(s => s.Queries)
-                    .Include(pl => pl.ProgressLogs)
+                    .Include(s => s.ProgressLogs)
                     .FirstOrDefault(s => s.Id == id);
         }
 
-        // Add a new student checking a student with same email does not exist
+        public Student GetStudentByUserId(int id)
+        {
+            // user associated with student must be a Pupil
+            return ctx.Students
+                    .Include(s => s.User)
+                    .Include(s => s.Queries)
+                    .Include(s => s.ProgressLogs)
+                    .FirstOrDefault(s => s.User.Id == id && s.User.Role == Role.Pupil );
+        }
+
+        public IList<Student> GetStudentsForUser(int uId)
+        {
+            // get students for specified user
+            return ctx.UserStudents                 
+                    .Where(us => us.UserId == uId)
+                    .Include(us => us.Student.User)
+                    .Select(us => us.Student)               
+                    .ToList(); 
+        }
+           
+
         public Student AddStudent(Student s)
         {
-            // check if email is already in use by another student
-            var existing = GetStudentByEmail(s.Email);
-            
+            // check user with email does not exist
+            var existing = GetUserByEmail(s.User.Email);
             if (existing != null)
             {
-                return null; // email in use so we cannot create student
-            } 
-            // email is unique so create student
-            ctx.Students.Add(s);
+                return null;
+            }
+
+            // create the student and add the user
+            var student = new Student {
+                Allergies = s.Allergies,
+                AdditionalNeeds = s.AdditionalNeeds,
+                InstrumentOne = s.InstrumentOne,
+                InstrumentTwo = s.InstrumentTwo,
+                CurrentGradeInstOne = s.CurrentGradeInstOne,
+                CurrentGradeInstTwo = s.CurrentGradeInstTwo,
+                CurrentTheoryGrade = s.CurrentTheoryGrade,
+                Aurals = s.Aurals,
+                LessonFormat = s.LessonFormat,
+                LessonOneDay  = s.LessonOneDay,
+                LessonTwoDay = s.LessonTwoDay,
+
+                // ideally create a new User from properties in s.User
+                User = new User {           
+                    FirstName = s.User.FirstName,
+                    LastName = s.User.LastName,
+                    ContactName = s.User.ContactName,
+                    Phone = s.User.Phone,
+                    AltPhone = s.User.AltPhone,
+                    AddressLineOne = s.User.AddressLineOne,
+                    AddressLineTwo = s.User.AddressLineTwo,
+                    AddressLineThree = s.User.AddressLineThree,
+                    Dob = s.User.Dob,
+                    Gender = s.User.Gender,
+                    Email = s.User.Email,
+                    Password = Hasher.CalculateHash(s.User.Password), // can hash if required 
+                    Role = Role.Pupil
+                }
+            };
+            ctx.Students.Add(student);
+
             ctx.SaveChanges(); // write to database
-            return s; // return newly added student
+            return student; // return newly added student
+        }
+
+        public Student AddStudent(User u, Student s)
+        {
+            // check user exists
+            var user = GetUser(u.Id);            
+            if (user == null)
+            {
+                return null; // user account must exist
+            } 
+            if (user.Role != Role.Pupil)
+            {
+                return null; // user must be a pupil
+            }
+
+            // create the student and add the user
+            var student = new Student {
+                Allergies = s.Allergies,
+                AdditionalNeeds = s.AdditionalNeeds,
+                InstrumentOne = s.InstrumentOne,
+                InstrumentTwo = s.InstrumentTwo,
+                CurrentGradeInstOne = s.CurrentGradeInstOne,
+                CurrentGradeInstTwo = s.CurrentGradeInstTwo,
+                CurrentTheoryGrade = s.CurrentTheoryGrade,
+                Aurals = s.Aurals,
+                LessonFormat = s.LessonFormat,
+                LessonOneDay  = s.LessonOneDay,
+                LessonTwoDay = s.LessonTwoDay,
+                User = new User {   
+                    Id = s.User.Id,
+                    FirstName = s.User.FirstName,
+                    LastName = s.User.LastName,
+                    ContactName = s.User.ContactName,
+                    Phone = s.User.Phone,
+                    AltPhone = s.User.AltPhone,
+                    AddressLineOne = s.User.AddressLineOne,
+                    AddressLineTwo = s.User.AddressLineTwo,
+                    AddressLineThree = s.User.AddressLineThree,
+                    Dob = s.User.Dob,
+                    Gender = s.User.Gender,
+                    Email = s.User.Email,
+                    Password = Hasher.CalculateHash(s.User.Password), // hash password 
+                    Role = Role.Pupil
+                }
+            };
+            ctx.Students.Add(student);
+
+            ctx.SaveChanges(); // write to database
+            return student; // return newly added student
+        }
+
+        public UserStudent AssignUserToStudent(int uId, int sId)
+        {
+            var user = GetUser(uId);
+            var student = GetStudentById(sId);
+            if (user == null || student == null)
+            {
+                return null;
+            }
+            var userStudent = new UserStudent { UserId = uId, StudentId = sId };
+            ctx.UserStudents.Add(userStudent);
+            ctx.SaveChanges();
+            return userStudent;
         }
 
         // Delete the student identified by Id returning true if deleted and false if not found
         public bool DeleteStudent(int id)
         {
-            var s = GetStudent(id);
+            var s = GetStudentById(id);
             if (s == null)
             {
                 return false;
@@ -202,47 +314,42 @@ namespace tb.Data.Services
         }
 
         // Update the student with the details in updated 
-        public Student UpdateStudent(Student u)
+        public Student UpdateStudent(Student s)
         {
             // verify the student exists
-            var student = GetStudent(u.Id);
+            var student = GetStudentById(s.Id);
             if (student == null)
             {
                 return null;
             }
             // update the details of the student retrieved and save
-            student.FirstName = u.FirstName;
-            student.LastName = u.LastName;
-            student.ContactName = u.ContactName;
-            student.Email = u.Email;
-            student.Phone = u.Phone;
-            student.AltPhone = u.AltPhone;
-            student.AddressLineOne = u.AddressLineOne;
-            student.AddressLineTwo = u.AddressLineTwo;
-            student.AddressLineThree = u.AddressLineThree;
-            student.Postcode = u.Postcode;
-            student.Age = u.Age;
-            student.Dob = u.Dob;
-            student.Gender = u.Gender;
-            student.Allergies = u.Allergies;
-            student.AdditionalNeeds = u.AdditionalNeeds;
-            student.InstrumentOne = u.InstrumentOne;
-            student.InstrumentTwo = u.InstrumentTwo;
-            student.CurrentGradeInstOne = u.CurrentGradeInstOne;
-            student.CurrentGradeInstTwo = u.CurrentGradeInstTwo;
-            student.CurrentTheoryGrade = u.CurrentTheoryGrade;
-            student.Aurals = u.Aurals;
-            student.LessonFormat = u.LessonFormat;
-            student.LessonOneDay = u.LessonOneDay;
-            student.LessonTwoDay = u.LessonTwoDay;
+            student.User.FirstName = s.User.FirstName;
+            student.User.LastName = s.User.LastName;
+            student.User.ContactName = s.User.ContactName;
+            student.User.Phone = s.User.Phone;
+            student.User.AltPhone = s.User.AltPhone;
+            student.User.AddressLineOne = s.User.AddressLineOne;
+            student.User.AddressLineTwo = s.User.AddressLineTwo;
+            student.User.AddressLineThree = s.User.AddressLineThree;
+            student.User.Dob = s.User.Dob;
+            student.User.Gender = s.User.Gender;
+            student.User.Email = s.User.Email;
+            //student.User.Password = Hasher.IsHashed(s.User.Password) ? s.User.Password : Hasher.CalculateHash(s.User.Password); // hash if not already hashed 
+               
+            student.Allergies = s.Allergies;
+            student.AdditionalNeeds = s.AdditionalNeeds;
+            student.InstrumentOne = s.InstrumentOne;
+            student.InstrumentTwo = s.InstrumentTwo;
+            student.CurrentGradeInstOne = s.CurrentGradeInstOne;
+            student.CurrentGradeInstTwo = s.CurrentGradeInstTwo;
+            student.CurrentTheoryGrade = s.CurrentTheoryGrade;
+            student.Aurals = s.Aurals;
+            student.LessonFormat = s.LessonFormat;
+            student.LessonOneDay = s.LessonOneDay;
+            student.LessonTwoDay = s.LessonTwoDay;
 
             ctx.SaveChanges(); // write to database
             return student;
-        }
-
-        public Student GetStudentByEmail(string email)
-        {
-            return ctx.Students.FirstOrDefault(s => s.Email == email);
         }
 
         public IList<Student> GetStudentsQuery(Func<Student,bool> q)
@@ -255,7 +362,7 @@ namespace tb.Data.Services
          // Miscellaneous
         public bool IsDuplicateEmail(string email, int studentId) 
         {
-            var existing = GetStudentByEmail(email);
+            var existing = GetUserByEmail(email);
             // if a student with email exists and the Id does not match
             // the studentId (if provided), then they cannot use the email
             return existing != null && studentId != existing.Id;           
@@ -264,7 +371,7 @@ namespace tb.Data.Services
         // =================== Query Management ===================
         public Query CreateQuery(int studentId, string issue)
         {
-            var student = GetStudent(studentId);
+            var student = GetStudentById(studentId);
             if (student == null) return null;
 
             var query = new Query
@@ -358,7 +465,8 @@ namespace tb.Data.Services
             }
             var r1 = ctx.Queries
                      .Include (t => t.Student)
-                     .Where(t => t.Student.FirstName.ToLower().Contains(query.ToLower()));
+                     .ThenInclude(s => s.User)
+                     .Where(t => t.Student.User.FirstName.ToLower().Contains(query.ToLower()));
             
              var r2 = ctx.Queries
                      .Include(t => t.Student)
@@ -370,8 +478,6 @@ namespace tb.Data.Services
                                     range == QueryRange.OPEN && t.Active ||
                                     range == QueryRange.CLOSED && !t.Active ||
                                     range == QueryRange.ALL).ToList();
-            // replace with return search results
-            // return new List<Query>(); 
         }
 
 
@@ -387,7 +493,7 @@ namespace tb.Data.Services
         public ProgressLog AddProgressLog(ProgressLog pl)
         {   
             //retrieve student from database
-            var student = GetStudent(pl.StudentId);
+            var student = GetStudentById(pl.StudentId);
 
             // if student does not exist return null
             if (student == null) return null;
@@ -432,20 +538,6 @@ namespace tb.Data.Services
 
             return true;
         }
-
-        //DIANE- POTENTIAL WAY OF IMPROVING AGE INPUT 
-//         public static int GetAge(DateTime birthDate)
-// {
-//     DateTime n = DateTime.Now; // To avoid a race condition around midnight
-//     int age = n.Year - birthDate.Year;
-
-//     if (n.Month < birthDate.Month || (n.Month == birthDate.Month && n.Day < birthDate.Day))
-//         age--;
-
-//     return age;
-    // }
-
-
    
     }
 }

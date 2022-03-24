@@ -33,7 +33,7 @@
             @foreach(var t in Model.Queries) { 
                <tr>
                   <td>@t.Id</td>
-                  <td>@t.Student.FirstName @t.Student.LastName</td>
+                  <td>@t.Student.Name</td>
                   <td>@t.CreatedOn.ToShortDateString()</td>
                   <td>@t.Issue.Substring(0, t.Issue.Length < 20 ? t.Issue.Length : 20) ...</td>
                   <td>

@@ -8,10 +8,18 @@
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="form-group">
-            <label asp-for="Name" class="control-label"><i class="bi-person-fill"></i> Name</label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="row mt-3">
+            <div class="col form-group ">
+                <label asp-for="FirstName" class="control-label"><i class="bi-person-fill"></i> FirstName</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="col form-group">
+                <label asp-for="LastName" class="control-label"> LastName</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="form-group mt-3">
@@ -34,18 +42,16 @@
             </div>
         </div>
 
-        <div class="form-group mt-3">
+        @* <div class="form-group mt-3">
             <label asp-for="Role" class="control-label"><i class="bi-person-badge-fill"></i> Role</label>
-            <select asp-for="Role"  class="form-control">
-                
-                    @* DM- potential to change below to allow admin and tutor roles to be added server side *@
+            <select asp-for="Role"  class="form-control">              
                 <option>Select Role</option>
                 <option value="Parent">Parent</option>
                 <option value="AdultStudent">Adult Student</option>
                 <option value="Pupil">Pupil</option>
             </select>
             <span asp-validation-for="Role" class="text-danger"></span>
-        </div>
+        </div> *@
 
         <div class="form-group mt-3">
             <input type="submit" value="Register" class="btn btn-primary" />

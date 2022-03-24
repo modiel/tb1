@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace tb.Core.Models
 {
-
+    public enum QueryRange { OPEN, CLOSED, ALL }
     public class Query
     {
         public int Id { get; set; }

@@ -7,7 +7,9 @@ namespace tb.Web.ViewModels
     public class UserRegisterViewModel
     { 
         [Required]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
  
         [Required]
         [EmailAddress]

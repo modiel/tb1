@@ -14,7 +14,7 @@ namespace tb.Data.Repositories
          // authentication store
         public DbSet<User> Users { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<User> UserStudents { get; set; }
+        public DbSet<UserStudent> UserStudents { get; set; }
         public DbSet<Query> Queries { get; set; }
         public DbSet<ProgressLog> ProgressLogs { get; set; }
 

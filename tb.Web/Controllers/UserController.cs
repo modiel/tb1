@@ -54,19 +54,26 @@ namespace tb.Web.Controllers
 
         public IActionResult Register()
         {
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register([Bind("Name,Email,Password,PasswordConfirm,Role")] UserRegisterViewModel m)       
+        public IActionResult Register(UserRegisterViewModel m)       
         {
             if (!ModelState.IsValid)
             {
                 return View(m);
             }
-            // add user via service
-            var user = _svc.AddUser(m.Name, m.Email,m.Password, m.Role);
+            // add Tutor user via service
+            var user = _svc.AddUser( new User {
+                FirstName = m.FirstName, 
+                LastName = m.LastName, 
+                Email = m.Email,
+                Password = m.Password, 
+                Role = Role.Tutor
+            });
             // check if error adding user and display warning
             if (user == null) {
                 Alert("There was a problem Registering. Please try again", AlertType.warning);
@@ -113,7 +120,9 @@ namespace tb.Web.Controllers
             var user = _svc.GetUser(GetSignedInUserId());
             var userViewModel = new UserProfileViewModel { 
                 Id = user.Id, 
-                Name = user.Name, 
+                Name = user.FirstName,
+                // add other properties
+
                 Email = user.Email,                 
                 Role = user.Role
             };
@@ -133,9 +142,11 @@ namespace tb.Web.Controllers
             } 
 
             // update user details and call service
-            user.Name = m.Name;
+            user.FirstName = m.Name;
             user.Email = m.Email;
-            user.Role = m.Role;        
+            user.Role = m.Role;  
+            // add other properties
+                  
             var updated = _svc.UpdateUser(user);
 
             // check if error updating service

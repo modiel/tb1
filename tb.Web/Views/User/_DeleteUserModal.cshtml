@@ -10,7 +10,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Are you sure you want to delete user @Model.Name? </p>
+        <p>Are you sure you want to delete user @Model.FirstName @Model.LastName? </p>
       </div>
       <div class="modal-footer">
         <form asp-controller="User" asp-action="DeleteUserConfirm">

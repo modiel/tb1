@@ -24,7 +24,7 @@ namespace tb.Web
             {
                 new Claim(ClaimTypes.Sid, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
                 new Claim(ClaimTypes.Role, user.Role.ToString())                              
             }, CookieAuthenticationDefaults.AuthenticationScheme);
 

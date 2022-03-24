@@ -3,6 +3,7 @@ using Xunit;
 using tb.Core.Models;
 using tb.Core.Services;
 using tb.Data.Services;
+using System;
 
 namespace tb.Test
 {
@@ -30,8 +31,8 @@ namespace tb.Test
         public void AddingUsersShouldWork()
         {
             // arrange
-            service.AddUser("Tutor", "tutor@mail.com", "tutor", Role.Tutor);
-            service.AddUser("Pupil", "pupil@mail.com", "pupil", Role.Pupil);
+            service.AddUser( new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor });
+            service.AddUser( new User { FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil});
 
             // act
             var users = service.GetUsers();
@@ -44,29 +45,30 @@ namespace tb.Test
         public void UpdatingUserShouldWork()
         {
             // arrange
-            var user = service.AddUser("Tutor", "tutor@mail.com", "tutor", Role.Tutor);
+            var user = service.AddUser( new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor });
+         
 
             // act
-            user.Name = "Tutor";
-            user.Email = "tutor@mail.com";
+            user.FirstName = "Tutor1";
+            user.Email = "tutor1@mail.com";
             var updatedUser = service.UpdateUser(user);
 
             // assert
-            Assert.Equal("Tutor", user.Name);
-            Assert.Equal("tutor@mail.com", user.Email);
+            Assert.Equal("Tutor1", user.FirstName);
+            Assert.Equal("tutor1@mail.com", user.Email);
         }
 
         [Fact]
         public void LoginWithValidCredentialsShouldWork()
         {
             // arrange
-            service.AddUser("Tutor", "tutor@mail.com", "tutor", Role.Tutor);
-
+            var user = service.AddUser( new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor });
+        
             // act            
-            var user = service.Authenticate("tutor@mail.com", "tutor");
+            var auth = service.Authenticate("tutor@mail.com", "tutor");
 
             // assert
-            Assert.NotNull(user);
+            Assert.NotNull(auth);
 
         }
 
@@ -74,7 +76,7 @@ namespace tb.Test
         public void LoginWithInvalidCredentialsShouldNotWork()
         {
             // arrange
-            service.AddUser("Tutor", "tutor@mail.com", "tutor", Role.Tutor);
+            service.AddUser( new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor });
 
             // act      
             var user = service.Authenticate("tutor@mail.com", "xxx");
@@ -87,7 +89,6 @@ namespace tb.Test
         // =================  Student Tests =====================
         [Fact]
         public void Student_GetStudentsWhenNone_ShouldReturnNone()
-
         {
             //arrange
 
@@ -103,23 +104,17 @@ namespace tb.Test
         public void Student_GetStudentsWhenStudentAdded_ShouldReturnStudent()
         {
             // arrange
-            // create dummy student one
-
-            var ns = new Student
-            {
-
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+            var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -134,11 +129,11 @@ namespace tb.Test
             };
 
             //add student to service
-            var student = service.AddStudent(ns);
+            student = service.AddStudent(pupil, student);
 
             //assert student exists and matches attributes
-            Assert.NotNull(ns);
-            Assert.Equal(student.Email, ns.Email);
+            Assert.NotNull(student);
+            Assert.Equal(student.UserId, pupil.Id);
         }
 
 
@@ -148,21 +143,25 @@ namespace tb.Test
             // arrange
             // create dummy student one
 
-            var ns = new Student
-            {
-
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+            // arrange
+            var pupil1 =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+            var pupil2 =  service.AddUser( new User { 
+                FirstName = "Pupil2", Email = "pupil2@mail.com", Password = "pupil2", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "10 Test Way", AddressLineTwo = "Main Street",
+                AddressLineThree = "", Postcode = "ZZZZ YYY", Dob = new System.DateTime(1975,1,1),
+                Gender = Gender.Male,
+            });
+
+            // create studente
+            var ns1 = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -174,23 +173,10 @@ namespace tb.Test
                 LessonFormat = LessonFormat.InPersonOnly,
                 LessonOneDay = DaysOfWeek.Monday,
                 LessonTwoDay = DaysOfWeek.NA
-
             };
 
             var ns2 = new Student
             {
-                FirstName = "Joe",
-                LastName = "Bloggs",
-                Email = "YYY@email.com",
-                Phone = "yyyyyyyyyyy",
-                AltPhone = "zzzzzzzzzzz",
-                AddressLineOne = "1 Update Way",
-                AddressLineTwo = "Update Street",
-                AddressLineThree = "",
-                Postcode = "ZZZZ YYY",
-                Age = 6,
-                Dob = "01/01/1965",
-                Gender = Gender.Male,
                 Allergies = "Bees",
                 AdditionalNeeds = "ADHD",
                 InstrumentOne = "yyy",
@@ -206,8 +192,8 @@ namespace tb.Test
             };
 
             //add students to service
-            var s1 = service.AddStudent(ns);
-            var s2 = service.AddStudent(ns2);
+            var s1 = service.AddStudent(pupil1, ns1);
+            var s2 = service.AddStudent(pupil2, ns2);
 
             // act
             //get students and check count
@@ -224,149 +210,17 @@ namespace tb.Test
         {
             // arrange
             //create dummy student to add to the service
-            var ns = new Student
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+            var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
-                Allergies = "xxx",
-                AdditionalNeeds = "ADD",
-                InstrumentOne = "yyy",
-                InstrumentTwo = "",
-                CurrentGradeInstOne = 3,
-                CurrentGradeInstTwo = 0,
-                CurrentTheoryGrade = 1,
-                Aurals = Aurals.Yes,
-                LessonFormat = LessonFormat.InPersonOnly,
-                LessonOneDay = DaysOfWeek.Monday,
-                LessonTwoDay = Core.Models.DaysOfWeek.NA
+            });
 
-            };
-
-            // act 
-            var sa = service.AddStudent(ns);
-            var s = service.GetStudentByEmail(sa.Email); // retrieve student saved 
-
-            // assert - that student is not null
-            Assert.NotNull(s);
-            //assert - that student matches set properties
-            Assert.Equal(s.Email, sa.Email);
-
-        }
-
-        [Fact]
-        public void Student_AddWhenDuplicateEmail_ShouldReturnNull()
-        {
-            // arrange
-            //create dummy student to add to the service
-            var ns = new Student
+            // create studente
+            var student = new Student
             {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
-                Gender = Gender.Female,
-                Allergies = "xxx",
-                AdditionalNeeds = "ADD",
-                InstrumentOne = "yyy",
-                InstrumentTwo = "",
-                CurrentGradeInstOne = 3,
-                CurrentGradeInstTwo = 0,
-                CurrentTheoryGrade = 1,
-                Aurals = Aurals.Yes,
-                LessonFormat = LessonFormat.InPersonOnly,
-                LessonOneDay = DaysOfWeek.Monday,
-                LessonTwoDay = DaysOfWeek.NA
-
-            };
-            var s1 = service.AddStudent(ns);
-
-            // act - add duplicate
-            var s2 = service.AddStudent(ns);
-
-            // assert
-            Assert.NotNull(s1);
-            Assert.Null(s2);
-        }
-
-        [Fact]
-        public void Student_DeleteStudentThatExists_ShouldReturnTrue()
-        {
-            //arrange
-            //create dummy student to add to the service
-            var ns = new Student
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
-                Gender = Gender.Female,
-                Allergies = "xxx",
-                AdditionalNeeds = "ADD",
-                InstrumentOne = "yyy",
-                InstrumentTwo = "",
-                CurrentGradeInstOne = 3,
-                CurrentGradeInstTwo = 0,
-                CurrentTheoryGrade = 1,
-                Aurals = Aurals.Yes,
-                LessonFormat = LessonFormat.InPersonOnly,
-                LessonOneDay = DaysOfWeek.Monday,
-                LessonTwoDay = DaysOfWeek.NA
-            };
-            var student = service.AddStudent(ns);
-
-            //act
-            var deleted = service.DeleteStudent(student.Id);
-            var student1 = service.GetStudentByEmail(student.Email); //attempt to get the student
-
-            //asert
-            Assert.True(deleted); //delete student should return true
-            Assert.Null(student1); // student1 should be null (as does not exist)
-
-        }
-
-        [Fact]
-        public void Student_DeleteStudentThatExists_ShouldReduceStudentCountByOne()
-        {
-            //arrange
-            //create dummy student to add to the service
-            var ns = new Student
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
-                Gender = Gender.Female,
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -381,7 +235,128 @@ namespace tb.Test
             };
 
             //add student to service
-            var student = service.AddStudent(ns);
+            student = service.AddStudent(pupil, student);
+           
+            var s = service.GetStudentById(student.Id); // retrieve student saved 
+
+            // assert - that student is not null
+            Assert.NotNull(s);
+            //assert - that student matches set properties
+            Assert.Equal(s.User.Email, pupil.Email);
+        }
+
+        [Fact]
+        public void Student_AddWhenDuplicateEmail_ShouldReturnNull()
+        {
+            // arrange
+            //create dummy student to add to the service
+             var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+                Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
+                Allergies = "xxx",
+                AdditionalNeeds = "ADD",
+                InstrumentOne = "yyy",
+                InstrumentTwo = "",
+                CurrentGradeInstOne = 3,
+                CurrentGradeInstTwo = 0,
+                CurrentTheoryGrade = 1,
+                Aurals = Aurals.Yes,
+                LessonFormat = LessonFormat.InPersonOnly,
+                LessonOneDay = DaysOfWeek.Monday,
+                LessonTwoDay = DaysOfWeek.NA
+            };
+
+            //add student to service
+            var s1 = service.AddStudent(pupil, student);
+
+            // act - add duplicate
+            var s2 = service.AddStudent(pupil, student);
+
+            // assert
+            Assert.NotNull(s1);
+            Assert.Null(s2);
+        }
+
+        [Fact]
+        public void Student_DeleteStudentThatExists_ShouldReturnTrue()
+        {
+            //arrange
+            //create dummy student to add to the service
+            var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+                Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
+                Allergies = "xxx",
+                AdditionalNeeds = "ADD",
+                InstrumentOne = "yyy",
+                InstrumentTwo = "",
+                CurrentGradeInstOne = 3,
+                CurrentGradeInstTwo = 0,
+                CurrentTheoryGrade = 1,
+                Aurals = Aurals.Yes,
+                LessonFormat = LessonFormat.InPersonOnly,
+                LessonOneDay = DaysOfWeek.Monday,
+                LessonTwoDay = DaysOfWeek.NA
+            };
+
+            //add student to service
+            student = service.AddStudent(pupil, student);
+
+            //act
+            var deleted = service.DeleteStudent(student.Id);
+            var student1 = service.GetStudentById(student.Id); //attempt to get the student
+
+            //asert
+            Assert.True(deleted); //delete student should return true
+            Assert.Null(student1); // student1 should be null (as does not exist)
+        }
+
+        [Fact]
+        public void Student_DeleteStudentThatExists_ShouldReduceStudentCountByOne()
+        {
+            //arrange
+            //create dummy student to add to the service
+             var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+                Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
+                Allergies = "xxx",
+                AdditionalNeeds = "ADD",
+                InstrumentOne = "yyy",
+                InstrumentTwo = "",
+                CurrentGradeInstOne = 3,
+                CurrentGradeInstTwo = 0,
+                CurrentTheoryGrade = 1,
+                Aurals = Aurals.Yes,
+                LessonFormat = LessonFormat.InPersonOnly,
+                LessonOneDay = DaysOfWeek.Monday,
+                LessonTwoDay = DaysOfWeek.NA
+            };
+
+            //add student to service
+            student = service.AddStudent(pupil, student);
 
             //act
             var deleted = service.DeleteStudent(student.Id);
@@ -397,21 +372,17 @@ namespace tb.Test
         {
             // arrange
             //create dummy student to add to the service
-            var ns = new Student
-            {
-
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+            var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -423,9 +394,10 @@ namespace tb.Test
                 LessonFormat = LessonFormat.InPersonOnly,
                 LessonOneDay = DaysOfWeek.Monday,
                 LessonTwoDay = DaysOfWeek.NA
-
             };
-            var student = service.AddStudent(ns);
+
+            //add student to service
+            student = service.AddStudent(pupil, student);
 
             // act 	
             service.DeleteStudent(0);               // delete non existent Student
@@ -439,21 +411,17 @@ namespace tb.Test
         public void Student_UpdateWhenExists_ShouldSetAllProperties()
         {
             //arrange - create test student
-            var ns = new Student
-
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+            var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -467,22 +435,23 @@ namespace tb.Test
                 LessonTwoDay = DaysOfWeek.NA
             };
 
-            service.AddStudent(ns);
+            //add student to service
+            var ns = service.AddStudent(pupil, student); 
 
+        
             //update test student
 
-            ns.FirstName = "Joe";
-            ns.LastName = "Bloggs";
-            ns.Email = "YYY@email.com";
-            ns.Phone = "yyyyyyyyyyy";
-            ns.AltPhone = "zzzzzzzzzzz";
-            ns.AddressLineOne = "1 Update Way";
-            ns.AddressLineTwo = "Update Street";
-            ns.AddressLineThree = "";
-            ns.Postcode = "ZZZZ YYY";
-            ns.Age = 6;
-            ns.Dob = "01/01/1965";
-            ns.Gender = Gender.SelfDescribe;
+            ns.User.FirstName = "Joe";
+            ns.User.LastName = "Bloggs";
+            ns.User.Email = "YYY@email.com";
+            ns.User.Phone = "yyyyyyyyyyy";
+            ns.User.AltPhone = "zzzzzzzzzzz";
+            ns.User.AddressLineOne = "1 Update Way";
+            ns.User.AddressLineTwo = "Update Street";
+            ns.User.AddressLineThree = "";
+            ns.User.Postcode = "ZZZZ YYY";
+            ns.User.Dob = new DateTime(1965,1,1);
+            ns.User.Gender = Gender.SelfDescribe;
             ns.Allergies = "Bees";
             ns.AdditionalNeeds = "ADHD";
             ns.InstrumentOne = "yyy";
@@ -501,17 +470,17 @@ namespace tb.Test
 
             //assert - attributes should match the updated records
             Assert.NotNull(ns);
-            Assert.Equal("Joe", ns.FirstName);
-            Assert.Equal("Bloggs", ns.LastName);
-            Assert.Equal("YYY@email.com", ns.Email);
-            Assert.Equal("yyyyyyyyyyy", ns.Phone);
-            Assert.Equal("zzzzzzzzzzz", ns.AltPhone);
-            Assert.Equal("1 Update Way", ns.AddressLineOne);
-            Assert.Equal("Update Street", ns.AddressLineTwo);
-            Assert.Equal("", ns.AddressLineThree);
-            Assert.Equal(6, ns.Age);
-            Assert.Equal("01/01/1965", ns.Dob);
-            Assert.Equal(Gender.SelfDescribe, ns.Gender);
+            Assert.Equal("Joe", ns.User.FirstName);
+            Assert.Equal("Bloggs", ns.User.LastName);
+            Assert.Equal("YYY@email.com", ns.User.Email);
+            Assert.Equal("yyyyyyyyyyy", ns.User.Phone);
+            Assert.Equal("zzzzzzzzzzz", ns.User.AltPhone);
+            Assert.Equal("1 Update Way", ns.User.AddressLineOne);
+            Assert.Equal("Update Street", ns.User.AddressLineTwo);
+            Assert.Equal("", ns.User.AddressLineThree);
+            Assert.Equal(new DateTime(1965,1,1), ns.User.Dob);
+            Assert.Equal(Gender.SelfDescribe, ns.User.Gender);
+
             Assert.Equal("Bees", ns.Allergies);
             Assert.Equal("ADHD", ns.AdditionalNeeds);
             Assert.Equal("yyy", ns.InstrumentOne);
@@ -527,9 +496,6 @@ namespace tb.Test
 
         }
 
-
-
-
         // =================  Query Tests ==========================
 
         [Fact] // --- AddQuery should be Active
@@ -537,21 +503,17 @@ namespace tb.Test
         {
             // arrange
             //create dummy student to add to the service
-            var ns = new Student
-
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+             var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -563,11 +525,10 @@ namespace tb.Test
                 LessonFormat = LessonFormat.InPersonOnly,
                 LessonOneDay = DaysOfWeek.Monday,
                 LessonTwoDay = DaysOfWeek.NA
-
             };
 
             //add student to service
-            var s = service.AddStudent(ns);
+            var s = service.AddStudent(pupil, student);
 
             // act
             var q = service.CreateQuery(s.Id, "Dummy Query 1");
@@ -581,21 +542,17 @@ namespace tb.Test
         {
             // arrange
             //create dummy student to add to the service
-            var ns = new Student
-
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+             var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -607,11 +564,11 @@ namespace tb.Test
                 LessonFormat = LessonFormat.InPersonOnly,
                 LessonOneDay = DaysOfWeek.Monday,
                 LessonTwoDay = DaysOfWeek.NA
-
             };
 
             //add student to service
-            var s = service.AddStudent(ns);
+            var s = service.AddStudent(pupil, student);
+
             //create two queries
             var t1 = service.CreateQuery(s.Id, "Dummy Query 1");
             var t2 = service.CreateQuery(s.Id, "Dummy Query 2");
@@ -628,21 +585,17 @@ namespace tb.Test
         {
             // arrange
             //create dummy student to add to the service
-            var ns = new Student
-
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+            var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -656,7 +609,9 @@ namespace tb.Test
                 LessonTwoDay = DaysOfWeek.NA
             };
 
-            var s = service.AddStudent(ns);
+            //add student to service
+            var s = service.AddStudent(pupil, student);
+
             var t = service.CreateQuery(s.Id, "Dummy Query");
 
             // act
@@ -674,21 +629,17 @@ namespace tb.Test
         {
             // arrange
             //create dummy student to add to the service
-            var ns = new Student
-
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+            var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -700,10 +651,11 @@ namespace tb.Test
                 LessonFormat = LessonFormat.InPersonOnly,
                 LessonOneDay = DaysOfWeek.Monday,
                 LessonTwoDay = DaysOfWeek.NA
-
             };
 
-            var s = service.AddStudent(ns);
+            //add student to service
+            var s = service.AddStudent(pupil, student);
+
             var t = service.CreateQuery(s.Id, "Dummy Query");
 
             // act
@@ -719,20 +671,17 @@ namespace tb.Test
         {
             // arrange
             //create dummy student to add to the service
-            var ns = new Student
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+             var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -746,7 +695,9 @@ namespace tb.Test
                 LessonTwoDay = DaysOfWeek.NA
             };
 
-            var s = service.AddStudent(ns);
+            //add student to service
+            var s = service.AddStudent(pupil, student);
+            
             var t1 = service.CreateQuery(s.Id, "Dummy Query 1");
             var t2 = service.CreateQuery(s.Id, "Dummy Query 2");
             var closed = service.CloseQuery(t1.Id, "Resolved");     // close one query    
@@ -763,20 +714,17 @@ namespace tb.Test
         {
             // arrange
             //create dummy student to add to the service
-            var ns = new Student
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+           var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -789,7 +737,10 @@ namespace tb.Test
                 LessonOneDay = DaysOfWeek.Monday,
                 LessonTwoDay = DaysOfWeek.NA
             };
-            var s = service.AddStudent(ns);
+
+            //add student to service
+            var s = service.AddStudent(pupil, student);
+
             var t1 = service.CreateQuery(s.Id, "Dummy Query 1");
             var t2 = service.CreateQuery(s.Id, "Dummy Query 2");
             var closed = service.CloseQuery(t1.Id, "Resolved");     // close one query    
@@ -806,20 +757,17 @@ namespace tb.Test
         {
             // arrange
             //create dummy student to add to the service
-            var ns = new Student
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+             var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -832,7 +780,10 @@ namespace tb.Test
                 LessonOneDay = DaysOfWeek.Monday,
                 LessonTwoDay = DaysOfWeek.NA
             };
-            var s = service.AddStudent(ns);
+
+            //add student to service
+            var s = service.AddStudent(pupil, student);
+
 
             //create query
             var t1 = service.CreateQuery(s.Id, "Dummy Query 1");
@@ -851,20 +802,17 @@ namespace tb.Test
         {
             //arrange
             //create dummy student to add to the service
-            var ns = new Student
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+            var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -879,7 +827,7 @@ namespace tb.Test
             };
 
             //add student to service
-            var student = service.AddStudent(ns);
+            student = service.AddStudent(pupil, student);
 
             //add queries to student
             var query1 = service.CreateQuery(student.Id,"Dummy Query 1" );
@@ -900,21 +848,17 @@ namespace tb.Test
         {
             //arrange
             //create dummy student to add to the service
-
-            var ns = new Student
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+             var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -926,16 +870,16 @@ namespace tb.Test
                 LessonFormat = LessonFormat.InPersonOnly,
                 LessonOneDay = DaysOfWeek.Monday,
                 LessonTwoDay = DaysOfWeek.NA
-
             };
 
-            var student = service.AddStudent(ns);
+            //add student to service
+            student = service.AddStudent(pupil, student);
 
             //create test progress log and add to database
             var progressLog = new ProgressLog
             {
                 Progress = "Practise more",
-                StudentId = ns.Id
+                StudentId = student.Id
             };
 
             //act
@@ -956,20 +900,17 @@ namespace tb.Test
         {
             //arrange
             //create dummy student to add to the service
-            var ns = new Student
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+             var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -981,15 +922,17 @@ namespace tb.Test
                 LessonFormat = LessonFormat.InPersonOnly,
                 LessonOneDay = DaysOfWeek.Monday,
                 LessonTwoDay = DaysOfWeek.NA
-
             };
-            var student = service.AddStudent(ns);
+
+            //add student to service
+            student = service.AddStudent(pupil, student);
+
 
             //create test progress log and add to database
             var pl1 = new ProgressLog
             {
                 Progress = "Practise more",
-                StudentId = ns.Id,
+                StudentId = student.Id,
             };
 
             //act
@@ -999,12 +942,12 @@ namespace tb.Test
             var pl2 = new ProgressLog
             {
                 Progress = "Minor Scales",
-                StudentId = ns.Id,
+                StudentId = student.Id,
             };
             var spl2 = service.AddProgressLog(pl2);
 
             //attempt to retrieve progresslogs from database
-            var s = service.GetStudent(ns.Id);
+            var s = service.GetStudentById(student.Id);
          
             //assert
             Assert.Equal(2, s.ProgressLogs.Count); //2 progress logs should exist
@@ -1014,21 +957,17 @@ namespace tb.Test
         public void ProgressLog_UpdateProgressLog_WhenUpdated_ShouldUpdate()
         {
             //arrange - create test student
-            var ns = new Student
-
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+             var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -1042,15 +981,14 @@ namespace tb.Test
                 LessonTwoDay = DaysOfWeek.NA
             };
 
-            //add progress log to student
-
-            var student = service.AddStudent(ns);
+            //add student to service
+            student = service.AddStudent(pupil, student);
 
             //create test progress log and add to database
             var pl = new ProgressLog
             {
                 Progress = "Practise more",
-                StudentId = ns.Id,
+                StudentId = student.Id,
             };
 
             //add progress log to student 
@@ -1071,21 +1009,17 @@ namespace tb.Test
         public void Student_DeleteStudent_WhenDeleted_ShouldAlsoDeleteProgressLog()
         {
             //arrange
-            //create dummy student to add to the service
-            var ns = new Student
-            {
-                FirstName = "XXX",
-                LastName = "XXXX",
-                Email = "XXX@email.com",
-                Phone = "xxxxxxxxxxxx",
-                AltPhone = "yyyyyyyyyyy",
-                AddressLineOne = "1 Test Way",
-                AddressLineTwo = "Test Street",
-                AddressLineThree = "",
-                Postcode = "XXXX YYY",
-                Age = 15,
-                Dob = "01/01/1965",
+             var pupil =  service.AddUser( new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
+            });
+
+            // create studente
+            var student = new Student
+            {
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -1098,13 +1032,15 @@ namespace tb.Test
                 LessonOneDay = DaysOfWeek.Monday,
                 LessonTwoDay = DaysOfWeek.NA
             };
-            var student = service.AddStudent(ns);
+
+            //add student to service
+            student = service.AddStudent(pupil, student);
 
             //create test progress log and add to database
             var progressLog = new ProgressLog
             {
                 Progress = "Practise more",
-                StudentId = ns.Id,
+                StudentId = student.Id,
             };
             var spl = service.AddProgressLog(progressLog);
 

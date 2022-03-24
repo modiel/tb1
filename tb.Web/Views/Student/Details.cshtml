@@ -2,7 +2,7 @@
 
 <partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/student", "Students"), ("","Details") })>
 
-    <h3 class="mt-4 mb-4" id="top">Student Details: @Model.FirstName @Model.LastName</h3>
+    <h3 class="mt-4 mb-4" id="top">Student Details: @Model.Name</h3>
 
     <div class="card text-center">
         <div class="card-header">
@@ -64,43 +64,43 @@
             <div class="col pt-3">
                 <dl class="row">
                     <dt class="col-7">First Name</dt>
-                    <dd class="col-5">@Model.FirstName</dd>
+                    <dd class="col-5">@Model.User.FirstName</dd>
 
                     <dt class="col-7">Last Name</dt>
-                    <dd class="col-5">@Model.LastName</dd>
+                    <dd class="col-5">@Model.User.LastName</dd>
 
                     <dt class="col-7">Contact Name (if under 18)</dt>
-                    <dd class="col-5">@Model.ContactName</dd>
+                    <dd class="col-5">@Model.User.ContactName</dd>
 
                     <dt class="col-7">Email</dt>
-                    <dd class="col-5">@Model.Email</dd>
+                    <dd class="col-5">@Model.User.Email</dd>
 
                     <dt class="col-7">Phone Number</dt>
-                    <dd class="col-5">@Model.Phone</dd>
+                    <dd class="col-5">@Model.User.Phone</dd>
 
                     <dt class="col-7">Alternative Phone</dt>
-                    <dd class="col-5">@Model.AltPhone</dd>
+                    <dd class="col-5">@Model.User.AltPhone</dd>
 
                     <dt class="col-7">Address Line 1 </dt>
-                    <dd class="col-5">@Model.AddressLineOne</dd>
+                    <dd class="col-5">@Model.User.AddressLineOne</dd>
 
                     <dt class="col-7">Address Line 2 </dt>
-                    <dd class="col-5">@Model.AddressLineTwo</dd>
+                    <dd class="col-5">@Model.User.AddressLineTwo</dd>
 
                     <dt class="col-7">Address Line 3 </dt>
-                    <dd class="col-5">@Model.AddressLineThree</dd>
+                    <dd class="col-5">@Model.User.AddressLineThree</dd>
 
                     <dt class="col-7">Postcode </dt>
-                    <dd class="col-5">@Model.Postcode</dd>
-
-                    <dt class="col-7">Age</dt>
-                    <dd class="col-5">@Model.Age</dd>
+                    <dd class="col-5">@Model.User.Postcode</dd>
 
                     <dt class="col-7">Dob</dt>
-                    <dd class="col-5">@Model.Dob</dd>
+                    <dd class="col-5">@Model.User.Dob.ToShortDateString()</dd>
+
+                    <dt class="col-7">Age</dt>
+                    <dd class="col-5">@Model.User.Age</dd>
 
                     <dt class="col-7">Gender</dt>
-                    <dd class="col-5">@Model.Gender</dd>
+                    <dd class="col-5">@Model.User.Gender</dd>
 
                     <dt class="col-7">Allergies</dt>
                     <dd class="col-5">@Model.Allergies</dd>

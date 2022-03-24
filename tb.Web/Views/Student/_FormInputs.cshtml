@@ -1,200 +1,167 @@
 @model Student
 
-
-
- <!-- FirstName and LastName  input groups in 2 columns in single row -->   
-    
-    <div class="row">
-
-        <div class="form-group col">
-            <label asp-for="FirstName" class="control-label">First Name</label>
-            <input asp-for="FirstName" class="form-control"/>
-            <span asp-validation-for="FirstName" class="text-danger"></span>
-        </div>
-
-        <div class="form-group col">
-            <label asp-for="LastName" class="control-label">Last Name</label>
-            <input asp-for="LastName" class="form-control"/>
-            <span asp-validation-for="LastName" class="text-danger"></span>
-        </div>
-
+<!-- FirstName and LastName  input groups in 2 columns in single row -->  
+<div class="row">
+    <div class="form-group col">
+        <label asp-for="User.FirstName" class="control-label">First Name</label>
+        <input asp-for="User.FirstName" class="form-control"/>
+        <span asp-validation-for="User.FirstName" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="ContactName" class="control-label">Contact Name (if under 18)</label>
-        <input asp-for="ContactName" class="form-control"/>
-        <span asp-validation-for="ContactName" class="text-danger"></span>
+    <div class="form-group col">
+        <label asp-for="User.LastName" class="control-label">Last Name</label>
+        <input asp-for="User.LastName" class="form-control"/>
+        <span asp-validation-for="User.LastName" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label asp-for="User.ContactName" class="control-label">Contact Name (if under 18)</label>
+    <input asp-for="User.ContactName" class="form-control"/>
+    <span asp-validation-for="User.ContactName" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="User.Email" class="control-label"></label>
+    <input asp-for="User.Email" class="form-control" />
+    <span asp-validation-for="User.Email" class="text-danger"></span>
+</div>
+
+<!--move Phone and AltPhone  input groups in 2 columns in single row -->      
+<div class="row">
+    <div class="form-group col">
+        <label asp-for="User.Phone" class="control-label"></label>
+        <input asp-for="User.Phone" class="form-control"/>
+        <span asp-validation-for="User.Phone" class="text-danger"></span>
     </div>
 
-    
-    <div class="form-group">
-        <label asp-for="Email" class="control-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+    <div class="form-group col">
+        <label asp-for="User.AltPhone" class="control-label">Alternative Phone</label>
+        <input asp-for="User.AltPhone" class="form-control"/>
+        <span asp-validation-for="User.AltPhone" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label asp-for="User.AddressLineOne" class="control-label">Address Line 1</label>
+    <input asp-for="User.AddressLineOne" class="form-control"/>
+    <span asp-validation-for="User.AddressLineOne" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="User.AddressLineTwo" class="control-label">Address Line 2</label>
+    <input asp-for="User.AddressLineTwo" class="form-control"/>
+    <span asp-validation-for="User.AddressLineTwo" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="User.AddressLineThree" class="control-label">Address Line 3</label>
+    <input asp-for="User.AddressLineThree" class="form-control"/>
+    <span asp-validation-for="User.AddressLineThree" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="User.Postcode" class="control-label"></label>
+    <input asp-for="User.Postcode" class="form-control"/>
+    <span asp-validation-for="User.Postcode" class="text-danger"></span>
+</div>
+
+<!--move Dob  Age and Gender input groups in 3 columns in single row -->      
+<div class="row">
+    <div class="form-group col">
+        <label asp-for="User.Dob" class="control-label">Date of Birth</label>
+        <input asp-for="User.Dob" class="form-control"/>
+        <span asp-validation-for="User.Dob" class="text-danger"></span>
+    </div>       
+
+    <div class="form-group col">
+        <label asp-for="User.Gender" class="control-label"></label> 
+        <select asp-for="User.Gender" class="form-control" asp-items="@Html.GetEnumSelectList<Gender>()"><option>Select Gender</option></select>
+        <span asp-validation-for="User.Gender" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label asp-for="Allergies" class="control-label"></label>
+    <textarea rows="2" asp-for="Allergies" class="form-control" placeholder="Add information here" ></textarea>
+    <span asp-validation-for="Allergies" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="AdditionalNeeds" class="control-label">Additional Needs</label>
+    <textarea rows="5" asp-for="AdditionalNeeds" class="form-control" placeholder="Add information here" ></textarea>
+    <span asp-validation-for="AdditionalNeeds" class="text-danger"></span>
+</div>
+
+<div class="row">
+    <div class="form-group col">
+        <label asp-for="InstrumentOne" class="control-label">Instrument One</label>
+        <input asp-for="InstrumentOne" class="form-control"/>
+        <span asp-validation-for="InstrumentOne" class="text-danger"></span>
     </div>
 
-    <!--move Phone and AltPhone  input groups in 2 columns in single row -->      
-    <div class="row">
+    <div class="form-group col">
+        <label asp-for="CurrentGradeInstOne" class="control-label">Current Grade Instrument One</label>
+        <input asp-for="CurrentGradeInstOne" class="form-control"/>
+        <span asp-validation-for="CurrentGradeInstOne" class="text-danger"></span>
+    </div>
+</div>
 
-        <div class="form-group col">
-            <label asp-for="Phone" class="control-label"></label>
-            <input asp-for="Phone" class="form-control"/>
-            <span asp-validation-for="Phone" class="text-danger"></span>
-        </div>
+<div class="row">
+    <div class="form-group col">
+        <label asp-for="InstrumentTwo" class="control-label">Instrument Two</label>
+        <input asp-for="InstrumentTwo" class="form-control"/>
+        <span asp-validation-for="InstrumentTwo" class="text-danger"></span>
+    </div>
+    <div class="form-group col">
+        <label asp-for="CurrentGradeInstTwo" class="control-label">Current Grade Instrument Two</label>
+        <input asp-for="CurrentGradeInstTwo" class="form-control"/>
+        <span asp-validation-for="CurrentGradeInstTwo" class="text-danger"></span>
+    </div>
+</div>
 
-        <div class="form-group col">
-            <label asp-for="AltPhone" class="control-label">Alternative Phone</label>
-            <input asp-for="AltPhone" class="form-control"/>
-            <span asp-validation-for="AltPhone" class="text-danger"></span>
-        </div>
 
+<!--move CurrentTheoryGrade and Aurals  input groups in 2 columns in single row -->   
+
+<div class="row">
+    <div class="form-group col">
+        <label asp-for="CurrentTheoryGrade" class="control-label">Current Theory Grade (if required)</label>
+        <input asp-for="CurrentTheoryGrade" class="form-control"/>
+        <span asp-validation-for="CurrentTheoryGrade" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="AddressLineOne" class="control-label">Address Line 1</label>
-        <input asp-for="AddressLineOne" class="form-control"/>
-        <span asp-validation-for="AddressLineOne" class="text-danger"></span>
+    <div class="form-group col">
+        <label asp-for="Aurals" class="control-label"></label>
+        <select asp-for="Aurals" class="form-control" asp-items="@Html.GetEnumSelectList<Aurals>()"><option>Select Aurals</option></select>
+
+        <span asp-validation-for="Aurals" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label asp-for="LessonFormat" class="control-label">Lesson Format</label>
+    <select asp-for="LessonFormat" class="form-control" asp-items="@Html.GetEnumSelectList<LessonFormat>()"><option>Select lesson format</option></select>
+    <span asp-validation-for="LessonFormat" class="text-danger"></span>
+</div>
+
+<!--move LessonOneDay and LessonTwoDay  input groups in 2 columns in single row -->   
+<div class="row">
+    <div class="form-group col mb-3">
+        <label asp-for="LessonOneDay" class="control-label">Lesson One Day</label>
+        <select asp-for="LessonOneDay" class="form-control" asp-items="@Html.GetEnumSelectList<DaysOfWeek>()"><option>Select Day</option></select>
+        <span asp-validation-for="LessonOneDay" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="AddressLineTwo" class="control-label">Address Line 2</label>
-        <input asp-for="AddressLineTwo" class="form-control"/>
-        <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
+    <div class="form-group col mb-1">
+        <label asp-for="LessonTwoDay" class="control-label">Lesson Two Day</label>
+        <select asp-for="LessonTwoDay" class="form-control" asp-items="@Html.GetEnumSelectList<DaysOfWeek>()"><option>Select Day</option></select>
+        <span asp-validation-for="LessonTwoDay" class="text-danger"></span>
     </div>
+</div>
 
-    <div class="form-group">
-        <label asp-for="AddressLineThree" class="control-label">Address Line 3</label>
-        <input asp-for="AddressLineThree" class="form-control"/>
-        <span asp-validation-for="AddressLineThree" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Postcode" class="control-label"></label>
-        <input asp-for="Postcode" class="form-control"/>
-        <span asp-validation-for="Postcode" class="text-danger"></span>
-    </div>
-
-    <!--move Dob  Age and Gender input groups in 3 columns in single row -->      
-    <div class="row">
-
-        <div class="form-group col">
-            <label asp-for="Dob" class="control-label">Date of Birth</label>
-            <input asp-for="Dob" class="form-control" placeholder="DD/MM/YYYY"/>
-            <span asp-validation-for="Dob" class="text-danger"></span>
-        </div>
-
-        <div class="form-group col">
-            <label asp-for="Age" class="control-label"></label>
-            <input asp-for="Age" class="form-control"/>
-            <span asp-validation-for="Age" class="text-danger"></span>
-        </div>
-
-        <div class="form-group col">
-            <label asp-for="Gender" class="control-label"></label> 
-            <select asp-for="Gender" class="form-control" asp-items="@Html.GetEnumSelectList<Gender>()"><option>Select Gender</option></select>
-            <span asp-validation-for="Gender" class="text-danger"></span>
-        </div>
-
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Allergies" class="control-label"></label>
-        <textarea rows="2" asp-for="Allergies" class="form-control" placeholder="Add information here" ></textarea>
-        <span asp-validation-for="Allergies" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="AdditionalNeeds" class="control-label">Additional Needs</label>
-        <textarea rows="5" asp-for="AdditionalNeeds" class="form-control" placeholder="Add information here" ></textarea>
-        <span asp-validation-for="AdditionalNeeds" class="text-danger"></span>
-    </div>
-
-    <div class="row">
-
-        <div class="form-group col">
-            <label asp-for="InstrumentOne" class="control-label">Instrument One</label>
-            <input asp-for="InstrumentOne" class="form-control"/>
-            <span asp-validation-for="InstrumentOne" class="text-danger"></span>
-        </div>
-
-        <div class="form-group col">
-            <label asp-for="CurrentGradeInstOne" class="control-label">Current Grade Instrument One</label>
-            <input asp-for="CurrentGradeInstOne" class="form-control"/>
-            <span asp-validation-for="CurrentGradeInstOne" class="text-danger"></span>
-        </div>
-
-    </div>
-    
-    <div class="row">
-
-        <div class="form-group col">
-            <label asp-for="InstrumentTwo" class="control-label">Instrument Two</label>
-            <input asp-for="InstrumentTwo" class="form-control"/>
-            <span asp-validation-for="InstrumentTwo" class="text-danger"></span>
-        </div>
-
-        <div class="form-group col">
-            <label asp-for="CurrentGradeInstTwo" class="control-label">Current Grade Instrument Two</label>
-            <input asp-for="CurrentGradeInstTwo" class="form-control"/>
-            <span asp-validation-for="CurrentGradeInstTwo" class="text-danger"></span>
-        </div>
-    
-    </div>
-
-
-    <!--move CurrentTheoryGrade and Aurals  input groups in 2 columns in single row -->   
-
-    <div class="row">
-
-        <div class="form-group col">
-            <label asp-for="CurrentTheoryGrade" class="control-label">Current Theory Grade (if required)</label>
-            <input asp-for="CurrentTheoryGrade" class="form-control"/>
-            <span asp-validation-for="CurrentTheoryGrade" class="text-danger"></span>
-        </div>
-
-        <div class="form-group col">
-            <label asp-for="Aurals" class="control-label"></label>
-            <select asp-for="Aurals" class="form-control" asp-items="@Html.GetEnumSelectList<Aurals>()"><option>Select Aurals</option></select>
-
-            <span asp-validation-for="Aurals" class="text-danger"></span>
-        </div>
-
-    </div>
-
-    <div class="form-group">
-        <label asp-for="LessonFormat" class="control-label">Lesson Format</label>
-        <select asp-for="LessonFormat" class="form-control" asp-items="@Html.GetEnumSelectList<LessonFormat>()"><option>Select lesson format</option></select>
-        <span asp-validation-for="LessonFormat" class="text-danger"></span>
-    </div>
-
-
-    <!--move LessonOneDay and LessonTwoDay  input groups in 2 columns in single row -->   
-
-    <div class="row">
-
-        <div class="form-group col mb-3">
-            <label asp-for="LessonOneDay" class="control-label">Lesson One Day</label>
-            <select asp-for="LessonOneDay" class="form-control" asp-items="@Html.GetEnumSelectList<DaysOfWeek>()"><option>Select Day</option></select>
-            <span asp-validation-for="LessonOneDay" class="text-danger"></span>
-        </div>
-
-        <div class="form-group col mb-1">
-            <label asp-for="LessonTwoDay" class="control-label">Lesson Two Day</label>
-            <select asp-for="LessonTwoDay" class="form-control" asp-items="@Html.GetEnumSelectList<DaysOfWeek>()"><option>Select Day</option></select>
-            <span asp-validation-for="LessonTwoDay" class="text-danger"></span>
-        </div>
-
-    </div>
-
-    
-
-    
-    
-
-
-    @* <!-- add PhotoUrl input group - ensure input field type is url -->
-    <div class="form-group">
-        <label asp-for="PhotoUrl" class="control-label"></label>
-        <input type="url" asp-for="PhotoUrl" class="form-control"/>
-        <span asp-validation-for="PhotoUrl" class="text-danger"></span>
-    </div> *@
+@* <!-- add PhotoUrl input group - ensure input field type is url -->
+<div class="form-group">
+    <label asp-for="PhotoUrl" class="control-label"></label>
+    <input type="url" asp-for="PhotoUrl" class="form-control"/>
+    <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+</div> *@

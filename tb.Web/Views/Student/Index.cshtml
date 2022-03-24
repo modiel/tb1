@@ -16,8 +16,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Name</th>
                 <th>Instrument 1</th>
                 <th>Instrument 2</th>
                 <th>Actions</th>
@@ -27,18 +26,14 @@
             @foreach(var s in Model) {
                     <tr>
                         <td>@s.Id</td>
-                        <td>@s.FirstName</td>
-                        <td>@s.LastName</td>
+                        <td>@s.Name</td>
                         <td>@s.InstrumentOne</td>
                         <td>@s.InstrumentTwo</td>   
                         <td>
                             <!-- Add View link -->
                             <a asp-controller="Student" asp-action="Details" asp-route-id=@s.Id title="View"><i class="bi bi-book"></i></a>                      
-                            
                             <!-- Add edit link  -->
-                            <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Edit" asp-route-id=@s.Id title="Edit"><i class="bi bi-pen" ></i></a>
-                            
-                            
+                            <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Edit" asp-route-id=@s.Id title="Edit"><i class="bi bi-pen" ></i></a>  
                             <!-- Add delete link -->
                             <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Delete" asp-route-id=@s.Id title="Delete"><i class="bi bi-trash"></i></a>
 

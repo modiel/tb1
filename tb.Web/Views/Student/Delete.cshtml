@@ -10,44 +10,38 @@
     <!-- display the student using a <dl> as per Details.cshtml -->
     <div class="col card rounded shadow pt-3">
         <dl class="row">       
-            <dt class="col-5">First Name</dt>
-            <dd class="col-7">@Model.FirstName</dd>
-
-            <dt class="col-5">Last Name</dt>
-            <dd class="col-7">@Model.LastName</dd>
+            <dt class="col-5">Name</dt>
+            <dd class="col-7">@Model.Name</dd>            
 
             <dt class="col-5">Contact Name (if under 18)</dt>
-            <dd class="col-7">@Model.ContactName</dd>
+            <dd class="col-7">@Model.User.ContactName</dd>
             
             <dt class="col-5">Email</dt>
-            <dd class="col-7">@Model.Email</dd>
+            <dd class="col-7">@Model.User.Email</dd>
 
             <dt class="col-5">Phone Number</dt>
-            <dd class="col-7">@Model.Phone</dd>
+            <dd class="col-7">@Model.User.Phone</dd>
             
             <dt class="col-5">Alternative Phone</dt>
-            <dd class="col-7">@Model.AltPhone</dd>
+            <dd class="col-7">@Model.User.AltPhone</dd>
 
             <dt class="col-5">Address Line 1 </dt>
-            <dd class="col-7">@Model.AddressLineOne</dd>
+            <dd class="col-7">@Model.User.AddressLineOne</dd>
 
             <dt class="col-5">Address Line 2 </dt>
-            <dd class="col-7">@Model.AddressLineTwo</dd>
+            <dd class="col-7">@Model.User.AddressLineTwo</dd>
         
             <dt class="col-5">Address Line 3 </dt>
-            <dd class="col-7">@Model.AddressLineThree</dd>
+            <dd class="col-7">@Model.User.AddressLineThree</dd>
 
             <dt class="col-5">Postcode </dt>
-            <dd class="col-7">@Model.Postcode</dd>
-
-            <dt class="col-5">Age</dt>
-            <dd class="col-7">@Model.Age</dd>
+            <dd class="col-7">@Model.User.Postcode</dd>
 
             <dt class="col-5">Dob</dt>
-            <dd class="col-7">@Model.Dob</dd>
+            <dd class="col-7">@Model.User.Dob</dd>
 
             <dt class="col-5">Gender</dt>
-            <dd class="col-7">@Model.Gender</dd>
+            <dd class="col-7">@Model.User.Gender</dd>
 
             <dt class="col-5">Allergies</dt>
             <dd class="col-7">@Model.Allergies</dd>

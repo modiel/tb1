@@ -22,12 +22,29 @@ namespace tb.Web.Controllers
         }
         
         // GET /student/index
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize]
         public IActionResult Index()
-        {
-            var students = svc.GetStudents();
-           
+        {            
+            if (User.IsInRole(Role.Admin.ToString()))
+            {
+                Alert("Admin View",AlertType.info);
+                return View(svc.GetStudents());
+            }           
+            var userId = GetSignedInUserId();
+            var students = svc.GetStudentsForUser(userId);
             return View(students);
+        }
+
+        [Authorize(Roles="Pupil,Parent")]
+        public IActionResult UserDetails()
+         {
+            var id = GetSignedInUserId();
+            var student = svc.GetStudentByUserId( id );
+            if (student == null) {
+                Alert("User does not have a student record",AlertType.warning);
+                return RedirectToAction("Index");
+            }
+            return View("Details",student);
         }
 
 
@@ -35,7 +52,7 @@ namespace tb.Web.Controllers
         public IActionResult Details(int id)
         {
             // retrieve the student with specified id from the service
-            var s = svc.GetStudent(id);
+            var s = svc.GetStudentById(id);
 
             // check if s is null and return NotFound()
             if (s == null)
@@ -60,36 +77,39 @@ namespace tb.Web.Controllers
         // POST /student/create       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin,Tutor")]
-
-        public IActionResult Create([Bind] Student s) //Check here
+        [Authorize(Roles="Tutor")]
+        public IActionResult Create(Student student) 
         {
+            var userId = GetSignedInUserId();
+            var user = svc.GetUser(userId);
+
             // check email is unique for this student
-            if (svc.IsDuplicateEmail(s.Email, s.Id))
+            if (!svc.IsEmailAvailable(student.User.Email, student.Id))
             {
                 // add manual validation error
-                ModelState.AddModelError(nameof(s.Email),"The email address is already in use");  
+                ModelState.AddModelError(nameof(student.User.Email),"The email address is already in use");  
             }
 
             // validate student
             if (ModelState.IsValid)
             {
                 // pass data to service to store 
-                var added = svc.AddStudent(s);
-                Alert($"Student {s.FirstName} {s.LastName} created successfully", AlertType.info);
+                student = svc.AddStudent(student);
+                var userStudent = svc.AssignUserToStudent(user.Id,student.Id);
+                Alert($"Student {student.Name} created successfully", AlertType.info);       
                 
                 return RedirectToAction(nameof(Index));
             }
             // redisplay the form for editing as there are validation errors
-            return View(s);
+            return View(student);
         }
 
         // GET /student/edit/{id}
-        [Authorize(Roles="Admin,Tutor,Parent,AdultStudent")]
+        [Authorize(Roles="Admin,Tutor,Parent")]
         public IActionResult Edit(int id)
         {
             // load the student using the service
-            var s = svc.GetStudent(id);
+            var s = svc.GetStudentById(id);
 
             // check if s is null and return NotFound()
             if (s == null)
@@ -105,14 +125,14 @@ namespace tb.Web.Controllers
         // POST /student/edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin,Tutor,Parent,AdultStudent")]
+        [Authorize(Roles="Admin,Tutor,Parent")]
         public IActionResult Edit(int id, Student s)
         {
             // check email is unique for this student
-            if (svc.IsDuplicateEmail(s.Email, s.Id))
+            if (!svc.IsEmailAvailable(s.User.Email, s.Id))
             {
                 // add manual validation error
-                ModelState.AddModelError(nameof(s.Email),"The email address is already in use");
+                ModelState.AddModelError(nameof(s.User.Email),"The email address is already in use");
             } 
             
             // validate student
@@ -120,7 +140,7 @@ namespace tb.Web.Controllers
             {
                 // pass data to service to update
                 svc.UpdateStudent(s);
-                Alert($"Student details for {s.FirstName} {s.LastName} saved", AlertType.info);
+                Alert($"Student details for {s.Name} saved", AlertType.info);
                 return RedirectToAction(nameof(Details), new { Id = id }); 
             }
 
@@ -133,7 +153,7 @@ namespace tb.Web.Controllers
         public IActionResult Delete(int id)
         {
             // load the student using the service
-            var s = svc.GetStudent(id);
+            var s = svc.GetStudentById(id);
             // check the returned student is not null and if so return NotFound()
             if (s == null)
             {
@@ -160,10 +180,10 @@ namespace tb.Web.Controllers
         }
 
          // GET /student/createQuery
-        [Authorize(Roles="Admin,Tutor,Parent,AdultStudent,Pupil")]
+        [Authorize(Roles="Admin,Tutor,Parent,Pupil")]
         public IActionResult CreateQuery(int id)
         {
-            var s = svc.GetStudent(id);
+            var s = svc.GetStudentById(id);
             // check the returned student is not null and if so alert
             if (s == null)
             {
@@ -182,10 +202,10 @@ namespace tb.Web.Controllers
         // POST /student/createQuery
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin,Tutor,Parent,AdultStudent,Pupil")]
+        [Authorize(Roles="Admin,Tutor,Parent,Pupil")]
         public IActionResult CreateQuery([Bind("StudentId, Issue")]QueryCreateViewModel qvm)
         {
-            var s = svc.GetStudent(qvm.StudentId);
+            var s = svc.GetStudentById(qvm.StudentId);
              // check the returned student is not null and if so return NotFound()
             if (s == null)
             {
@@ -195,7 +215,7 @@ namespace tb.Web.Controllers
         
             // create the Query view model and populate the StudentId property
             svc.CreateQuery(qvm.StudentId, qvm.Issue);
-            Alert($"Query from {s.FirstName} {s.LastName} created successfully", AlertType.success);   
+            Alert($"Query from {s.Name} created successfully", AlertType.success);   
 
             return RedirectToAction("Details", new { Id = qvm.StudentId });
         }
@@ -204,7 +224,7 @@ namespace tb.Web.Controllers
         [Authorize(Roles="Admin,Tutor")]
         public IActionResult CreateProgressLog(int id)
         {
-            var s = svc.GetStudent(id);
+            var s = svc.GetStudentById(id);
              // check the returned Student is not null and if so alert
             if (s == null)
             {
@@ -224,7 +244,7 @@ namespace tb.Web.Controllers
         [Authorize(Roles="Admin,Tutor")]
         public IActionResult CreateProgressLog (ProgressLog pl)
         {
-            var s = svc.GetStudent(pl.StudentId);
+            var s = svc.GetStudentById(pl.StudentId);
              // check the returned Student is not null and if so alert
             if (s == null)
             {
@@ -232,7 +252,7 @@ namespace tb.Web.Controllers
                 return RedirectToAction(nameof(Details));
             }  
             
-            Alert($"ProgressLog for {s.FirstName} {s.LastName} created successfully", AlertType.success);   
+            Alert($"ProgressLog for {s.Name} created successfully", AlertType.success);   
             // create the ProgressLog view model and populate the StudentId property
             svc.AddProgressLog(new ProgressLog { StudentId = pl.StudentId, Progress = pl.Progress});
  

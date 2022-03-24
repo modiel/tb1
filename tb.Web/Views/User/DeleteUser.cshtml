@@ -11,7 +11,7 @@
 
             <h3 class="mb-4">Delete User</h3>
 
-            <h5 class="mb-4">Are you sure you want to delete user @Model.Name?</br>This cannot be undone</h4>
+            <h5 class="mb-4">Are you sure you want to delete user @Model.FirstName @Model.LastName?</br>This cannot be undone</h4>
 
                 <dl class="row">
 
@@ -19,7 +19,7 @@
                     <dd class="col-7">@Model.Id</dd>
 
                     <dt class="col-5">Name</dt>
-                    <dd class="col-7">@Model.Name</dd>
+                    <dd class="col-7">@Model.FirstName @Model.LastName</dd>
 
                     <dt class="col-5">Role</dt>
                     <dd class="col-7">@Model.Role</dd>
