@@ -70,13 +70,15 @@
 <div class="row">
     <div class="form-group col">
         <label asp-for="User.Dob" class="control-label">Date of Birth</label>
-        <input asp-for="User.Dob" class="form-control"/>
+        <input type="date" asp-for="User.Dob" class="form-control"/>
         <span asp-validation-for="User.Dob" class="text-danger"></span>
     </div>       
 
     <div class="form-group col">
         <label asp-for="User.Gender" class="control-label"></label> 
-        <select asp-for="User.Gender" class="form-control" asp-items="@Html.GetEnumSelectList<Gender>()"><option>Select Gender</option></select>
+        <select asp-for="User.Gender" class="form-control" asp-items="@Html.GetEnumSelectList<Gender>()">
+            <option>Select Gender</option>
+        </select>
         <span asp-validation-for="User.Gender" class="text-danger"></span>
     </div>
 </div>
@@ -132,7 +134,9 @@
 
     <div class="form-group col">
         <label asp-for="Aurals" class="control-label"></label>
-        <select asp-for="Aurals" class="form-control" asp-items="@Html.GetEnumSelectList<Aurals>()"><option>Select Aurals</option></select>
+        <select asp-for="Aurals" class="form-control" asp-items="@Html.GetEnumSelectList<Aurals>()">
+            <option>Select Aurals</option>
+        </select>
 
         <span asp-validation-for="Aurals" class="text-danger"></span>
     </div>
@@ -140,7 +144,9 @@
 
 <div class="form-group">
     <label asp-for="LessonFormat" class="control-label">Lesson Format</label>
-    <select asp-for="LessonFormat" class="form-control" asp-items="@Html.GetEnumSelectList<LessonFormat>()"><option>Select lesson format</option></select>
+    <select asp-for="LessonFormat" class="form-control" asp-items="@Html.GetEnumSelectList<LessonFormat>()">
+        <option>Select lesson format</option>
+    </select>
     <span asp-validation-for="LessonFormat" class="text-danger"></span>
 </div>
 
@@ -148,13 +154,17 @@
 <div class="row">
     <div class="form-group col mb-3">
         <label asp-for="LessonOneDay" class="control-label">Lesson One Day</label>
-        <select asp-for="LessonOneDay" class="form-control" asp-items="@Html.GetEnumSelectList<DaysOfWeek>()"><option>Select Day</option></select>
+        <select asp-for="LessonOneDay" class="form-control" asp-items="@Html.GetEnumSelectList<DaysOfWeek>()">
+            <option>Select Day</option>
+        </select>
         <span asp-validation-for="LessonOneDay" class="text-danger"></span>
     </div>
 
     <div class="form-group col mb-1">
         <label asp-for="LessonTwoDay" class="control-label">Lesson Two Day</label>
-        <select asp-for="LessonTwoDay" class="form-control" asp-items="@Html.GetEnumSelectList<DaysOfWeek>()"><option>Select Day</option></select>
+        <select asp-for="LessonTwoDay" class="form-control" asp-items="@Html.GetEnumSelectList<DaysOfWeek>()">
+            <option>Select Day</option>
+        </select>
         <span asp-validation-for="LessonTwoDay" class="text-danger"></span>
     </div>
 </div>

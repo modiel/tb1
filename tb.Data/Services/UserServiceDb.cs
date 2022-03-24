@@ -132,7 +132,8 @@ namespace tb.Data.Services
         // Verify if email is available or registered to specified user
         public bool IsEmailAvailable(string email, int userId)
         {
-            return ctx.Users.FirstOrDefault(u => u.Email == email && u.Id != userId) == null;
+            var user = GetUserByEmail(email);
+            return user == null || user.Id == userId;
         }
 
         public IList<User> GetUsersQuery(Func<User,bool> q)

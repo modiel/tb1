@@ -24,14 +24,21 @@ namespace tb.Web.Controllers
         // GET /student/index
         [Authorize]
         public IActionResult Index()
-        {            
+        {  
+            IList<Student> students = new List<Student>();
+            var userId = GetSignedInUserId();          
             if (User.IsInRole(Role.Admin.ToString()))
             {
-                Alert("Admin View",AlertType.info);
-                return View(svc.GetStudents());
-            }           
-            var userId = GetSignedInUserId();
-            var students = svc.GetStudentsForUser(userId);
+                students = svc.GetStudents();
+            } 
+            else if (User.IsInRole(Role.Pupil.ToString()))
+            {
+                students.Add( svc.GetStudentByUserId(userId));
+            }          
+            else //tutor or parent
+            {
+                students = svc.GetStudentsForUser(userId);
+            }
             return View(students);
         }
 
@@ -129,10 +136,10 @@ namespace tb.Web.Controllers
         public IActionResult Edit(int id, Student s)
         {
             // check email is unique for this student
-            if (!svc.IsEmailAvailable(s.User.Email, s.Id))
+            if (!svc.IsEmailAvailable(s.User.Email, s.User.Id))
             {
                 // add manual validation error
-                ModelState.AddModelError(nameof(s.User.Email),"The email address is already in use");
+                ModelState.AddModelError("User.Email","The email address is already in use");
             } 
             
             // validate student

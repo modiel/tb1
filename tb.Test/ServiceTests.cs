@@ -968,6 +968,7 @@ namespace tb.Test
             // create studente
             var student = new Student
             {
+                User = pupil,
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -982,7 +983,7 @@ namespace tb.Test
             };
 
             //add student to service
-            student = service.AddStudent(pupil, student);
+            student = service.AddStudent(student);
 
             //create test progress log and add to database
             var pl = new ProgressLog
@@ -1020,6 +1021,7 @@ namespace tb.Test
             // create studente
             var student = new Student
             {
+                User = pupil,
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
@@ -1034,7 +1036,7 @@ namespace tb.Test
             };
 
             //add student to service
-            student = service.AddStudent(pupil, student);
+            student = service.AddStudent(student);
 
             //create test progress log and add to database
             var progressLog = new ProgressLog

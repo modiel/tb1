@@ -51,7 +51,7 @@ namespace tb.Core.Models
         public User User { get; set; }
                
         // convenience readonly property to access user/student name
-        public string Name => $"{User.Name}";
+        public string Name => $"{User?.Name}";
 
         // 1-N relationship - a student may be related to many users (parent->student, tutor->student)
         public IList<UserStudent> UserStudents { get; set; } = new List<UserStudent>();

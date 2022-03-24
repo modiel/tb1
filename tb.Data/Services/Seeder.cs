@@ -30,8 +30,9 @@ namespace tb.Data.Services
             //add students
             var s1 = new Student
             {   
-                User = new User { FirstName = "Pupil1", LastName = "", Email = "pupil1@mail.com", Password =  "pupil1", Role =  Role.Pupil, Dob = new DateTime(2010,1,1) },
-        
+                User = new User { FirstName = "Pupil1", LastName = "", Email = "pupil1@mail.com", Password =  "pupil1", 
+                                  Role =  Role.Pupil, Dob = new DateTime(2010,1,1) 
+                                },
                 Allergies = "None",
                 AdditionalNeeds = "None",
                 InstrumentOne = "Piano",
@@ -48,8 +49,9 @@ namespace tb.Data.Services
 
             var s2 = new Student
             {   
-                User = new User { FirstName = "Pupil2", LastName = "", Email = "pupil2@mail.com", Password =  "pupil2", Role =  Role.Pupil, Dob = new DateTime(2000,1,1) },
-    
+                User = new User { FirstName = "Pupil2", LastName = "", Email = "pupil2@mail.com", Password =  "pupil2", 
+                                  Role =  Role.Pupil, Dob = new DateTime(2000,1,1) 
+                                },
                 Allergies = "Tree nuts",
                 AdditionalNeeds = "ADD - mild but check if meds have been taken",
                 InstrumentOne = "Piano",
@@ -66,8 +68,9 @@ namespace tb.Data.Services
 
             var s3 = new Student
             {   
-                User= new User { FirstName = "Pupil3", LastName = "", Email = "pupil3@mail.com", Password =  "pupil3", Role =  Role.Pupil, Dob = new DateTime(1990,4,1) }
-           ,
+                User= new User { FirstName = "Pupil3", LastName = "", Email = "pupil3@mail.com", Password =  "pupil3", 
+                                 Role =  Role.Pupil, Dob = new DateTime(1990,4,1) 
+                                },
                 Allergies = "",
                 AdditionalNeeds = "",
                 InstrumentOne = "Flute",
@@ -84,8 +87,9 @@ namespace tb.Data.Services
             
             var s4 = new Student
             {   
-                User = new User { FirstName = "Pupil4", LastName = "", Email = "pupil4@mail.com", Password =  "pupil4", Role =  Role.Pupil, Dob = new DateTime(1995,10,1) }
-           , 
+                User = new User { FirstName = "Pupil4", LastName = "", Email = "pupil4@mail.com", Password =  "pupil4", 
+                                  Role =  Role.Pupil, Dob = new DateTime(1995,10,1) 
+                                }, 
                 Allergies = "",
                 AdditionalNeeds = "Turns things to ice when stressed. The cold never bothered her anyway",
                 InstrumentOne = "Piano",
@@ -102,8 +106,9 @@ namespace tb.Data.Services
               
             var s5 = new Student
             {   
-                User = new User { FirstName = "Pupil5", LastName = "", Email = "pupil5@mail.com", Password =  "pupil5", Role =  Role.Pupil, Dob = new DateTime(1989,3,1) }
-            ,
+                User = new User { FirstName = "Pupil5", LastName = "", Email = "pupil5@mail.com", Password =  "pupil5", 
+                                  Role =  Role.Pupil, Dob = new DateTime(1989,3,1) 
+                                },
                 Allergies = "Sunlight",
                 AdditionalNeeds = "Keep temperature low",
                 InstrumentOne = "Piano",

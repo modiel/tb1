@@ -27,7 +27,7 @@ namespace tb.Core.Models
         public string AltPhone { get; set; } = "";
         
         [Required]
-        public string  AddressLineOne { get; set; } = "";
+        public string  AddressLineOne { get; set; } = string.Empty;
         public string  AddressLineTwo { get; set; } = "";
         public string  AddressLineThree { get; set; } = "";
 
@@ -37,12 +37,12 @@ namespace tb.Core.Models
         [Required]
         public DateTime Dob { get; set; } = DateTime.Now;
 
-    
         [Required]
         public Gender Gender  { get; set; } = Gender.Male;
 
         // login credentials and role
-        [Required] [EmailAddress]
+        [Required] 
+        [EmailAddress] 
         public string Email { get; set; } = "";
         public string Password { get; set; } = "";
         public Role Role { get; set; } = Role.Pupil;
