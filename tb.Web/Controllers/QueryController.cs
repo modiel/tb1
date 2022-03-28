@@ -91,13 +91,13 @@ namespace tb.Web.Controllers
         }
        
         // GET /Query/create
-        [Authorize(Roles="Admin,Tutor,Parent,Adult Student,Pupil")]
+        [Authorize(Roles="Admin,Tutor,Parent,Pupil")]
         public IActionResult Create()
         {
             var students = svc.GetStudents();
             // populate viewmodel select list property
             var qvm = new QueryCreateViewModel {
-                Students = new SelectList(students,"Id","FirstName","LastName") 
+                Students = new SelectList(students,"Id","Name") 
             };
             
             // render blank form
@@ -106,7 +106,7 @@ namespace tb.Web.Controllers
        
         // POST /Query/create
         [HttpPost]
-        [Authorize(Roles="Admin,Tutor,Parent,Adult Student,Pupil")]
+        [Authorize(Roles="Admin,Tutor,Parent,Pupil")]
         public IActionResult Create(QueryCreateViewModel qvm)
         {
             if (ModelState.IsValid)
