@@ -66,6 +66,7 @@ namespace tb.Data.Services
                 AddressLineTwo = u.AddressLineTwo,
                 AddressLineThree = u.AddressLineThree,
                 Dob = u.Dob,
+                Postcode = u.Postcode,
                 Gender = u.Gender,
                 Email = u.Email,
                 Password = Hasher.CalculateHash(u.Password), // can hash if required 
@@ -113,6 +114,7 @@ namespace tb.Data.Services
             User.AddressLineOne = updated.AddressLineOne;
             User.AddressLineTwo = updated.AddressLineTwo;
             User.AddressLineThree = updated.AddressLineThree;
+            User.Postcode = updated.Postcode;
             User.Dob = updated.Dob;
             User.Gender = updated.Gender;
             User.Email = updated.Email;
@@ -274,6 +276,7 @@ namespace tb.Data.Services
                     AddressLineOne = s.User.AddressLineOne,
                     AddressLineTwo = s.User.AddressLineTwo,
                     AddressLineThree = s.User.AddressLineThree,
+                    Postcode = s.User.Postcode,
                     Dob = s.User.Dob,
                     Gender = s.User.Gender,
                     Email = s.User.Email,
@@ -332,6 +335,7 @@ namespace tb.Data.Services
             student.User.AddressLineOne = s.User.AddressLineOne;
             student.User.AddressLineTwo = s.User.AddressLineTwo;
             student.User.AddressLineThree = s.User.AddressLineThree;
+            student.User.Postcode = s.User.Postcode;
             student.User.Dob = s.User.Dob;
             student.User.Gender = s.User.Gender;
             student.User.Email = s.User.Email;
@@ -471,6 +475,7 @@ namespace tb.Data.Services
             
              var r2 = ctx.Queries
                      .Include(t => t.Student)
+                     .ThenInclude(s => s.User)
                      .Where(t => t.Issue.ToLower().Contains(query.ToLower()));
  
             
