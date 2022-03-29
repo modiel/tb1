@@ -80,12 +80,12 @@ namespace tb.Data.Services
         // Delete the User identified by Id returning true if deleted and false if not found
         public bool DeleteUser(int id)
         {
-            var s = GetUser(id);
-            if (s == null)
+            var u = GetUser(id);
+            if (u == null)
             {
                 return false;
             }
-            ctx.Users.Remove(s);
+            ctx.Users.Remove(u);
             ctx.SaveChanges();
             return true;
         }
@@ -159,7 +159,7 @@ namespace tb.Data.Services
         public IList<Student> GetStudents()
         {
             // return the collection as a list
-            return ctx.Students.ToList();
+            return ctx.Students.Include(s => s.User).ToList();
         }
 
 
@@ -399,6 +399,7 @@ namespace tb.Data.Services
         {
             return ctx.Queries
                      .Include(q => q.Student)
+                     .ThenInclude (u => u.User)
                      .FirstOrDefault(q => q.Id == id);
         }
 
@@ -439,6 +440,7 @@ namespace tb.Data.Services
         {
             var Queries =ctx.Queries
                             .Include(q => q.Student)
+                            .ThenInclude (s => s.User)
                             .ToList();
             return Queries;
         }
@@ -447,8 +449,9 @@ namespace tb.Data.Services
         public IList<Query> GetOpenQueries()
         {
              return ctx.Queries
-                      .Include(t => t.Student)
-                      .Where(t => t.Active)
+                      .Include(q => q.Student)
+                      .ThenInclude (s => s.User)
+                      .Where(q => q.Active)
                       .ToList();
         } 
         
@@ -456,6 +459,7 @@ namespace tb.Data.Services
         {
             return ctx.Queries
                      .Include(s => s.Student)
+                     .ThenInclude (s => s.User)
                      .Where(q).ToList();
         }
         

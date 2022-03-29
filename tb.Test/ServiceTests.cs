@@ -116,10 +116,13 @@ namespace tb.Test
 
             //act
             var students = service.GetStudents(); //database should be empty
-            var count = students.Count;
+            var users = service.GetUsers(); //database should be empty as no users were added to student
+            var studentsCount = students.Count;
+            var usersCount = users.Count; 
 
             //assert 
-            Assert.Equal(0, count);
+            Assert.Equal(0, studentsCount);
+            Assert.Equal(0,usersCount);
         }
 
         [Fact]
@@ -157,6 +160,7 @@ namespace tb.Test
             //assert student exists and matches attributes
             Assert.NotNull(student);
             Assert.Equal(student.UserId, pupil.Id);
+        
         }
 
 
@@ -222,11 +226,23 @@ namespace tb.Test
             // act
             //get students and check count
             var students = service.GetStudents();
-            var count = students.Count;
+            var sCount = students.Count;
+
+            //get users and check count
+            var users = service.GetUsers();
+            var uCount = users.Count;
 
             // assert
-            //should return two students
-            Assert.Equal(2, count);
+            //should return two students and two users as created by Add student
+            Assert.Equal(2, sCount);
+            Assert.Equal(2, uCount);
+            //attributes of user and student should match
+            Assert.Equal(ns1.UserId, pupil1.Id);
+            Assert.Equal(ns2.UserId, pupil2.Id);
+
+            
+
+            
         }
 
         [Fact]
@@ -345,13 +361,14 @@ namespace tb.Test
             student = service.AddStudent(student);
 
             //act
-            var deleted = service.DeleteStudent(student.Id);
+            var deletedStudent = service.DeleteStudent(student.Id);
             var student1 = service.GetStudentById(student.Id); //attempt to get the student
 
             //asert
-            Assert.True(deleted); //delete student should return true
+            Assert.True(deletedStudent); //delete student should return true
             Assert.Null(student1); // student1 should be null (as does not exist)
         }
+
 
         [Fact]
         public void Student_DeleteStudentThatExists_ShouldReduceStudentCountByOne()
@@ -600,7 +617,7 @@ namespace tb.Test
             };
 
             //add student to service
-            var s  = service.AddStudent(student);
+            var s = service.AddStudent(student);
 
             //create two queries
             var t1 = service.CreateQuery(s.Id, "Dummy Query 1");
@@ -611,6 +628,7 @@ namespace tb.Test
 
             // assert- should be two open queries
             Assert.Equal(2, open.Count);
+            // Assert.Equal(s.UserId, pupil.Id);
         }
 
         [Fact]
@@ -746,7 +764,7 @@ namespace tb.Test
         }
 
         [Fact]
-        public void Ticket_SearchQueriessWhenOneResultAvailableInOpenQueries_ShouldReturnOne()
+        public void Query_SearchQueriessWhenOneResultAvailableInOpenQueries_ShouldReturnOne()
         {
            // arrange
             //create dummy student to add to the service
