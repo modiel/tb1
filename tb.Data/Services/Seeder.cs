@@ -141,24 +141,27 @@ namespace tb.Data.Services
             var pl1 = new ProgressLog
             {
                 Progress = "Scales need more work!",
-                StudentId = s1.Id,
+                StudentId = student1.Id,
             };
             svc.AddProgressLog(pl1);
 
             var pl2 = new ProgressLog
             {
                 Progress = "Fur Elise: Bars 1-9 hands together",
-                StudentId = s1.Id,
+                StudentId = student1.Id,
             };
             svc.AddProgressLog(pl2);
 
             // add queries
-            var q1 = svc.CreateQuery(s1.Id, "I've lost my music");
-            var q2 = svc.CreateQuery(s1.Id, "I forgot my password.");
-            var q3 = svc.CreateQuery(s2.Id, "When is my next lesson?");
-            var q4 = svc.CreateQuery(s4.Id, "I'm having difficulty with pedalling. How do I let it go?");
-            var q5 = svc.CreateQuery(s5.Id, "I can't do lessons in summer.");
-            var q6 = svc.CreateQuery(s5.Id, "I forgot my email address."); 
+            
+            var q1 = svc.CreateQuery(student1.Id, "I've lost my music");
+            var q2 = svc.CreateQuery(student1.Id, "I forgot my password.");
+            var q3 = svc.CreateQuery(student2.Id, "When is my next lesson?");
+            var q4 = svc.CreateQuery(student4.Id, "I'm having difficulty with pedalling. How do I let it go?");
+            var q5 = svc.CreateQuery(student5.Id, "I can't do lessons in summer.");
+            var q6 = svc.CreateQuery(student5.Id, "I forgot my email address.");
+
+
         }    
     }
 
