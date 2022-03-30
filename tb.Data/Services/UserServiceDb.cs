@@ -78,13 +78,29 @@ namespace tb.Data.Services
         }
 
         // Delete the User identified by Id returning true if deleted and false if not found
-        public bool DeleteUser(int id)
+        public bool DeleteUser(User u, Student s)
+        {
+            var user = GetUser(u.Id);
+            if (u == null)
+            {
+                return false;
+            }
+
+            var us = GetStudentByUserId(s.UserId);
+            ctx.Users.Remove(u);
+            ctx.Students.Remove(us);
+
+            ctx.SaveChanges();
+            return true;
+        }
+          public bool DeleteUser(int id)
         {
             var u = GetUser(id);
             if (u == null)
             {
                 return false;
             }
+
             ctx.Users.Remove(u);
             ctx.SaveChanges();
             return true;

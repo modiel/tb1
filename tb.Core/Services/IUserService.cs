@@ -17,6 +17,7 @@ namespace tb.Core.Services
         bool IsEmailAvailable(string email, int userId);
         User AddUser(User user);
         User UpdateUser(User user);
+        bool DeleteUser(User u, Student s);
         bool DeleteUser(int id);
         User Authenticate(string email, string password);
 

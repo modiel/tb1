@@ -233,7 +233,27 @@ namespace tb.Test
             Assert.NotNull(assigned);
             Assert.Equal(2,assigned.Count); //should be two students assigned to tutor
         }
+        [Fact]
+        public void User_WhenDeleted_ShouldDeleteUser()
+        {
+            // arrange
+        //arrange- create dummy tutor
+            var tutor = service.AddUser(new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+                Gender = Gender.Female });
+                
+            // act
+            var deleted = service.DeleteUser(tutor.Id);
 
+            //attempt to get User from database
+            var deletedCheck= service.GetUser(tutor.Id);
+        
+            // assert
+            Assert.True(deleted);
+            Assert.Null(deletedCheck);
+        }
 
         // =================  Student Tests =====================
         [Fact]
