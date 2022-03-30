@@ -78,16 +78,20 @@ namespace tb.Data.Services
         }
 
         // Delete the User identified by Id returning true if deleted and false if not found
-        public bool DeleteUser(User u, Student s)
+        public bool DeleteUser(int id, Student s)
         {
-            var user = GetUser(u.Id);
-            if (u == null)
+            var user = GetUser(id);
+            if (user == null)
             {
                 return false;
             }
+             if (user.Role != Role.Pupil)
+            {
+                return false; // user must be a pupil
+            }
 
             var us = GetStudentByUserId(s.UserId);
-            ctx.Users.Remove(u);
+            ctx.Users.Remove(user); 
             ctx.Students.Remove(us);
 
             ctx.SaveChanges();
@@ -329,6 +333,23 @@ namespace tb.Data.Services
                 return false;
             }
             ctx.Students.Remove(s);
+            ctx.SaveChanges(); // write to database
+            return true;
+        }
+
+        public bool DeleteStudent(Student s, User u)
+        {
+            var student = GetStudentById(s.Id);
+                       
+            if (student == null)
+            {
+                return false; // student account must exist
+            } 
+
+            var user = GetUser(student.UserId);
+    
+            ctx.Students.Remove(student);
+            ctx.Users.Remove(user);
             ctx.SaveChanges(); // write to database
             return true;
         }

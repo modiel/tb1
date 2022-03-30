@@ -17,7 +17,7 @@ namespace tb.Core.Services
         bool IsEmailAvailable(string email, int userId);
         User AddUser(User user);
         User UpdateUser(User user);
-        bool DeleteUser(User u, Student s);
+        bool DeleteUser(int id, Student s);
         bool DeleteUser(int id);
         User Authenticate(string email, string password);
 
@@ -31,6 +31,7 @@ namespace tb.Core.Services
         Student AddStudent(Student s);
         Student UpdateStudent(Student u);  
         bool DeleteStudent(int id);
+        bool DeleteStudent(Student s, User u);
         IList<Student> GetStudentsForUser(int uId);
         IList<Student> GetStudentsQuery(Func<Student,bool> q);
 

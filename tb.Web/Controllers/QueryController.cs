@@ -57,7 +57,7 @@ namespace tb.Web.Controllers
         }     
              
         // GET/Query/{id}
-        [Authorize(Roles="Admin,Tutor,Parent,Adult Student,Pupil")]
+        [Authorize(Roles="Admin,Tutor,Parent,Pupil")]
         public IActionResult Details(int id)
         {
             var query = svc.GetQuery(id);

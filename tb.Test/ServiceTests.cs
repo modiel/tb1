@@ -243,7 +243,7 @@ namespace tb.Test
                 AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
                 AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female });
-                
+
             // act
             var deleted = service.DeleteUser(tutor.Id);
 
@@ -254,7 +254,55 @@ namespace tb.Test
             Assert.True(deleted);
             Assert.Null(deletedCheck);
         }
+        // [Fact]
+        // public void User_WhenAddedWithStudent_WhenDeleted_ShouldAlsoDeleteStudent(){
+        //    // arrange
+        //     var pupil =  new User { 
+        //         FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+        //         LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+        //         AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+        //         AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+        //         Gender = Gender.Female,
+        //     };
 
+        //     // create student
+        //     var student = new Student
+        //     {   
+        //         User = pupil,
+        //         Allergies = "xxx",
+        //         AdditionalNeeds = "ADD",
+        //         InstrumentOne = "yyy",
+        //         InstrumentTwo = "",
+        //         CurrentGradeInstOne = 3,
+        //         CurrentGradeInstTwo = 0,
+        //         CurrentTheoryGrade = 1,
+        //         Aurals = Aurals.Yes,
+        //         LessonFormat = LessonFormat.InPersonOnly,
+        //         LessonOneDay = DaysOfWeek.Monday,
+        //         LessonTwoDay = DaysOfWeek.NA
+        //     };
+
+        //     //act
+        //     //add student to service
+        //     service.AddStudent(student);
+
+        //     // act
+        //     var deleted = service.DeleteUser (pupil.Id, student);
+
+        //     //attempt to get User from database
+        //     var deletedUserCheck= service.GetUser(pupil.Id);
+            
+        //     //attempt to get Student from database
+        //     var deletedStudentCheck= service.GetStudentByUserId(student.UserId);
+        
+        //     // assert
+        //     Assert.True(deleted);
+        //     Assert.Null(deletedUserCheck);
+        //     Assert.Null(deletedStudentCheck);
+
+        // }
+
+        
         // =================  Student Tests =====================
         [Fact]
         public void Student_GetStudentsWhenNone_ShouldReturnNone()
@@ -422,7 +470,7 @@ namespace tb.Test
 
             //act
             //add student to service
-            // service.AddStudent(student);
+            service.AddStudent(student);
 
             //attempt to retrieve Student from database
             service.GetStudentByUserId(student.UserId);

@@ -60,6 +60,7 @@ namespace tb.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="Admin,Tutor")]
         public IActionResult Register(UserRegisterViewModel m)       
         {
             if (!ModelState.IsValid)
@@ -120,9 +121,17 @@ namespace tb.Web.Controllers
             var user = _svc.GetUser(GetSignedInUserId());
             var userViewModel = new UserProfileViewModel { 
                 Id = user.Id, 
-                Name = user.FirstName,
-                // add other properties
-
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                ContactName = user.ContactName,
+                Phone = user.Phone,
+                AltPhone = user.AltPhone,
+                AddressLineOne = user.AddressLineOne,
+                AddressLineTwo = user.AddressLineTwo,
+                AddressLineThree = user.AddressLineThree,
+                Postcode = user.Postcode,
+                Dob = user.Dob,
+                Gender = user.Gender,
                 Email = user.Email,                 
                 Role = user.Role
             };
@@ -142,11 +151,23 @@ namespace tb.Web.Controllers
             } 
 
             // update user details and call service
-            user.FirstName = m.Name;
+            user.FirstName = m.FirstName;
             user.Email = m.Email;
             user.Role = m.Role;  
             // add other properties
-                  
+            user.LastName = m.LastName;
+            user.ContactName = m.ContactName;
+            user.Phone = m.Phone;
+            user.AltPhone = m.AltPhone;
+            user.AddressLineOne = m.AddressLineOne;
+            user.AddressLineTwo = m.AddressLineTwo;
+            user.AddressLineThree = m.AddressLineThree;
+            user.Postcode = m.Postcode;
+            user.Dob = m.Dob;
+            user.Gender = m.Gender;
+            user.Email = m.Email;                
+            user.Role = m.Role;
+
             var updated = _svc.UpdateUser(user);
 
             // check if error updating service
@@ -198,12 +219,12 @@ namespace tb.Web.Controllers
         [HttpPost]
         [Authorize(Roles="Admin,Tutor")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteUserConfirm(int id)
+        public IActionResult DeleteUserConfirm(int id, Student s)//int id if needed-DM
         {
             // delete student via service
-            _svc.DeleteUser(id);
+            _svc.DeleteUser(id, s);
          
-            Alert($"User {id} deleted successfully", AlertType.success);
+            Alert($"User {s.Name} deleted successfully", AlertType.success);
             // redirect to the index view
             return RedirectToAction(nameof(Index), new { Id = id });
         }

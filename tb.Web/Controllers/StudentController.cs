@@ -49,7 +49,7 @@ namespace tb.Web.Controllers
             var student = svc.GetStudentByUserId( id );
             if (student == null) {
                 Alert("User does not have a student record",AlertType.warning);
-                return RedirectToAction("Index");
+                return Redirect("/");
             }
             return View("Details",student);
         }
@@ -176,14 +176,15 @@ namespace tb.Web.Controllers
         [HttpPost]
         [Authorize(Roles="Admin,Tutor")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirm(int id)
-        {
+        public IActionResult DeleteConfirm( Student s, User u)
+        {   
+            var student = svc.GetStudentById(s.Id);
             // delete student via service
-            svc.DeleteStudent(id);
+            svc.DeleteStudent(s, u);
          
-            Alert($"Student {id} deleted successfully", AlertType.success);
+            Alert($"Student {student.Name}  deleted successfully", AlertType.success);
             // redirect to the index view
-            return RedirectToAction(nameof(Index), new { Id = id });
+            return RedirectToAction(nameof(Index), new { Id = s.Id });
         }
 
          // GET /student/createQuery
@@ -259,7 +260,7 @@ namespace tb.Web.Controllers
                 return RedirectToAction(nameof(Details));
             }  
             
-            Alert($"ProgressLog for {s.Name} created successfully", AlertType.success);   
+            Alert($"Progress Log for {s.Name} created successfully", AlertType.success);   
             // create the ProgressLog view model and populate the StudentId property
             svc.AddProgressLog(new ProgressLog { StudentId = pl.StudentId, Progress = pl.Progress});
  
