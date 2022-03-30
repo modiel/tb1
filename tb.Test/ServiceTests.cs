@@ -108,6 +108,133 @@ namespace tb.Test
 
         }
 
+        [Fact]
+        public void User_WhenAssignedStudent_ShouldReturnStudent()
+        {
+            //arrange- create dummy tutor
+            var tutor = service.AddUser(new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+                Gender = Gender.Female });
+            
+           //create dummy pupil
+           var pupil =  new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+                Gender = Gender.Female,
+            };
+
+            var student = new Student
+            {   
+                User = pupil,
+                Allergies = "xxx",
+                AdditionalNeeds = "ADD",
+                InstrumentOne = "yyy",
+                InstrumentTwo = "",
+                CurrentGradeInstOne = 3,
+                CurrentGradeInstTwo = 0,
+                CurrentTheoryGrade = 1,
+                Aurals = Aurals.Yes,
+                LessonFormat = LessonFormat.InPersonOnly,
+                LessonOneDay = DaysOfWeek.Monday,
+                LessonTwoDay = DaysOfWeek.NA
+            };
+
+            //add student to service
+            service.AddStudent(student);
+
+            //assign student to tutor
+            var userStudent = service.AssignUserToStudent(tutor.Id, student.Id);
+            
+            //act
+            var assigned = service.GetStudentsForUser(tutor.Id);
+
+            //assert 
+            Assert.NotNull(assigned); //student should be assigned in UserStudents
+           
+        }
+
+        [Fact]
+        public void User_WhenAssignedTwoStudents_ShouldReturnTwoStudents()
+        {
+            //arrange- create dummy tutor
+            var tutor = service.AddUser(new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+                Gender = Gender.Female });
+            
+           //create dummy pupil
+            var pupil1 =   new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+                Gender = Gender.Female,
+            };
+            var pupil2 =  new User { 
+                FirstName = "Pupil2", Email = "pupil2@mail.com", Password = "pupil2", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "10 Test Way", AddressLineTwo = "Main Street",
+                AddressLineThree = "", Postcode = "ZZZZ YYY", Dob = new System.DateTime(1975,1,1),
+                Gender = Gender.Male,
+            };
+
+            // create students
+            var ns1 = new Student
+            {   User = pupil1,
+                Allergies = "xxx",
+                AdditionalNeeds = "ADD",
+                InstrumentOne = "yyy",
+                InstrumentTwo = "",
+                CurrentGradeInstOne = 3,
+                CurrentGradeInstTwo = 0,
+                CurrentTheoryGrade = 1,
+                Aurals = Aurals.Yes,
+                LessonFormat = LessonFormat.InPersonOnly,
+                LessonOneDay = DaysOfWeek.Monday,
+                LessonTwoDay = DaysOfWeek.NA
+            };
+
+            var ns2 = new Student
+            {   
+                User = pupil2,
+                Allergies = "Bees",
+                AdditionalNeeds = "ADHD",
+                InstrumentOne = "yyy",
+                InstrumentTwo = "ZZZ",
+                CurrentGradeInstOne = 2,
+                CurrentGradeInstTwo = 1,
+                CurrentTheoryGrade = 2,
+                Aurals = Aurals.Yes,
+                LessonFormat = LessonFormat.InPersonOnly,
+                LessonOneDay = DaysOfWeek.Tuesday,
+                LessonTwoDay = DaysOfWeek.Thursday
+
+            };
+
+            //add students to service
+            var s1 = service.AddStudent( ns1);
+            var s2 = service.AddStudent( ns2);
+        
+
+            //assign student to tutor
+            var userStudent1 = service.AssignUserToStudent(tutor.Id, s1.Id);
+            var userStudent2 = service.AssignUserToStudent(tutor.Id, s2.Id);
+            
+
+            //act
+            var assigned = service.GetStudentsForUser(tutor.Id);
+
+            //assert 
+            Assert.NotNull(assigned);
+            Assert.Equal(2,assigned.Count); //should be two students assigned to tutor
+        }
+
+
         // =================  Student Tests =====================
         [Fact]
         public void Student_GetStudentsWhenNone_ShouldReturnNone()
@@ -154,6 +281,7 @@ namespace tb.Test
                 LessonTwoDay = DaysOfWeek.NA
             };
 
+            //act
             //add student to service
             service.AddStudent(student);
 
@@ -241,8 +369,49 @@ namespace tb.Test
             Assert.Equal(ns2.UserId, pupil2.Id);
 
             
+        }
+        
+        [Fact]
+        public void Student_GetStudentByUserId_ShouldReturnStudent(){
+      
+            // arrange
+            var pupil =  new User { 
+                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+                Gender = Gender.Female,
+            };
 
-            
+            // create student
+            var student = new Student
+            {   
+                User = pupil,
+                Allergies = "xxx",
+                AdditionalNeeds = "ADD",
+                InstrumentOne = "yyy",
+                InstrumentTwo = "",
+                CurrentGradeInstOne = 3,
+                CurrentGradeInstTwo = 0,
+                CurrentTheoryGrade = 1,
+                Aurals = Aurals.Yes,
+                LessonFormat = LessonFormat.InPersonOnly,
+                LessonOneDay = DaysOfWeek.Monday,
+                LessonTwoDay = DaysOfWeek.NA
+            };
+
+            //act
+            //add student to service
+            // service.AddStudent(student);
+
+            //attempt to retrieve Student from database
+            service.GetStudentByUserId(student.UserId);
+
+            //assert
+            Assert.NotNull(student);
+            Assert.Equal(student.UserId, pupil.Id);
+        
+
         }
 
         [Fact]
