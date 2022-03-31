@@ -182,7 +182,7 @@ namespace tb.Web.Controllers
             // delete student via service
             svc.DeleteStudent(s, u);
          
-            Alert($"Student {student.Name}  deleted successfully", AlertType.success);
+            Alert($"Student {student.Name} deleted successfully", AlertType.success);
             // redirect to the index view
             return RedirectToAction(nameof(Index), new { Id = s.Id });
         }
@@ -306,9 +306,7 @@ namespace tb.Web.Controllers
             // redisplay the form for editing as validation errors
             return View(pl);
         }
-
-        // GET / student/delete/{id}
-        [Authorize(Roles="Admin,Tutor")]       
+     
 
            // GET / ProgressLog/delete/{id}
         [Authorize(Roles="Admin,Tutor")]

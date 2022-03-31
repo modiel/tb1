@@ -87,7 +87,7 @@
         <form asp-controller="Student" asp-action="DeleteConfirm" type="post">
             <input type="hidden" asp-for="Id"/>
             <input type="submit" value="Confirm" class="btn btn-danger" />
-            <a class="btn btn-secondary" asp-controller="Student" asp-action="Details" >Cancel</a>
+            <a class="btn btn-secondary" asp-controller="Student" asp-route-id=@Model.Id asp-action="Details" >Cancel</a>
         </form>
     </div>
     

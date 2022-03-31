@@ -19,5 +19,5 @@
 <!-- Not Logged in -->
 <div class="navbar-nav" asp-condition="@(!User.Identity.IsAuthenticated)">
     <a class="nav-link text-dark"  asp-controller="User" asp-action="Login">Login</a>
-    <a class="nav-link text-dark"  asp-controller="User" asp-action="Register">Register</a>
+    @* <a class="nav-link text-dark"  asp-controller="User" asp-action="Register">Register</a> DM- potential to register- currently limited to admin or Tutor *@
 </div>
