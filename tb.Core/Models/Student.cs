@@ -16,6 +16,8 @@ namespace tb.Core.Models
 
         public string AdditionalNeeds { get; set; }
 
+        public string GeneralNotes { get; set; }
+
         [Required]
         public string InstrumentOne { get; set; }
 

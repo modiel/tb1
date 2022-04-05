@@ -34,8 +34,6 @@ namespace tb.Web.ViewModels
 
         [Required]
         public Gender Gender  { get; set; } = Gender.Male;
-
-
  
         [Required]
         [EmailAddress]

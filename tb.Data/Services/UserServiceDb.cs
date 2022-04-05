@@ -247,6 +247,7 @@ namespace tb.Data.Services
                     AddressLineOne = s.User.AddressLineOne,
                     AddressLineTwo = s.User.AddressLineTwo,
                     AddressLineThree = s.User.AddressLineThree,
+                    Postcode = s.User.Postcode,
                     Dob = s.User.Dob,
                     Gender = s.User.Gender,
                     Email = s.User.Email,
@@ -376,6 +377,7 @@ namespace tb.Data.Services
             student.User.Dob = s.User.Dob;
             student.User.Gender = s.User.Gender;
             student.User.Email = s.User.Email;
+            student.User.Role = student.User.Role;
             //student.User.Password = Hasher.IsHashed(s.User.Password) ? s.User.Password : Hasher.CalculateHash(s.User.Password); // hash if not already hashed 
                
             student.Allergies = s.Allergies;

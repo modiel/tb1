@@ -1,0 +1,37 @@
+@model User
+
+<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/user", "Users"), ("","Edit") })>
+
+<h3 class="mt-4 mb-4">Edit User</h3>
+
+<div class="card rounded shadow p-3">
+    <form asp-action="EditUser" method="post">
+    
+    
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+        <!-- Id is hidden as its not user editable but needs to be in the -->
+        <!-- form to ensure the student passed to the controller is complete -->    
+        <input type="hidden" asp-for="Id"/>
+        
+         @* <input type="hidden" asp-for="User.Id"/> *@
+      
+        <partial name="_UserFormInputs" />
+   
+        <!-- submit button and cancel link which navigates to Details action -->
+        @* <div class="form-group">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Save" class="btn btn-primary"/>
+            <a class="btn btn-secondary" asp-action="Details" asp-route-id=@Model.Id>Cancel</a>
+        </div>  *@
+         <div class="form-group mt-3">
+             <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a class="btn btn-secondary" asp-controller="User" asp-action="UserDetails">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

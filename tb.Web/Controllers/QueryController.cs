@@ -25,7 +25,7 @@ namespace tb.Web.Controllers
         }
         
         // GET /Query/index
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         public IActionResult Index()
         {
             // retrieve all OPEN Queries   
@@ -57,7 +57,7 @@ namespace tb.Web.Controllers
         }     
              
         // GET/Query/{id}
-        [Authorize(Roles="Admin,Tutor,Parent,Pupil")]
+        [Authorize(Roles="Tutor,Parent,Pupil")]
         public IActionResult Details(int id)
         {
             var query = svc.GetQuery(id);
@@ -72,7 +72,7 @@ namespace tb.Web.Controllers
 
         // POST /query/close/{id}
         [HttpPost]
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         public IActionResult Close([Bind("Id, Resolution")] Query q)
         {
             // close query via service
@@ -91,7 +91,7 @@ namespace tb.Web.Controllers
         }
        
         // GET /Query/create
-        [Authorize(Roles="Admin,Tutor,Parent,Pupil")]
+        [Authorize(Roles="Tutor,Parent,Pupil")]
         public IActionResult Create()
         {
             var students = svc.GetStudents();
@@ -106,7 +106,7 @@ namespace tb.Web.Controllers
        
         // POST /Query/create
         [HttpPost]
-        [Authorize(Roles="Admin,Tutor,Parent,Pupil")]
+        [Authorize(Roles="Tutor,Parent,Pupil")]
         public IActionResult Create(QueryCreateViewModel qvm)
         {
             if (ModelState.IsValid)
@@ -122,7 +122,7 @@ namespace tb.Web.Controllers
         }
 
            // GET / Query/delete/{id}
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         public IActionResult DeleteQuery(int id)
         {
             // load the query using the service
@@ -139,7 +139,7 @@ namespace tb.Web.Controllers
 
         // POST /ProgressLog/delete/{id}
         [HttpPost]
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         public IActionResult DeleteQueryConfirm(int id, int studentId)
         {
             // delete Query via service

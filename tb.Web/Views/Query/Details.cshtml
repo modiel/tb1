@@ -32,10 +32,10 @@
     </div>
 
     <div class="mt-3">
-        <button asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal" data-bs-target="#closeModal"
+        <button asp-condition=@User.IsInRole("Tutor") data-bs-toggle="modal" data-bs-target="#closeModal"
             class="btn btn-sm btn-dark"><i class="bi bi-question-diamond"></i>Resolve
         </button>
-        <button asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal"data-bs-target="#deleteQueryModal" 
+        <button asp-condition=@User.IsInRole("Tutor") data-bs-toggle="modal"data-bs-target="#deleteQueryModal" 
             class="btn btn-sm btn-danger"><i class="bi bi-trash mr-1"></i>Delete
         </button>
 

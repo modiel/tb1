@@ -8,7 +8,7 @@
 
 <div>
     <!-- display the student using a <dl> as per Details.cshtml -->
-    <div class="col card rounded shadow pt-3">
+    <div class="col card rounded shadow p-3">
         <dl class="row">       
             <dt class="col-5">Name</dt>
             <dd class="col-7">@Model.Name</dd>            
@@ -38,7 +38,7 @@
             <dd class="col-7">@Model.User.Postcode</dd>
 
             <dt class="col-5">Dob</dt>
-            <dd class="col-7">@Model.User.Dob</dd>
+            <dd class="col-7">@Model.User.Dob.ToShortDateString()</dd>
 
             <dt class="col-5">Gender</dt>
             <dd class="col-7">@Model.User.Gender</dd>
@@ -61,6 +61,7 @@
             <dt class="col-5">Current Grade Instrument 2</dt>
             <dd class="col-7">@Model.CurrentGradeInstTwo</dd>
   
+
             <dt class="col-5">Current Theory Grade (if applicable)</dt>
             <dd class="col-7">@Model.CurrentTheoryGrade</dd>
 
@@ -87,7 +88,7 @@
         <form asp-controller="Student" asp-action="DeleteConfirm" type="post">
             <input type="hidden" asp-for="Id"/>
             <input type="submit" value="Confirm" class="btn btn-danger" />
-            <a class="btn btn-secondary" asp-controller="Student" asp-route-id=@Model.Id asp-action="Details" >Cancel</a>
+            <a class="btn btn-secondary" asp-controller="Student" asp-route-id=@Model.Id asp-action="Index" >Cancel</a>
         </form>
     </div>
     

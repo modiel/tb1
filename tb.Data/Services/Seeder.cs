@@ -13,9 +13,9 @@ namespace tb.Data.Services
             svc.Initialise();
 
             // add users 
-            var admin = svc.AddUser(
-                new User { FirstName = "Admin", LastName = "", Email = "admin@mail.com", Password =  "admin", Role =  Role.Admin }
-            );
+            // var admin = svc.AddUser(
+            //     new User { FirstName = "Admin", LastName = "", Email = "admin@mail.com", Password =  "admin", Role =  Role.Admin }
+            // );
             var tutor = svc.AddUser(
                 new User { FirstName = "Tutor", LastName = "", Email = "tutor@mail.com", Password =  "tutor", Role =  Role.Tutor }
             );
@@ -35,6 +35,7 @@ namespace tb.Data.Services
                                 },
                 Allergies = "None",
                 AdditionalNeeds = "None",
+                GeneralNotes = "",
                 InstrumentOne = "Piano",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 1,
@@ -54,6 +55,7 @@ namespace tb.Data.Services
                                 },
                 Allergies = "Tree nuts",
                 AdditionalNeeds = "ADD - mild but check if meds have been taken",
+                GeneralNotes = "Wants to do GCSE music",
                 InstrumentOne = "Piano",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -73,6 +75,7 @@ namespace tb.Data.Services
                                 },
                 Allergies = "",
                 AdditionalNeeds = "",
+                GeneralNotes = "Wants to do A Level music",
                 InstrumentOne = "Flute",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 4,
@@ -92,6 +95,7 @@ namespace tb.Data.Services
                                 }, 
                 Allergies = "",
                 AdditionalNeeds = "Turns things to ice when stressed. The cold never bothered her anyway",
+                GeneralNotes = "Learns by ear, work on sight reading",
                 InstrumentOne = "Piano",
                 InstrumentTwo = "Flute",
                 CurrentGradeInstOne = 6,
@@ -111,6 +115,7 @@ namespace tb.Data.Services
                                 },
                 Allergies = "Sunlight",
                 AdditionalNeeds = "Keep temperature low",
+                GeneralNotes = "",
                 InstrumentOne = "Piano",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 0,

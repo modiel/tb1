@@ -27,7 +27,7 @@ namespace tb.Web.Controllers
         {  
             IList<Student> students = new List<Student>();
             var userId = GetSignedInUserId();          
-            if (User.IsInRole(Role.Admin.ToString()))
+            if (User.IsInRole(Role.Tutor.ToString())) //this could be admin if role restored
             {
                 students = svc.GetStudents();
             } 
@@ -35,7 +35,7 @@ namespace tb.Web.Controllers
             {
                 students.Add( svc.GetStudentByUserId(userId));
             }          
-            else //tutor or parent
+            else // parent
             {
                 students = svc.GetStudentsForUser(userId);
             }
@@ -73,7 +73,7 @@ namespace tb.Web.Controllers
         }
 
          // GET: /student/create
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         public IActionResult Create()
         {
             // display blank form to create a student
@@ -111,8 +111,23 @@ namespace tb.Web.Controllers
             return View(student);
         }
 
+        // Change Password
+        [Authorize]
+        public IActionResult UpdatePassword()
+        {
+            // use BaseClass helper method to retrieve Id of signed in user 
+            var user = svc.GetUser(GetSignedInUserId());
+            var passwordViewModel = new UserPasswordViewModel { 
+                Id = user.Id, 
+                Password = user.Password, 
+                PasswordConfirm = user.Password, 
+            };
+            return View(passwordViewModel);
+        }
+        
+
         // GET /student/edit/{id}
-        [Authorize(Roles="Admin,Tutor,Parent")]
+        [Authorize(Roles="Tutor,Parent")]
         public IActionResult Edit(int id)
         {
             // load the student using the service
@@ -132,7 +147,7 @@ namespace tb.Web.Controllers
         // POST /student/edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin,Tutor,Parent")]
+        [Authorize(Roles="Tutor,Parent")]
         public IActionResult Edit(int id, Student s)
         {
             // check email is unique for this student
@@ -156,7 +171,7 @@ namespace tb.Web.Controllers
         }
 
         // GET / student/delete/{id}
-        [Authorize(Roles="Admin,Tutor")]       
+        [Authorize(Roles="Tutor")]       
         public IActionResult Delete(int id)
         {
             // load the student using the service
@@ -174,7 +189,7 @@ namespace tb.Web.Controllers
 
         // POST /student/delete/{id}
         [HttpPost]
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirm( Student s, User u)
         {   
@@ -188,7 +203,7 @@ namespace tb.Web.Controllers
         }
 
          // GET /student/createQuery
-        [Authorize(Roles="Admin,Tutor,Parent,Pupil")]
+        [Authorize(Roles="Tutor,Parent,Pupil")]
         public IActionResult CreateQuery(int id)
         {
             var s = svc.GetStudentById(id);
@@ -210,7 +225,7 @@ namespace tb.Web.Controllers
         // POST /student/createQuery
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin,Tutor,Parent,Pupil")]
+        [Authorize(Roles="Tutor,Parent,Pupil")]
         public IActionResult CreateQuery([Bind("StudentId, Issue")]QueryCreateViewModel qvm)
         {
             var s = svc.GetStudentById(qvm.StudentId);
@@ -229,7 +244,7 @@ namespace tb.Web.Controllers
         }
 
         // GET /Student/createProgressLog
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         public IActionResult CreateProgressLog(int id)
         {
             var s = svc.GetStudentById(id);
@@ -249,7 +264,7 @@ namespace tb.Web.Controllers
 
         // POST /Student/createProgressLog
         [HttpPost]
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         public IActionResult CreateProgressLog (ProgressLog pl)
         {
             var s = svc.GetStudentById(pl.StudentId);
@@ -268,7 +283,7 @@ namespace tb.Web.Controllers
         }
 
         // GET /progressLog/edit/{id}
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         public IActionResult EditProgressLog(int id)
         {
             // load the student using the service
@@ -288,7 +303,7 @@ namespace tb.Web.Controllers
         // POST /progressLog/edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         public IActionResult EditProgressLog(int id, ProgressLog pl)
         {
             
@@ -309,7 +324,7 @@ namespace tb.Web.Controllers
      
 
            // GET / ProgressLog/delete/{id}
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         public IActionResult DeleteProgressLog(int id)
         {
             // load the ProgressLog using the service
@@ -327,7 +342,7 @@ namespace tb.Web.Controllers
 
         // POST /ProgressLog/delete/{id}
         [HttpPost]
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         public IActionResult DeleteProgressLogConfirm(int id, int studentId)
         {
             // delete ProgressLog via service

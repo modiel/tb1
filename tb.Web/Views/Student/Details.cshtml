@@ -35,13 +35,13 @@
                 <!-- add navigation link to Edit action, passing the correct route id parameter -->
                 <!-- note use of ClaimsPrincipal extension method HasOneOfRoles (found in Extensions) -->
 
-                <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Edit"
+                <a asp-condition=@User.IsInRole("Tutor") asp-controller="Student" asp-action="Edit"
                     asp-route-id="@Model.Id" class="btn btn-sm btn-outline-success mr-2">
                     <i class="bi bi-pencil-square p-1"></i>Edit Student
                 </a>
 
                 <!-- add navigation link to redirect to Index action -->
-                <a asp-controller="Student" asp-action="Index" class="btn btn-sm btn-light mr-2">
+                <a asp-condition=@User.IsInRole("Tutor,Parent") asp-controller="Student" asp-action="Index" class="btn btn-sm btn-light mr-2">
                     <i class="bi bi-card-list p-1"></i>Student List
                 </a>
 
@@ -50,7 +50,7 @@
                     asp-route-id=@Model.Id><i class="bi bi-trash"></i>Delete Student</a> *@
 
                 <!-- add navigation link to Delete action, passing the correct route id parameter -->
-                <button asp-condition=@User.HasOneOfRoles("Admin,Tutor") data-bs-toggle="modal"
+                <button asp-condition=@User.IsInRole("Tutor") data-bs-toggle="modal"
                     data-bs-target="#deleteModal" class="btn btn-sm btn-outline-danger ml-2">
                     <i class="bi bi-trash mr-1"></i>Delete Student
                 </button>
@@ -93,7 +93,7 @@
                     <dt class="col-7">Postcode </dt>
                     <dd class="col-5">@Model.User.Postcode</dd>
 
-                    <dt class="col-7">Dob</dt>
+                    <dt class="col-7">Date of Birth</dt>
                     <dd class="col-5">@Model.User.Dob.ToShortDateString()</dd>
 
                     <dt class="col-7">Age</dt>
@@ -107,6 +107,9 @@
 
                     <dt class="col-7">Additional Needs/Conditions</dt>
                     <dd class="col-5">@Model.AdditionalNeeds</dd>
+
+                    <dt class="col-7">General Notes</dt>
+                    <dd class="col-5">@Model.GeneralNotes</dd>
 
                     <dt class="col-7">Instrument 1</dt>
                     <dd class="col-5">@Model.InstrumentOne</dd>
@@ -142,7 +145,7 @@
 
             @* <!-- Photo -->
                 <div class="col-4">
-                <img src="@Model.PhotoUrl" class="img-fluid">//DIANE COME BACK HERE
+                <img src="@Model.PhotoUrl" class="img-fluid">//DM- option to add photos
                 </div> *@
         </div>
     </div>
@@ -177,13 +180,13 @@
                             <td>@pl.Progress</td>
 
                             <!-- Add edit link -->
-                        <td><a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student"
+                        <td><a asp-condition=@User.IsInRole("Tutor") asp-controller="Student"
                                 asp-action="EditProgressLog" asp-route-id=@pl.Id><i class="bi-pen"></i> Edit
                                     Progress</a></td>
 
 
                             <!-- Add delete link -->
-                        <td><a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student"
+                        <td><a asp-condition=@User.IsInRole("Tutor") asp-controller="Student"
                                 asp-action="DeleteProgressLog" asp-route-id=@pl.Id><i class="bi-trash"></i> Delete
                                     Progress</a>
                         </td>

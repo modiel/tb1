@@ -338,6 +338,7 @@ namespace tb.Test
                 User = pupil,
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Sight reading focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -387,6 +388,7 @@ namespace tb.Test
             {   User = pupil1,
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Sight reading focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -403,6 +405,7 @@ namespace tb.Test
                 User = pupil2,
                 Allergies = "Bees",
                 AdditionalNeeds = "ADHD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "ZZZ",
                 CurrentGradeInstOne = 2,
@@ -456,6 +459,7 @@ namespace tb.Test
             {   
                 User = pupil,
                 Allergies = "xxx",
+                GeneralNotes = "Aurals focus",
                 AdditionalNeeds = "ADD",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
@@ -501,6 +505,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -542,6 +547,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -583,6 +589,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -626,6 +633,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -668,6 +676,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -709,6 +718,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -739,6 +749,7 @@ namespace tb.Test
             ns.User.Gender = Gender.SelfDescribe;
             ns.Allergies = "Bees";
             ns.AdditionalNeeds = "ADHD";
+            ns.GeneralNotes = "Left hand weaker";
             ns.InstrumentOne = "yyy";
             ns.InstrumentTwo = "ZZZ";
             ns.CurrentGradeInstOne = 2;
@@ -768,6 +779,7 @@ namespace tb.Test
 
             Assert.Equal("Bees", ns.Allergies);
             Assert.Equal("ADHD", ns.AdditionalNeeds);
+            Assert.Equal("Right hand joint issue", ns.GeneralNotes);
             Assert.Equal("yyy", ns.InstrumentOne);
             Assert.Equal("ZZZ", ns.InstrumentTwo);
             Assert.Equal(2, ns.CurrentGradeInstOne);
@@ -802,6 +814,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -932,6 +945,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -975,6 +989,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -1019,6 +1034,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -1063,6 +1079,7 @@ namespace tb.Test
                 User = pupil,
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -1108,6 +1125,7 @@ namespace tb.Test
             {   User = pupil,
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -1155,6 +1173,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -1208,6 +1227,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -1266,6 +1286,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -1320,6 +1341,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Aurals focus",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
