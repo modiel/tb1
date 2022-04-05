@@ -44,12 +44,10 @@ namespace tb.Data.Services
                       .ThenInclude(us => us.Student)
                       .FirstOrDefault(s => s.Id == id);
         }
-
-
-        // Add a new User checking a User with same email does not exist
-        public User AddUser(User u)
+ // Add a new User checking a User with same email does not exist
+        public User AddUser(string fname, string lname, string contactname, string phone, string altphone,string email, string address1, string address2, string address3, string postcode, DateTime dob, Gender gender,  string password, Role role)
         {     
-            var existing = GetUserByEmail(u.Email);
+            var existing = GetUserByEmail(email);
             if (existing != null)
             {
                 return null;
@@ -57,25 +55,56 @@ namespace tb.Data.Services
 
             var user = new User
             {            
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                ContactName = u.ContactName,
-                Phone = u.Phone,
-                AltPhone = u.AltPhone,
-                AddressLineOne = u.AddressLineOne,
-                AddressLineTwo = u.AddressLineTwo,
-                AddressLineThree = u.AddressLineThree,
-                Dob = u.Dob,
-                Postcode = u.Postcode,
-                Gender = u.Gender,
-                Email = u.Email,
-                Password = Hasher.CalculateHash(u.Password), // can hash if required 
-                Role = u.Role              
+                FirstName = fname,
+                LastName = lname,
+                ContactName = contactname,
+                Phone = phone,
+                AltPhone = altphone,
+                Email = email,
+                AddressLineOne = address1,
+                AddressLineTwo = address2,
+                AddressLineThree = address3,
+                Postcode = postcode,
+                Dob = dob,
+                Gender = gender, 
+                Password = Hasher.CalculateHash(password), // can hash if required 
+                Role = role              
             };
             ctx.Users.Add(user);
             ctx.SaveChanges();
             return user; // return newly added User
         }
+
+        // Add a new User checking a User with same email does not exist - could be used if only adding a particular type of user
+        // public User AddUser(User u)
+        // {     
+        //     var existing = GetUserByEmail(u.Email);
+        //     if (existing != null)
+        //     {
+        //         return null;
+        //     } 
+
+        //     var user = new User
+        //     {            
+        //         FirstName = u.FirstName,
+        //         LastName = u.LastName,
+        //         ContactName = u.ContactName,
+        //         Phone = u.Phone,
+        //         AltPhone = u.AltPhone,
+        //         AddressLineOne = u.AddressLineOne,
+        //         AddressLineTwo = u.AddressLineTwo,
+        //         AddressLineThree = u.AddressLineThree,
+        //         Dob = u.Dob,
+        //         Postcode = u.Postcode,
+        //         Gender = u.Gender,
+        //         Email = u.Email,
+        //         Password = Hasher.CalculateHash(u.Password), // can hash if required 
+        //         Role = u.Role              
+        //     };
+        //     ctx.Users.Add(user);
+        //     ctx.SaveChanges();
+        //     return user; // return newly added User
+        // }
 
         // Delete the User identified by Id returning true if deleted and false if not found
         public bool DeleteUser(int id, Student s)
@@ -227,6 +256,7 @@ namespace tb.Data.Services
             var student = new Student {
                 Allergies = s.Allergies,
                 AdditionalNeeds = s.AdditionalNeeds,
+                GeneralNotes = s.GeneralNotes,
                 InstrumentOne = s.InstrumentOne,
                 InstrumentTwo = s.InstrumentTwo,
                 CurrentGradeInstOne = s.CurrentGradeInstOne,
@@ -278,6 +308,7 @@ namespace tb.Data.Services
             var student = new Student {
                 Allergies = s.Allergies,
                 AdditionalNeeds = s.AdditionalNeeds,
+                GeneralNotes = s.GeneralNotes,
                 InstrumentOne = s.InstrumentOne,
                 InstrumentTwo = s.InstrumentTwo,
                 CurrentGradeInstOne = s.CurrentGradeInstOne,
@@ -382,6 +413,7 @@ namespace tb.Data.Services
                
             student.Allergies = s.Allergies;
             student.AdditionalNeeds = s.AdditionalNeeds;
+            student.GeneralNotes = s.GeneralNotes;
             student.InstrumentOne = s.InstrumentOne;
             student.InstrumentTwo = s.InstrumentTwo;
             student.CurrentGradeInstOne = s.CurrentGradeInstOne;

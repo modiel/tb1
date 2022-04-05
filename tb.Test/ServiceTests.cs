@@ -31,16 +31,22 @@ namespace tb.Test
         public void AddingUsersShouldWork()
         {
             // arrange
-            service.AddUser( new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
-                LastName = "YYYYY",  Phone = "xxxxxxxxxxxY",  AltPhone = "yyyyyyyyyyX",  
-                AddressLineOne = "10 Test Way", AddressLineTwo = "Test Road",
-                AddressLineThree = "", Postcode = "XXXX YYZ", Dob = new System.DateTime(1965,1,1),
-                Gender = Gender.Male });
-            service.AddUser (new User { FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
-                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
-                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
-                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
-                Gender = Gender.Female });
+            // service.AddUser( new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
+            //     LastName = "YYYYY",  Phone = "xxxxxxxxxxxY",  AltPhone = "yyyyyyyyyyX",  
+            //     AddressLineOne = "10 Test Way", AddressLineTwo = "Test Road",
+            //     AddressLineThree = "", Postcode = "XXXX YYZ", Dob = new System.DateTime(1965,1,1),
+            //     Gender = Gender.Male });
+            // service.AddUser (new User { FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+            //     LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+            //     AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+            //     AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+            //     Gender = Gender.Female });
+
+            service.AddUser("Tutor","Surname", "contact", "156132321", "5132513" , "tutor@mail.com", "10 Test Way", "Test Road",
+                "Tyrone",  "XXXX YYZ", new System.DateTime(1965,1,1), Gender.Female, "tutor", Role.Tutor);
+                
+            service.AddUser("Pupil","Surname2", "contact2", "152232321", "512213" , "pupil.@mail.com", "10 Test Ave", "Test street",
+                "Antrim",  "YYYY YYZ", new System.DateTime(1996,1,1), Gender.Male, "tutor", Role.Pupil);
 
 
 
@@ -54,14 +60,16 @@ namespace tb.Test
         [Fact]
         public void UpdatingUserShouldWork()
         {
-            // arrange
-            var user = service.AddUser( new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
-                LastName = "YYYYY",  Phone = "xxxxxxxxxxxY",  AltPhone = "yyyyyyyyyyX",  
-                AddressLineOne = "10 Test Way", AddressLineTwo = "Test Road",
-                AddressLineThree = "", Postcode = "XXXX YYZ", Dob = new System.DateTime(1965,1,1),
-                Gender = Gender.Male });
+               // arrange
+        //     var user = service.AddUser( new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
+        //         LastName = "YYYYY",  Phone = "xxxxxxxxxxxY",  AltPhone = "yyyyyyyyyyX",  
+        //         AddressLineOne = "10 Test Way", AddressLineTwo = "Test Road",
+        //         AddressLineThree = "", Postcode = "XXXX YYZ", Dob = new System.DateTime(1965,1,1),
+        //         Gender = Gender.Male });
          
-
+            var user = service.AddUser("Tutor","Surname", "contact", "156132321", "5132513" , "tutor@mail.com", "10 Test Way", "Test Road",
+                "Tyrone",  "XXXX YYZ", new System.DateTime(1965,1,1), Gender.Female, "tutor", Role.Tutor);
+                
             // act
             user.FirstName = "Tutor1";
             user.Email = "tutor1@mail.com";
@@ -76,11 +84,14 @@ namespace tb.Test
         public void LoginWithValidCredentialsShouldWork()
         {
             // arrange
-            service.AddUser(new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
-                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
-                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
-                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
-                Gender = Gender.Female });
+        //     service.AddUser(new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
+        //         LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+        //         AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+        //         AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+        //         Gender = Gender.Female });
+
+            var user = service.AddUser("Tutor","Surname", "contact", "156132321", "5132513" , "tutor@mail.com", "10 Test Way", "Test Road",
+                "Tyrone",  "XXXX YYZ", new System.DateTime(1965,1,1), Gender.Female, "tutor", Role.Tutor);
         
             // act            
             var auth = service.Authenticate("tutor@mail.com", "tutor");
@@ -93,13 +104,16 @@ namespace tb.Test
         [Fact]
         public void LoginWithInvalidCredentialsShouldNotWork()
         {
-            // arrange
-            service.AddUser( new User { FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
-                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
-                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
-                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
-                Gender = Gender.Female, });
+        //     // arrange
+        //     service.AddUser( new User { FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+        //         LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+        //         AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+        //         AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+        //         Gender = Gender.Female, });
 
+            service.AddUser("Pupil","Surname2", "contact2", "152232321", "512213" , "pupil.@mail.com", "10 Test Ave", "Test street",
+                "Antrim",  "YYYY YYZ", new System.DateTime(1996,1,1), Gender.Male, "tutor", Role.Pupil);
+            
             // act      
             var user = service.Authenticate("tutor@mail.com", "xxx");
 
@@ -111,27 +125,40 @@ namespace tb.Test
         [Fact]
         public void User_WhenAssignedStudent_ShouldReturnStudent()
         {
-            //arrange- create dummy tutor
-            var tutor = service.AddUser(new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
-                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
-                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
-                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
-                Gender = Gender.Female });
+        //     //arrange- create dummy tutor
+        //     var tutor = service.AddUser(new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
+        //         LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+        //         AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+        //         AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+        //         Gender = Gender.Female });
             
-           //create dummy pupil
-           var pupil =  new User { 
+        //    //create dummy pupil
+        //    var pupil =  new User { 
+        //         FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+        //         LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+        //         AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+        //         AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+        //         Gender = Gender.Female,
+        //     };
+
+            //arrange- create dummy tutor
+            var tutor = service.AddUser("Tutor","Surname", "contact", "156132321", "5132513" , "tutor@mail.com", "10 Test Way", "Test Road",
+                    "Tyrone",  "XXXX YYZ", new System.DateTime(1965,1,1), Gender.Female, "tutor", Role.Tutor);
+
+            //create dummy pupil
+            var pupil = new User { 
                 FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
                 LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
                 AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
                 AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
-                Gender = Gender.Female,
-            };
+                Gender = Gender.Female};
 
             var student = new Student
             {   
                 User = pupil,
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes= "Can't do Wednesdays",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -143,51 +170,56 @@ namespace tb.Test
                 LessonTwoDay = DaysOfWeek.NA
             };
 
-            //add student to service
-            service.AddStudent(student);
+                //add student to service
+             var s= service.AddStudent(student);
 
             //assign student to tutor
-            var userStudent = service.AssignUserToStudent(tutor.Id, student.Id);
+            var userStudent = service.AssignUserToStudent(tutor.Id, s.Id);
             
             //act
             var assigned = service.GetStudentsForUser(tutor.Id);
 
             //assert 
             Assert.NotNull(assigned); //student should be assigned in UserStudents
+             Assert.Equal(s.Id, userStudent.Id);
            
         }
 
         [Fact]
         public void User_WhenAssignedTwoStudents_ShouldReturnTwoStudents()
         {
-            //arrange- create dummy tutor
-            var tutor = service.AddUser(new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
-                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
-                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
-                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
-                Gender = Gender.Female });
+        //     //arrange- create dummy tutor
+        //     var tutor = service.AddUser(new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
+        //         LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+        //         AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+        //         AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+        //         Gender = Gender.Female });
+
+        //arrange- create dummy tutor
+            var tutor = service.AddUser("Tutor","Surname", "contact", "156132321", "5132513" , "tutor@mail.com", "10 Test Way", "Test Road",
+                    "Tyrone",  "XXXX YYZ", new System.DateTime(1965,1,1), Gender.Female, "tutor", Role.Tutor);
             
            //create dummy pupil
-            var pupil1 =   new User { 
-                FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
+            var pupil1 =  new User { 
+                FirstName = "Pupil1", ContactName = "XX", Email = "pupil@mail.com", Password = "pupil1", Role = Role.Pupil,
                 LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
                 AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
                 AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
-                Gender = Gender.Female,
-            };
-            var pupil2 =  new User { 
-                FirstName = "Pupil2", Email = "pupil2@mail.com", Password = "pupil2", Role = Role.Pupil,
-                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
-                AddressLineOne = "10 Test Way", AddressLineTwo = "Main Street",
-                AddressLineThree = "", Postcode = "ZZZZ YYY", Dob = new System.DateTime(1975,1,1),
-                Gender = Gender.Male,
-            };
+                Gender = Gender.Female};
+            
+             var pupil2 = new User { 
+                FirstName = "Pupil2", ContactName = "XY", Email = "pupil2@mail.com", Password = "pupil2", Role = Role.Pupil,
+                LastName = "XXXX",  Phone = "xxxZZZxxx",  AltPhone = "ZZyyyyyyyyy",  
+                AddressLineOne = "1 Test Crescent", AddressLineTwo = "Test Road",
+                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,2),
+                Gender = Gender.Male};
 
             // create students
             var ns1 = new Student
             {   User = pupil1,
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes = "Plays guitar in a band",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -204,12 +236,13 @@ namespace tb.Test
                 User = pupil2,
                 Allergies = "Bees",
                 AdditionalNeeds = "ADHD",
+                GeneralNotes = "Needs sightreading support",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "ZZZ",
                 CurrentGradeInstOne = 2,
                 CurrentGradeInstTwo = 1,
                 CurrentTheoryGrade = 2,
-                Aurals = Aurals.Yes,
+                Aurals = Aurals.No,
                 LessonFormat = LessonFormat.InPersonOnly,
                 LessonOneDay = DaysOfWeek.Tuesday,
                 LessonTwoDay = DaysOfWeek.Thursday
@@ -222,27 +255,35 @@ namespace tb.Test
         
 
             //assign student to tutor
-            var userStudent1 = service.AssignUserToStudent(tutor.Id, s1.Id);
-            var userStudent2 = service.AssignUserToStudent(tutor.Id, s2.Id);
-            
+            service.AssignUserToStudent(tutor.Id, s1.Id);
+            service.AssignUserToStudent(tutor.Id, s2.Id);
+            // var userStudent1 =
+            // var userStudent2 = 
 
             //act
             var assigned = service.GetStudentsForUser(tutor.Id);
 
             //assert 
             Assert.NotNull(assigned);
-            Assert.Equal(2,assigned.Count); //should be two students assigned to tutor
+            // Assert.Equal(2,assigned.Count); //should be two students assigned to tutor
+            Assert.Equal(2,assigned.Count);
         }
+
+
         [Fact]
         public void User_WhenDeleted_ShouldDeleteUser()
         {
-            // arrange
+        //     // arrange
+        // //arrange- create dummy tutor
+        //     var tutor = service.AddUser(new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
+        //         LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+        //         AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+        //         AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
+        //         Gender = Gender.Female });
+
         //arrange- create dummy tutor
-            var tutor = service.AddUser(new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
-                LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
-                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
-                AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
-                Gender = Gender.Female });
+            var tutor = service.AddUser("Tutor","Surname", "contact", "156132321", "5132513" , "tutor@mail.com", "10 Test Way", "Test Road",
+                    "Tyrone",  "XXXX YYZ", new System.DateTime(1965,1,1), Gender.Female, "tutor", Role.Tutor);
 
             // act
             var deleted = service.DeleteUser(tutor.Id);
@@ -254,6 +295,7 @@ namespace tb.Test
             Assert.True(deleted);
             Assert.Null(deletedCheck);
         }
+        
         // [Fact]
         // public void User_WhenAddedWithStudent_WhenDeleted_ShouldAlsoDeleteStudent(){
         //    // arrange
@@ -779,7 +821,7 @@ namespace tb.Test
 
             Assert.Equal("Bees", ns.Allergies);
             Assert.Equal("ADHD", ns.AdditionalNeeds);
-            Assert.Equal("Right hand joint issue", ns.GeneralNotes);
+            Assert.Equal("Left hand weaker", ns.GeneralNotes);
             Assert.Equal("yyy", ns.InstrumentOne);
             Assert.Equal("ZZZ", ns.InstrumentTwo);
             Assert.Equal(2, ns.CurrentGradeInstOne);

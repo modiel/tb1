@@ -16,23 +16,20 @@ namespace tb.Data.Services
             // var admin = svc.AddUser(
             //     new User { FirstName = "Admin", LastName = "", Email = "admin@mail.com", Password =  "admin", Role =  Role.Admin }
             // );
-            var tutor = svc.AddUser(
-                new User { FirstName = "Tutor", LastName = "", Email = "tutor@mail.com", Password =  "tutor", Role =  Role.Tutor }
-            );
+            var tutor = svc.AddUser( "Tutor","Surname", "", "156132321", "5132513" , "tutor@mail.com", "10 Test Way", "Test Road",
+                "Tyrone",  "XXXX YYZ", new System.DateTime(1965,1,1), Gender.Female, "tutor", Role.Tutor);
             var parent = svc.AddUser(
-                new User { FirstName = "Parent", LastName = "", Email = "parent@mail.com", Password =  "parent", Role =  Role.Parent }
-            );  
-
-            var tutor1 = svc.AddUser(
-                new User { FirstName = "Tutor1", LastName = "", Email = "tutor1@mail.com", Password =  "tutor1", Role =  Role.Tutor }
-            );
+            "Parent","One", "", "0209999999", "0208888888" , "parent@mail.com", "10 Test Way", "Test Road",
+                "Down",  "XXXX YYZ", new System.DateTime(1965,1,1), Gender.Female, "parent", Role.Parent);
+            
           
             //add students
             var s1 = new Student
             {   
-                User = new User { FirstName = "Pupil1", LastName = "", Email = "pupil1@mail.com", Password =  "pupil1", 
-                                  Role =  Role.Pupil, Dob = new DateTime(2010,1,1) 
-                                },
+                User = new User { FirstName = "Pupil1", LastName = "", Email = "pupil1@mail.com", Password =  "pupil1",Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", 
+                Role =  Role.Pupil, Dob = new DateTime(2010,1,1), Gender = Gender.Female},
                 Allergies = "None",
                 AdditionalNeeds = "None",
                 GeneralNotes = "",

@@ -23,7 +23,7 @@
         </div> 
         <div class="row mt-3">
 
-            @* <div class="col form-group">
+            <div class="col form-group">
                 <label asp-for="Phone" class="control-label"> Phone</label>
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
@@ -63,10 +63,10 @@
                 <input asp-for="Postcode" class="form-control" />
                 <span asp-validation-for="Postcode" class="text-danger"></span>
             </div>
-        </div>     *@
+        </div>     
         
 
-            @* <!--move Dob  and Gender input groups in 2 columns in single row. This not required for parents --> DM NOT SURE THIS WILL STAY HERE
+            <!--move Dob  and Gender input groups in 2 columns in single row. This not required for parents --> DM NOT SURE THIS WILL STAY HERE
             <div class="row" asp-condition=@User.IsInRole("Pupil")>
                 <div class="form-group col">
                     <label asp-for="Dob" class="control-label">Date of Birth</label>
@@ -83,7 +83,7 @@
                     <span asp-validation-for="Gender" class="text-danger"></span>
                 </div>
 
-            </div> *@
+            </div>
 
 
         
@@ -111,7 +111,7 @@
             <label asp-for="Role" class="control-label"><i class="bi-person-badge-fill"></i> Role</label>
             <select asp-for="Role" class="form-control">
                 <option>Select Role</option>   
-                @* <option value="Tutor">Tutor</option> *@
+                <option value="Tutor">Tutor</option> 
                 <option value="Pupil">Pupil</option>
                 <option value="Parent">Parent/Caregiver</option>
             </select>

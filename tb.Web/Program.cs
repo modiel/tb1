@@ -28,7 +28,7 @@ if (!app.Environment.IsDevelopment())
 else 
 {
     // seed users in development mode - using service provider to get UserService from DI
-    Seeder.Seed(app.Services.GetService<IUserService>());
+    // Seeder.Seed(app.Services.GetService<IUserService>());
 }
 
 //app.UseHttpsRedirection();

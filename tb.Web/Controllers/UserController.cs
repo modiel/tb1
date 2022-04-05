@@ -60,31 +60,32 @@ namespace tb.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin,Tutor")]
-        public IActionResult Register(UserRegisterViewModel m)       
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(m);
-            }
-            // add Tutor user via service
-            var user = _svc.AddUser( new User {
-                FirstName = m.FirstName, 
-                LastName = m.LastName, 
-                Email = m.Email,
-                Password = m.Password, 
-                Role = Role.Tutor
-            });
-            // check if error adding user and display warning
-            if (user == null) {
-                Alert("There was a problem Registering. Please try again", AlertType.warning);
-                return View(m);
-            }
+        
+        // public IActionResult Register(UserRegisterViewModel m)       
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return View(m);
+        //     }
+        //     // add Tutor user via service
+        //     var user = _svc.AddUser( string fname, string lname, string contactname, string phone, string altphone,string email, string address1, string address2, string address3, string postcode, DateTime dob, Gender gender, string password, Role role);
 
-            Alert("Successfully Registered. Now login", AlertType.info);
+        //         // fname = m.FirstName; 
+        //         // lname = m.LastName; 
+        //         // Email = m.Email,
+        //         // Password = m.Password, 
+        //         // Role = Role.Tutor
+    
+        //     // check if error adding user and display warning
+        //     if (user == null) {
+        //         Alert("There was a problem Registering. Please try again", AlertType.warning);
+        //         return View(m);
+        //     }
 
-            return RedirectToAction(nameof(Login));
-        }
+        //     Alert("Successfully Registered. Now login", AlertType.info);
+
+        //     return RedirectToAction(nameof(Login));
+        // }
 
 
          // GET /user/index
