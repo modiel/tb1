@@ -23,7 +23,7 @@
         </div> 
         <div class="row mt-3">
 
-            <div class="col form-group">
+            @* <div class="col form-group">
                 <label asp-for="Phone" class="control-label"> Phone</label>
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
@@ -63,7 +63,7 @@
                 <input asp-for="Postcode" class="form-control" />
                 <span asp-validation-for="Postcode" class="text-danger"></span>
             </div>
-        </div>    
+        </div>     *@
         
 
             @* <!--move Dob  and Gender input groups in 2 columns in single row. This not required for parents --> DM NOT SURE THIS WILL STAY HERE
@@ -93,7 +93,7 @@
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
-        <div class="row">
+        @* <div class="row">
             <div class="col form-group mt-3">
                 <label asp-for="Password" class="control-label"><i class="bi-shield-lock-fill"></i> Password</label>
                 <input type="password" asp-for="Password" class="form-control" />
@@ -105,7 +105,7 @@
                 <input type="password" asp-for="PasswordConfirm" class="form-control" />
                 <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
             </div>
-        </div>
+        </div> *@
 
         <div class="form-group mt-3">
             <label asp-for="Role" class="control-label"><i class="bi-person-badge-fill"></i> Role</label>
