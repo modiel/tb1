@@ -51,8 +51,7 @@ namespace tb.Web.ViewModels
         // Navigation property
         public Student Student { get; set; }
 
-        //DM - this may be redundant
-        public IList<UserStudent> UserStudents { get; set; } = new List<UserStudent>();
+        
 
     }
 }

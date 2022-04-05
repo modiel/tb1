@@ -61,31 +61,33 @@ namespace tb.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        // public IActionResult Register(UserRegisterViewModel m)       
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return View(m);
-        //     }
-        //     // add Tutor user via service
-        //     var user = _svc.AddUser( string fname, string lname, string contactname, string phone, string altphone,string email, string address1, string address2, string address3, string postcode, DateTime dob, Gender gender, string password, Role role);
+        public IActionResult Register(UserRegisterViewModel m)       
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(m);
+            }
+            // add Tutor user via service
+            var user = _svc.AddUser( m.FirstName, m.LastName, m.ContactName, m.Phone, m.AltPhone,m.Email, m.AddressLineOne, m.AddressLineTwo, m.AddressLineThree, m.Postcode, m.Dob, m.Gender, m.Password, m.Role);
 
-        //         // fname = m.FirstName; 
-        //         // lname = m.LastName; 
-        //         // Email = m.Email,
-        //         // Password = m.Password, 
-        //         // Role = Role.Tutor
+            // string fname, string lname, string contactname, string phone, string altphone,string email, string address1, string address2, string address3, string postcode, DateTime dob, Gender gender, string password, Role role
+
+                // fname = m.FirstName; 
+                // lname = m.LastName; 
+                // Email = m.Email,
+                // Password = m.Password, 
+                // Role = Role.Tutor
     
-        //     // check if error adding user and display warning
-        //     if (user == null) {
-        //         Alert("There was a problem Registering. Please try again", AlertType.warning);
-        //         return View(m);
-        //     }
+            // check if error adding user and display warning
+            if (user == null) {
+                Alert("There was a problem Registering. Please try again", AlertType.warning);
+                return View(m);
+            }
 
-        //     Alert("Successfully Registered. Now login", AlertType.info);
+            Alert("Successfully Registered. Now login", AlertType.info);
 
-        //     return RedirectToAction(nameof(Login));
-        // }
+            return RedirectToAction(nameof(Login));
+        }
 
 
          // GET /user/index
@@ -142,7 +144,7 @@ namespace tb.Web.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateProfile([Bind("Id,Name,Email,Role")] UserProfileViewModel m)       
+        public async Task<IActionResult> UpdateProfile([Bind("Id,FirstName,LastName,Email,Role")] UserProfileViewModel m)       
         {
             var user = _svc.GetUser(m.Id);
             // check if form is invalid and redisplay

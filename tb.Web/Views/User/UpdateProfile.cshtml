@@ -10,35 +10,109 @@
 
         <input asp-for="Id" type="hidden" />
 
-        <div class="form-group">
-            <label asp-for="Name" class="control-label"><i class="bi-person-fill"></i> Name</label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
+        <div class="row mt-3">
+            <div class="col form-group ">
+                <label asp-for="FirstName" class="control-label"><i class="bi-person-fill"></i> First Name</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
 
+            <div class="col form-group">
+                <label asp-for="LastName" class="control-label"> Last Name</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div> 
+        <div class="row mt-3">
+
+            <div class="col form-group">
+                <label asp-for="Phone" class="control-label"> Phone</label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+
+
+            <div class="col form-group">
+                <label asp-for="AltPhone" class="control-label"> Alternative Phone</label>
+                <input asp-for="AltPhone" class="form-control" />
+                <span asp-validation-for="AltPhone" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mt-3">
+
+
+            <div class="col form-group">
+                <label asp-for="AddressLineOne" class="control-label"> Address Line 1</label>
+                <input asp-for="AddressLineOne" class="form-control" />
+                <span asp-validation-for="AddressLineOne" class="text-danger"></span>
+            </div>
+
+            <div class="col form-group">
+                <label asp-for="AddressLineTwo" class="control-label"> Address Line 2</label>
+                <input asp-for="AddressLineTwo" class="form-control" />
+                <span asp-validation-for="AddressLineTwo" class="text-danger"></span>
+            </div>
+
+            <div class="col form-group">
+                <label asp-for="AddressLineThree" class="control-label"> Address Line 3</label>
+                <input asp-for="AddressLineThree" class="form-control" />
+                <span asp-validation-for="AddressLineThree" class="text-danger"></span>
+            </div>
+
+            
+            <div class="form-group">
+                <label asp-for="Postcode" class="control-label"></label>
+                <input asp-for="Postcode" class="form-control" />
+                <span asp-validation-for="Postcode" class="text-danger"></span>
+            </div>
+        </div>     
+        
+
+            @* <!--move Dob  and Gender input groups in 2 columns in single row. This not required for parents --> DM NOT SURE THIS WILL STAY HERE *@
+            <div class="row" asp-condition=@User.IsInRole("Pupil")>
+                <div class="form-group col">
+                    <label asp-for="Dob" class="control-label">Date of Birth</label>
+                    <input type="date" asp-condition=@User.IsInRole("Pupil") asp-for="Dob"
+                        class="form-control" />
+                    <span asp-validation-for="Dob" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col">
+                    <label asp-for="Gender" class="control-label"></label>
+                    <select asp-for="Gender" class="form-control" asp-items="@Html.GetEnumSelectList<Gender>()">
+                        <option>Select Gender</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+
+            </div>
+
+
+        
         <div class="form-group mt-3">
             <label asp-for="Email" class="control-label"><i class="bi-envelope-fill"></i> Email</label>
             <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
-        <div asp-condition=@User.HasOneOfRoles("Admin,Tutor") class="form-group mt-3">
+
+        @* <div class="form-group mt-3">
             <label asp-for="Role" class="control-label"><i class="bi-person-badge-fill"></i> Role</label>
-                <select asp-for="Role" asp-items="Html.GetEnumSelectList<Role>()" class="form-control">
-                    @* DM- option to use entire role list- or can limited here *@
-                    <option>Select Role</option>
-                    @* <option value="Parent">I am a Parent</option>
-                    <option value="AdultStudent">I am an Adult Student</option>
-                    <option value="Pupil">I am a Pupil</option>             *@
-                </select>
+            <select asp-for="Role" class="form-control">
+                <option>Select Role</option>   
+                @* <option value="Tutor">Tutor</option>  
+                <option value="Pupil">Pupil</option>
+                <option value="Parent">Parent/Caregiver</option>
+            </select>
             <span asp-validation-for="Role" class="text-danger"></span>
-        </div>
+        </div> *@
 
         <div class="form-group mt-3">
-            <input type="submit" value="Save" class="btn btn-primary" />
+            <input type="submit" value="Update" class="btn btn-primary" />
             <a class="btn btn-secondary" asp-controller="Home" asp-action="Index">Cancel</a>
         </div>
 
+    
     </form>
 </div>
 
