@@ -33,9 +33,9 @@
                             <!-- Add View link -->
                             <a asp-controller="Student" asp-action="Details" asp-route-id=@s.Id title="View"><i class="bi bi-book"></i></a>                      
                             <!-- Add edit link  -->
-                            <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Edit" asp-route-id=@s.Id title="Edit"><i class="bi bi-pen" ></i></a>  
+                            <a asp-condition=@User.HasOneOfRoles("Parent,Tutor") asp-controller="Student" asp-action="Edit" asp-route-id=@s.Id title="Edit"><i class="bi bi-pen" ></i></a>  
                             <!-- Add delete link -->
-                            <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="Student" asp-action="Delete" asp-route-id=@s.Id title="Delete"><i class="bi bi-trash"></i></a>
+                            <a asp-condition=@User.HasOneOfRoles("Parent,Tutor") asp-controller="Student" asp-action="Delete" asp-route-id=@s.Id title="Delete"><i class="bi bi-trash"></i></a>
 
                             @* <!-- custom anchor tag that links to a custom delete modal for the current student  --> *@
                             <!-- Note how we create a unique modal id using 's.Id' and use this as the anchor tag href -->

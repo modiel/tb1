@@ -11,19 +11,15 @@
         <!-- form inputs -->
         <partial name="_FormInputs"/>
 
-            @* <div class="row">
+            <div class="row">
             <div class="col form-group mt-3">
-                <label asp-for="User.Password" class="control-label"><i class="bi-shield-lock-fill"></i> Password</label>
-                <input type="password" asp-for="User.Password" class="form-control"  id="myInput"> />
-                <span asp-validation-for="User.Password" class="text-danger"></span>
-            </div> *@
-            <!-- An element to toggle between password visibility -->
-            @* <input type="checkbox" onclick="myFunction()">Show Password
-                    </div> *@
-
-
-
-        
+                <label asp-for="@Model.User.Password" class="control-label"><i class="bi-shield-lock-fill"></i> Set Password for Student</label>
+                <input type="password" asp-for="@Model.User.Password" class="form-control"  id="myInput"> 
+                <span asp-validation-for="@Model.User.Password" class="text-danger"></span>
+                <!-- An element to toggle between password visibility -->
+                <input type="checkbox" onclick="myFunction()">Show Password
+            </div>
+            
 
         <div class="form-group ">
             <input type="submit" value="Create" class="btn btn-primary"/>
