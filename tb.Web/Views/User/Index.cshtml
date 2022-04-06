@@ -28,8 +28,8 @@
                         <!-- Add View link -->
                         <a asp-condition=@User.IsInRole("Tutor") asp-controller="User" asp-action="UserDetails" asp-route-id=@u.Id title="View User"><i class="bi bi-book"></i></a>                      
                             
-                         <!-- Add edit link  -->
-                        <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="EditUser" asp-route-id=@u.Id title="Edit User"><i class="bi bi-pen" ></i></a>
+                         @* <!-- Add edit link  -->
+                        <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="EditUser" asp-route-id=@u.Id title="Edit User"><i class="bi bi-pen" ></i></a> *@
                     
                         <!-- Add delete link -->
                         <a asp-condition=@User.IsInRole("Tutor") asp-controller="User" asp-action="DeleteUser" asp-route-id=@u.Id title="Delete User"><i class="bi bi-trash"></i></a>

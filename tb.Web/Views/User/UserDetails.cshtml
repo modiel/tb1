@@ -15,11 +15,8 @@
 
             <!-- add navigation link to Edit action, passing the correct route id parameter -->
             <!-- note use of ClaimsPrincipal extension method HasOneOfRoles (found in Extensions) -->
-@* 
-            <a asp-condition=@User.HasOneOfRoles("Admin,Tutor") asp-controller="User" asp-action="UpdateProfile"
-                asp-route-id="@Model.Id" class="btn btn-sm btn-outline-success mr-2">
-                <i class="bi bi-pencil-square p-1"></i>Update User
-            </a> *@
+
+            
 
             <!-- add navigation link to redirect to Index action -->
             <a asp-controller="User" asp-action="Index" class="btn btn-sm btn-light mr-2">
@@ -32,13 +29,15 @@
                 <i class="bi bi-trash mr-1"></i>Delete User
             </button> 
 
+            <a  class="btn btn-sm btn-primary my-3" asp-controller="Student" asp-action="Create" title="Create new student">Create <i class="bi bi-person-plus-fill"></i></a>     
+
             
 
-             <a asp-controller="User" asp-action="EditUser" asp-route-id="@Model.Id" 
+             @* <a asp-controller="User" asp-action="EditUser" asp-route-id="@Model.Id" 
              title="Update User" class="btn btn-sm btn-outline-success mr-2">
                     <i class="bi bi-pencil-square p-1"></i>Edit User
              </a>    
-           
+            *@
         <div>      
     </div>
          

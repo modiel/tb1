@@ -144,7 +144,7 @@ namespace tb.Web.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateProfile([Bind("Id,FirstName,LastName,Email,Role")] UserProfileViewModel m)       
+        public async Task<IActionResult> UpdateProfile([Bind("Id, FirstName, LastName, ContactName, Phone, AltPhone, AddressLineOne, AddressLineTwo, AddressLineThree, Postcode, Email, Dob, Gender, Role")] UserProfileViewModel m)       
         {
             var user = _svc.GetUser(m.Id);
             // check if form is invalid and redisplay
@@ -156,7 +156,7 @@ namespace tb.Web.Controllers
             // update user details and call service
             user.FirstName = m.FirstName;
             user.Email = m.Email;
-            user.Role = m.Role;  
+        
             // add other properties
             user.LastName = m.LastName;
             user.ContactName = m.ContactName;
@@ -257,6 +257,48 @@ namespace tb.Web.Controllers
             await SignInCookie(user);
 
             return RedirectToAction("Index","Home");
+
+            
+        }
+
+
+          // GET: /student/create DM ADDED 
+        [Authorize]
+        public IActionResult Create()
+        {
+            // display blank form to create a student
+            var s = new Student();
+            return View(s);
+        }
+
+        // POST /student/create       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public IActionResult Create(Student student) 
+        {
+            var userId = GetSignedInUserId();
+            var user = _svc.GetUser(userId);
+
+            // check email is unique for this student
+            if (!_svc.IsEmailAvailable(student.User.Email, student.Id))
+            {
+                // add manual validation error
+                ModelState.AddModelError(nameof(student.User.Email),"The email address is already in use");  
+            }
+
+            // validate student
+            if (ModelState.IsValid)
+            {
+                // pass data to service to store 
+                student = _svc.AddStudent(student);
+                var userStudent = _svc.AssignUserToStudent(user.Id,student.Id);
+                Alert($"Student {student.Name} created successfully", AlertType.info);       
+                
+                return RedirectToAction(nameof(Index));
+            }
+            // redisplay the form for editing as there are validation errors
+            return View(student);
         }
 
         [HttpPost]

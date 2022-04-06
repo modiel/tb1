@@ -45,7 +45,7 @@ namespace tb.Web.ViewModels
         public int Age => (int)DateTime.Now.Subtract(Dob).TotalDays / 365;
         public bool Adult => Age >= 18;
 
-        [Required]
+        
         public Role Role { get; set; }
 
         // Navigation property
