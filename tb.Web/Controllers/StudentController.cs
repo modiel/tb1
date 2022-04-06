@@ -73,7 +73,7 @@ namespace tb.Web.Controllers
         }
 
          // GET: /student/create
-        [Authorize(Roles="Tutor")]
+        [Authorize]
         public IActionResult Create()
         {
             // display blank form to create a student
@@ -84,7 +84,7 @@ namespace tb.Web.Controllers
         // POST /student/create       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Tutor")]
+        [Authorize]
         public IActionResult Create(Student student) 
         {
             var userId = GetSignedInUserId();
