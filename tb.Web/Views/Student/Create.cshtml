@@ -11,6 +11,8 @@
         <!-- form inputs -->
         <partial name="_FormInputs"/>
 
+        <!-- set password when creating student-->
+
             <div class="row">
             <div class="col form-group mt-3">
                 <label asp-for="@Model.User.Password" class="control-label"><i class="bi-shield-lock-fill"></i> Set Password for Student</label>
@@ -21,7 +23,7 @@
             </div>
             
 
-        <div class="form-group ">
+        <div class="form-group mt-3 ">
             <input type="submit" value="Create" class="btn btn-primary"/>
             <a class="btn btn-secondary" asp-action="Index">Cancel</a>
         </div>
