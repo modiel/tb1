@@ -220,14 +220,14 @@ namespace tb.Web.Controllers
 
         // POST /user/delete/{id}
         [HttpPost]
-        [Authorize(Roles="Admin,Tutor")]
+        [Authorize(Roles="Tutor")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteUserConfirm(int id, Student s)//int id if needed-DM
+        public IActionResult DeleteUserConfirm(int id)//int id if needed-DM
         {
             // delete student via service
-            _svc.DeleteUser(id, s);
+             _svc.DeleteUser(id);
          
-            Alert($"User {s.Name} deleted successfully", AlertType.success);
+            Alert($"User {id} deleted successfully", AlertType.success);
             // redirect to the index view
             return RedirectToAction(nameof(Index), new { Id = id });
         }

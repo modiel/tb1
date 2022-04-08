@@ -202,7 +202,44 @@ namespace tb.Web.Controllers
             return RedirectToAction(nameof(Index), new { Id = s.Id });
         }
 
-         // GET /student/createQuery
+       
+
+        // GET /Student/Assign
+        [Authorize(Roles="Tutor,Parent")]
+        public IActionResult Assign()
+        {
+            var users = svc.GetUsers();
+
+            var parents = users.Where( u => u.Role == Role.Parent)
+                                .Select( u => u) ;
+
+            // populate viewmodel select list property
+            var avm = new AssignViewModel {
+                Users = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(parents,"Id","Name") 
+            };
+            
+            // render blank form
+            return View( avm );
+        }
+       
+        // POST /Student/assign
+        [HttpPost]
+        [Authorize(Roles="Tutor,Parent")]
+        public IActionResult Assign(AssignViewModel avm)
+        {
+            if (ModelState.IsValid)
+            {
+                var assign = svc.AssignUserToStudent(avm.UserId, avm.StudentId);
+     
+                Alert($"Student{avm.StudentId} Assigned to User {avm.UserId}", AlertType.info);  
+                return RedirectToAction(nameof(Index));
+            }
+            
+            // redisplay the form for editing
+            return View(avm);
+        }
+
+          // GET /student/createQuery
         [Authorize(Roles="Tutor,Parent,Pupil")]
         public IActionResult CreateQuery(int id)
         {

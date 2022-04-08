@@ -107,25 +107,23 @@ namespace tb.Data.Services
         // }
 
         // Delete the User identified by Id returning true if deleted and false if not found
-        public bool DeleteUser(int id, Student s)
-        {
-            var user = GetUser(id);
-            if (user == null)
-            {
-                return false;
-            }
-             if (user.Role != Role.Pupil)
-            {
-                return false; // user must be a pupil
-            }
+        // public bool DeleteUser(int id, Student s)
+        // {
+        //     var user = GetUser(id);
+        //     if (user == null)
+        //     {
+        //         return false;
+        //     }
+        //      if (user.Role != Role.Pupil)
+        //     {
+        //         return false; // user must be a pupil
+        //     }
 
-            var us = GetStudentByUserId(s.UserId);
-            ctx.Users.Remove(user); 
-            ctx.Students.Remove(us);
-
-            ctx.SaveChanges();
-            return true;
-        }
+            
+        //     ctx.Users.Remove(user);
+        //     ctx.SaveChanges();
+        //     return true;
+        // }
           public bool DeleteUser(int id)
         {
             var u = GetUser(id);
