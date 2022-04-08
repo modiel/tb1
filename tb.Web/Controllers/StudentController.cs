@@ -128,7 +128,7 @@ namespace tb.Web.Controllers
 
         // GET /student/edit/{id}
         [Authorize(Roles="Tutor,Parent")]
-        public IActionResult Edit(int id)
+        public IActionResult Edit([Bind("Password")]int id) 
         {
             // load the student using the service
             var s = svc.GetStudentById(id);
