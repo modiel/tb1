@@ -1,4 +1,5 @@
 @model UserProfileViewModel
+<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/user", "Users"), ("", "Update Profile")})>
 
 <div class="card shadow p-4 mt-4">
 
@@ -69,7 +70,7 @@
         </div>     
         
 
-            @* <!--move Dob  and Gender input groups in 2 columns in single row. This not required for parents --> DM NOT SURE THIS WILL STAY HERE *@
+            @* <!--move Dob  and Gender input groups in 2 columns in single row. This not required for parents --> DM MAY MOVE TO STUDENT IN PRODUCTION *@
             <div class="row" asp-condition=@User.IsInRole("Pupil")>
                 <div class="form-group col-3">
                     <label asp-for="Dob" class="control-label">Date of Birth</label>

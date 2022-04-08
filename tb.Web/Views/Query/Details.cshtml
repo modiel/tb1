@@ -1,38 +1,38 @@
 @model Query
 
 <!-- Breadcrumbs using partial view -->
-<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/query", "Queries"), ("","Close") })>
+<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/query", "Queries"), ("","Resolve") })>
 
     <!--    include button to call _CloseQuery modal (see Student Details view) -->
     <h3 class="mt-4 mb-4">Query from @Model.Student.Name </h3>
 
     <div class="card shadow rounded p-3">
         <dl class="row">
-            <dt class="col-4">Query Id</dt>
-            <dd class="col-8">@Model.Id</dd>
+            <dt class="col-5">Query Id</dt>
+            <dd class="col-7">@Model.Id</dd>
 
-            <dt class="col-4">Name of Student</dt>
-            <dd class="col-2">@Model.Student.Name</dd>         
+            <dt class="col-5">Name of Student</dt>
+            <dd class="col-7">@Model.Student.Name</dd>         
 
-            <dt class="col-4">Created On</dt>
-            <dd class="col-8">@Model.CreatedOn</dd>
+            <dt class="col-5">Created On</dt>
+            <dd class="col-7">@Model.CreatedOn</dd>
 
-            <dt class="col-4">Issue</dt>
-            <dd class="col-8">@Model.Issue</dd>
+            <dt class="col-5">Issue</dt>
+            <dd class="col-7">@Model.Issue</dd>
 
-            <dt class="col-4">Resolved On</dt>
-            <dd class="col-8">
+            <dt class="col-5">Resolved On</dt>
+            <dd class="col-7">
                 <span asp-condition=@(Model.Active)>Unresolved</span>
                 <span asp-condition=@(!Model.Active)>@(Model.ResolvedOn)</span>
             </dd>
 
-            <dt class="col-4">Resolution</dt>
-            <dd class="col-8">@Model.Resolution</dd>
+            <dt class="col-5">Resolution</dt>
+            <dd class="col-7">@Model.Resolution</dd>
         </dl>
     </div>
 
-    <div class="mt-3">
-        <button asp-condition=@User.IsInRole("Tutor") data-bs-toggle="modal" data-bs-target="#closeModal"
+    <div asp-condition=@User.IsInRole("Tutor") class="mt-3">
+        <button asp-condition=@(Model.Active) data-bs-toggle="modal" data-bs-target="#closeModal"
             class="btn btn-sm btn-dark"><i class="bi bi-question-diamond"></i>Resolve
         </button>
         <button asp-condition=@User.IsInRole("Tutor") data-bs-toggle="modal"data-bs-target="#deleteQueryModal" 

@@ -2,7 +2,7 @@
 
 <partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/user", "Users"), ("","UserDetails") })>
 
-    <h3 class="mt-4 mb-4" id="top">User Details</h3>
+    <h3 class="mt-4 mb-4" id="top">User Details: @Model.Name</h3>
    
     <!-- action options -->
     <div class="container">
@@ -29,7 +29,7 @@
                 <i class="bi bi-trash mr-1"></i>Delete User
             </button> 
 
-            <a  class="btn btn-sm btn-primary my-3" asp-controller="Student" asp-action="Create" title="Create new student">Create <i class="bi bi-person-plus-fill"></i></a>     
+            <a asp-condition=@User.HasOneOfRoles("Tutor,Parent") class="btn btn-sm btn-primary my-3" asp-controller="Student" asp-action="Create" title="Create new student">Create <i class="bi bi-person-plus-fill"></i></a>     
 
             
 
