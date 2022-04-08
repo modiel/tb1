@@ -121,7 +121,7 @@ namespace tb.Web.Controllers
             return View(qvm);
         }
 
-           // GET / Query/delete/{id}
+        // GET / Query/delete/{id}
         [Authorize(Roles="Tutor")]
         public IActionResult DeleteQuery(int id)
         {

@@ -208,6 +208,7 @@ namespace tb.Web.Controllers
         [Authorize(Roles="Tutor,Parent")]
         public IActionResult Assign()
         {
+
             var users = svc.GetUsers();
 
             var parents = users.Where( u => u.Role == Role.Parent)
@@ -225,14 +226,14 @@ namespace tb.Web.Controllers
         // POST /Student/assign
         [HttpPost]
         [Authorize(Roles="Tutor,Parent")]
-        public IActionResult Assign(AssignViewModel avm)
+        public IActionResult Assign(int id, AssignViewModel avm)
         {
             if (ModelState.IsValid)
-            {
-                var assign = svc.AssignUserToStudent(avm.UserId, avm.StudentId);
+            {   var student = svc.GetStudentByUserId(id);
+                var assign = svc.AssignUserToStudent(avm.UserId, id);
      
-                Alert($"Student{avm.StudentId} Assigned to User {avm.UserId}", AlertType.info);  
-                return RedirectToAction(nameof(Index));
+                Alert($"Student {id} Assigned to User {avm.UserId}", AlertType.info);  
+                return RedirectToAction(nameof(Index), new { UserId = avm.UserId, StudentId = avm.StudentId, Id= id });
             }
             
             // redisplay the form for editing
