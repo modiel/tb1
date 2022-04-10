@@ -222,10 +222,16 @@ namespace tb.Data.Services
         
             if (order.ToLower() == "inst1") //will order by instrument
             { 
-            return ctx.Students.OrderBy(s => s.InstrumentOne)
+            return ctx.Students.OrderBy(s => s.InstrumentOne ) 
+                               
                                 .Include(s => s.User).ToList();
             }
 
+             if (order.ToLower() == "age") //will order by date of birth
+            { 
+            return ctx.Students.OrderBy(s => s.User.Dob)
+                                .Include(s => s.User).ToList();
+            }
 
             if (order.ToLower() == "id")//will order by Lesson Format
             { 

@@ -13,7 +13,7 @@
 
 
 
-<div class="card text-center">
+<div asp-condition=@User.IsInRole("Tutor") class="card text-center">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
@@ -30,6 +30,7 @@
                 </li>
             </ul>
         </div>
+</div>
 <div class="card shadow rounded p-3">
     <div class="row pl-3">
     <table class="table table-light table-striped">
