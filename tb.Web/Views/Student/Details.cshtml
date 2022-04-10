@@ -35,7 +35,7 @@
                 <!-- add navigation link to Edit action, passing the correct route id parameter -->
                 <!-- note use of ClaimsPrincipal extension method HasOneOfRoles (found in Extensions) -->
 
-                <a asp-condition=@User.IsInRole("Tutor") asp-controller="Student" asp-action="Edit"
+                <a  asp-controller="Student" asp-action="Edit"
                     asp-route-id="@Model.Id" class="btn btn-sm btn-outline-success mr-2">
                     <i class="bi bi-pencil-square p-1"></i>Edit Student
                 </a>
@@ -151,7 +151,7 @@
 
     <h3 class="mt-3" id="pl">Progress Logs</h3>
     <!-- Progress Log button added to avoid rescrolling -->
-    <a asp-action="CreateProgressLog" asp-route-id="@Model.Id" class="btn btn-sm btn-info">
+    <a asp-condition=@User.IsInRole("Tutor") asp-action="CreateProgressLog" asp-route-id="@Model.Id" class="btn btn-sm btn-info">
         <i class="bi bi-plus-square-dotted ml-1"></i>Add Progress Log
     </a>
 
