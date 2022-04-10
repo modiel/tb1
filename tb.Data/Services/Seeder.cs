@@ -26,7 +26,7 @@ namespace tb.Data.Services
             //add students
             var s1 = new Student
             {   
-                User = new User { FirstName = "Pupil1", LastName = "", Email = "pupil1@mail.com", Password =  "pupil1",Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                User = new User { FirstName = "Pupil1", LastName = "PPP", Email = "pupil1@mail.com", Password =  "pupil1",Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
                 AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
                 AddressLineThree = "", Postcode = "XXXX YYY", 
                 Role =  Role.Pupil, Dob = new DateTime(2010,1,1), Gender = Gender.Female},
@@ -47,7 +47,7 @@ namespace tb.Data.Services
 
             var s2 = new Student
             {   
-                User = new User { FirstName = "Pupil2", LastName = "", Email = "pupil2@mail.com", Password =  "pupil2", 
+                User = new User { FirstName = "Pupil2", LastName = "BBBB", Email = "pupil2@mail.com", Password =  "pupil2", 
                                   Role =  Role.Pupil, Dob = new DateTime(2000,1,1) 
                                 },
                 Allergies = "Tree nuts",
@@ -67,7 +67,7 @@ namespace tb.Data.Services
 
             var s3 = new Student
             {   
-                User= new User { FirstName = "Pupil3", LastName = "", Email = "pupil3@mail.com", Password =  "pupil3", 
+                User= new User { FirstName = "Pupil3", LastName = "zzz", Email = "pupil3@mail.com", Password =  "pupil3", 
                                  Role =  Role.Pupil, Dob = new DateTime(1990,4,1) 
                                 },
                 Allergies = "",
@@ -87,7 +87,7 @@ namespace tb.Data.Services
             
             var s4 = new Student
             {   
-                User = new User { FirstName = "Pupil4", LastName = "", Email = "pupil4@mail.com", Password =  "pupil4", 
+                User = new User { FirstName = "Pupil4", LastName = "YYYY", Email = "pupil4@mail.com", Password =  "pupil4", 
                                   Role =  Role.Pupil, Dob = new DateTime(1995,10,1) 
                                 }, 
                 Allergies = "",
@@ -107,7 +107,7 @@ namespace tb.Data.Services
               
             var s5 = new Student
             {   
-                User = new User { FirstName = "Pupil5", LastName = "", Email = "pupil5@mail.com", Password =  "pupil5", 
+                User = new User { FirstName = "Pupil5", LastName = "AAA", Email = "pupil5@mail.com", Password =  "pupil5", 
                                   Role =  Role.Pupil, Dob = new DateTime(1989,3,1) 
                                 },
                 Allergies = "Sunlight",

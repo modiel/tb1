@@ -26,14 +26,16 @@ namespace tb.Web.Controllers
         public IActionResult Index()
         {  
             IList<Student> students = new List<Student>();
-            var userId = GetSignedInUserId();          
-            if (User.IsInRole(Role.Tutor.ToString())) //this could be admin if role restored
+
+            var userId = GetSignedInUserId(); //define route based on role of who is signed in        
+
+            if (User.IsInRole(Role.Tutor.ToString())) //this could be admin if using hub system
             {
                 students = svc.GetStudents();
             } 
             else if (User.IsInRole(Role.Pupil.ToString()))
             {
-                students.Add( svc.GetStudentByUserId(userId));
+                students.Add(svc.GetStudentByUserId(userId));
             }          
             else // parent
             {
@@ -41,6 +43,23 @@ namespace tb.Web.Controllers
             }
             return View(students);
         }
+
+        // GET /student/index/ordered
+        [Authorize]
+        public IActionResult OrderedIndex(string order = null)
+        {
+        IList<Student> students = new List<Student>();
+
+        
+         if (User.IsInRole(Role.Tutor.ToString())) //this could be admin if using hub system
+            {
+                students = svc.GetStudents(order);
+            } 
+            return View(students);
+
+        }
+        
+
 
         [Authorize(Roles="Pupil,Parent")]
         public IActionResult UserDetails()
@@ -128,10 +147,12 @@ namespace tb.Web.Controllers
 
            // GET /student/edit/{id}
         [Authorize]
-        public IActionResult Edit([Bind("Password")]int id) 
-        {
+        public IActionResult Edit([Bind("Password")]int id, User u) 
+        {   
+            var user = GetSignedInUserId();
             // load the student using the service
             var s = svc.GetStudentById(id);
+            
         
             // check if s is null and return NotFound()
             if (s == null)
@@ -140,7 +161,7 @@ namespace tb.Web.Controllers
                 return RedirectToAction(nameof(Index), new { Id = id });
             }   
 
-            if( s.User.Adult != true)
+            if( s.User.Adult != true || user == 0)
             {
                 
                 Alert($"Edits may only be peformed by students aged over 18", AlertType.warning); 

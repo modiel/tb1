@@ -352,7 +352,7 @@ namespace tb.Test
             //arrange
 
             //act
-            var students = service.GetStudents(); //database should be empty
+            var students = service.GetStudents(""); //database should be empty
             var users = service.GetUsers(); //database should be empty as no users were added to student
             var studentsCount = students.Count;
             var usersCount = users.Count; 
@@ -466,7 +466,7 @@ namespace tb.Test
 
             // act
             //get students and check count
-            var students = service.GetStudents();
+            var students = service.GetStudents("");
             var sCount = students.Count;
 
             //get users and check count
@@ -692,7 +692,7 @@ namespace tb.Test
 
             //act
             var deleted = service.DeleteStudent(student.Id);
-            var students = service.GetStudents(); //retrieve list of students to confirm student is deleted
+            var students = service.GetStudents(""); //retrieve list of students to confirm student is deleted
 
             //assert
             Assert.Equal(0, students.Count); //confirm students count is 0
@@ -735,7 +735,7 @@ namespace tb.Test
 
             // act 	
             service.DeleteStudent(0);               // delete non existent Student
-            var Students = service.GetStudents();   // retrieve list of Students
+            var Students = service.GetStudents("");   // retrieve list of Students
 
             // assert
             Assert.Equal(1, Students.Count);    // should be 1 Student

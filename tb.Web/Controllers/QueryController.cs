@@ -94,7 +94,7 @@ namespace tb.Web.Controllers
         [Authorize(Roles="Tutor,Parent,Pupil")]
         public IActionResult Create()
         {
-            var students = svc.GetStudents();
+            var students = svc.GetStudents("");
             // populate viewmodel select list property
             var qvm = new QueryCreateViewModel {
                 Students = new SelectList(students,"Id","Name") 

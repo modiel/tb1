@@ -203,10 +203,40 @@ namespace tb.Data.Services
         // ------------------ Student Related Operations ------------------------
 
         // retrieve list of Students
-        public IList<Student> GetStudents()
-        {
+         public IList<Student> GetStudents()
+         {
+         return ctx.Students.Include(s => s.User).ToList();//will default to order by Id
+         }
+
+        public IList<Student> GetStudents(string order = null)
+
+        { 
+
             // return the collection as a list
-            return ctx.Students.Include(s => s.User).ToList();
+            if (order.ToLower() == "name") //will order alphbetically 
+            { 
+            return ctx.Students.OrderBy(s => s.User.LastName)
+                                .Include(s => s.User)
+                                .ToList();
+            }
+        
+            if (order.ToLower() == "inst1") //will order by instrument
+            { 
+            return ctx.Students.OrderBy(s => s.InstrumentOne)
+                                .Include(s => s.User).ToList();
+            }
+
+
+            if (order.ToLower() == "id")//will order by Lesson Format
+            { 
+            return ctx.Students.OrderBy(s => s.Id)
+                                .Include(s => s.User).ToList();
+            }
+
+            else
+            {
+            return ctx.Students.Include(s => s.User).ToList();//will default to order by Id
+            }
         }
 
 
