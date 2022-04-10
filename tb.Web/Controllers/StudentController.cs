@@ -126,19 +126,28 @@ namespace tb.Web.Controllers
         }
         
 
-        // GET /student/edit/{id}
-        [Authorize(Roles="Tutor,Parent")]
+           // GET /student/edit/{id}
+        [Authorize]
         public IActionResult Edit([Bind("Password")]int id) 
         {
             // load the student using the service
             var s = svc.GetStudentById(id);
-
+        
             // check if s is null and return NotFound()
             if (s == null)
             {
                 Alert($"No such student {id}", AlertType.warning); 
                 return RedirectToAction(nameof(Index), new { Id = id });
             }   
+
+            if( s.User.Adult != true)
+            {
+                
+                Alert($"Edits may only be peformed by students aged over 18", AlertType.warning); 
+                return RedirectToAction(nameof(Details), new { Id = id });
+            
+            }
+
 
             // pass student to view for editing
             return View(s);
@@ -147,7 +156,7 @@ namespace tb.Web.Controllers
         // POST /student/edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Tutor,Parent")]
+        [Authorize]
         public IActionResult Edit(int id, Student s)
         {
             // check email is unique for this student
