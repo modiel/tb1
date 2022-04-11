@@ -170,8 +170,8 @@ namespace tb.Test
                 LessonTwoDay = DaysOfWeek.NA
             };
 
-                //add student to service
-             var s= service.AddStudent(student);
+            //add student to service
+            var s= service.AddStudent(student);
 
             //assign student to tutor
             var userStudent = service.AssignUserToStudent(tutor.Id, s.Id);
@@ -181,7 +181,7 @@ namespace tb.Test
 
             //assert 
             Assert.NotNull(assigned); //student should be assigned in UserStudents
-             Assert.Equal(s.Id, userStudent.Id);
+            Assert.Equal(s.Id, userStudent.Id); //id should match student and userstudent
            
         }
 
@@ -296,56 +296,7 @@ namespace tb.Test
             Assert.Null(deletedCheck);
         }
         
-        // [Fact]
-        // public void User_WhenAddedWithStudent_WhenDeleted_ShouldAlsoDeleteStudent(){
-        //    // arrange
-        //     var pupil =  new User { 
-        //         FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
-        //         LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
-        //         AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
-        //         AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
-        //         Gender = Gender.Female,
-        //     };
-            
-
-        //     // create student
-        //     var student = new Student
-        //     {   
-        //         User = pupil,
-        //         Allergies = "xxx",
-        //         AdditionalNeeds = "ADD",
-        //         InstrumentOne = "yyy",
-        //         InstrumentTwo = "",
-        //         CurrentGradeInstOne = 3,
-        //         CurrentGradeInstTwo = 0,
-        //         CurrentTheoryGrade = 1,
-        //         Aurals = Aurals.Yes,
-        //         LessonFormat = LessonFormat.InPersonOnly,
-        //         LessonOneDay = DaysOfWeek.Monday,
-        //         LessonTwoDay = DaysOfWeek.NA
-        //     };
-
-        //     //act
-        //     //add student to service
-        //     service.AddStudent(student);
-
-        //     // act
-        //     var deleted = service.DeleteStudent(student, pupil);
-
-        //     //attempt to get User from database
-        //     var deletedUserCheck= service.GetUser(pupil.Id);
-            
-        //     //attempt to get Student from database
-        //     // var deletedStudentCheck= service.GetStudentByUserId(student.UserId);
-        
-        //     // assert
-        //     Assert.True(deleted);
-        //     Assert.Null(deletedUserCheck);
-        //     // Assert.Null(deletedStudentCheck);
-
-        // }
-
-        
+    
         // =================  Student Tests =====================
         [Fact]
         public void Student_GetStudentsWhenNone_ShouldReturnNone()

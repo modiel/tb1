@@ -15,24 +15,30 @@ namespace tb.Data.Services
             // add users 
             // var admin = svc.AddUser(
             //     new User { FirstName = "Admin", LastName = "", Email = "admin@mail.com", Password =  "admin", Role =  Role.Admin }
-            // );
-            var tutor = svc.AddUser( "Tutor","Surname", "", "156132321", "5132513" , "tutor@mail.com", "10 Test Way", "Test Road",
+            // )-DM could use for future if employing an admin
+            var tutor = svc.AddUser( "Tutor","McTuition", "", "156132321", "5132513" , "tutor@mail.com", "10 Test Way", "Test Road",
                 "Tyrone",  "XXXX YYZ", new System.DateTime(1965,1,1), Gender.Female, "tutor", Role.Tutor);
             var parent = svc.AddUser(
-            "Parent","One", "", "0209999999", "0208888888" , "parent@mail.com", "10 Test Way", "Test Road",
-                "Down",  "XXXX YYZ", new System.DateTime(1965,1,1), Gender.Female, "parent", Role.Parent);
+            "Parent","McParent", "", "0209999999", "0208888888" , "parent@mail.com", "11 Test Way", "Test Road",
+                "Down",  "XXXX YYZ", new System.DateTime(1975,1,1), Gender.Male, "parent", Role.Parent);
+            var parent1 = svc.AddUser(
+            "Iduna","Arendelle", "", "0209999999", "0208888888" , "iduna@mail.com", "10 Mountainside", "Mountainside",
+                "Norway",  "XXXX YYZ", new System.DateTime(1972,1,1), Gender.Female, "iduna", Role.Parent);
+            var parent2 = svc.AddUser(
+            "Mrs","Peacock", "", "0209999999", "0208888888" , "peacock@mail.com","12 Test Way", "Test Road",
+                "Down",  "XXXX YYZ", new System.DateTime(1979,5,1), Gender.Female, "peacock", Role.Parent);
             
           
             //add students
             var s1 = new Student
             {   
-                User = new User { FirstName = "Pupil1", LastName = "PPP", Email = "pupil1@mail.com", Password =  "pupil1",Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                User = new User { FirstName = "Missy", LastName = "Scarlet", ContactName = "Mrs Peacock", Email = "missy@mail.com", Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
                 AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
                 AddressLineThree = "", Postcode = "XXXX YYY", 
-                Role =  Role.Pupil, Dob = new DateTime(2010,1,1), Gender = Gender.Female},
+                Dob = new DateTime(2010,1,1), Gender = Gender.Female, Password =  "missy",  Role =  Role.Pupil},
                 Allergies = "None",
                 AdditionalNeeds = "None",
-                GeneralNotes = "",
+                GeneralNotes = "Needs help with Bass Clef",
                 InstrumentOne = "Piano",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 1,
@@ -47,9 +53,11 @@ namespace tb.Data.Services
 
             var s2 = new Student
             {   
-                User = new User { FirstName = "Pupil2", LastName = "BBBB", Email = "pupil2@mail.com", Password =  "pupil2", 
-                                  Role =  Role.Pupil, Dob = new DateTime(2000,1,1) 
-                                },
+                User = new User { FirstName = "Sven", LastName = "Reindeer", ContactName = "Kristof Trollson", Email = "pupil2@mail.com", Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY",   
+                Role =  Role.Pupil, Dob = new DateTime(2008,1,1), Password =  "pupil2", Gender = Gender.Male 
+                },
                 Allergies = "Tree nuts",
                 AdditionalNeeds = "ADD - mild but check if meds have been taken",
                 GeneralNotes = "Wants to do GCSE music",
@@ -67,9 +75,10 @@ namespace tb.Data.Services
 
             var s3 = new Student
             {   
-                User= new User { FirstName = "Pupil3", LastName = "zzz", Email = "pupil3@mail.com", Password =  "pupil3", 
-                                 Role =  Role.Pupil, Dob = new DateTime(1990,4,1) 
-                                },
+                User= new User { FirstName = "Hans", LastName = "Isles", ContactName = "" , Email = "hans@mail.com",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Role =  Role.Pupil, Dob = new DateTime(1990,4,1), Password =  "hans", Gender = Gender.Male
+                },
                 Allergies = "",
                 AdditionalNeeds = "",
                 GeneralNotes = "Wants to do A Level music",
@@ -79,7 +88,7 @@ namespace tb.Data.Services
                 CurrentGradeInstTwo = 0,
                 CurrentTheoryGrade = 1,
                 Aurals = Aurals.Yes,
-                LessonFormat = LessonFormat.OnlineOnly,
+                LessonFormat = LessonFormat.OnlineOnly, 
                 LessonOneDay = Core.Models.DaysOfWeek.Monday,
                 LessonTwoDay = Core.Models.DaysOfWeek.NA
             };
@@ -87,12 +96,13 @@ namespace tb.Data.Services
             
             var s4 = new Student
             {   
-                User = new User { FirstName = "Pupil4", LastName = "YYYY", Email = "pupil4@mail.com", Password =  "pupil4", 
-                                  Role =  Role.Pupil, Dob = new DateTime(1995,10,1) 
+                User = new User { FirstName = "Elsa", LastName = "Arendelle", Email = "elsa@mail.com", Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY", Password = "elsa", Role =  Role.Pupil, Dob = new DateTime(1995,10,1), Gender = Gender.Female 
                                 }, 
                 Allergies = "",
                 AdditionalNeeds = "Turns things to ice when stressed. The cold never bothered her anyway",
-                GeneralNotes = "Learns by ear, work on sight reading",
+                GeneralNotes = "Learns by ear, work on sight reading.",
                 InstrumentOne = "Piano",
                 InstrumentTwo = "Flute",
                 CurrentGradeInstOne = 6,
@@ -107,12 +117,13 @@ namespace tb.Data.Services
               
             var s5 = new Student
             {   
-                User = new User { FirstName = "Pupil5", LastName = "AAA", Email = "pupil5@mail.com", Password =  "pupil5", 
-                                  Role =  Role.Pupil, Dob = new DateTime(1989,3,1) 
-                                },
+                User = new User { FirstName = "Olaf", LastName = "Arendelle", Email = "olaf@mail.com", Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY",   Password =  "olaf", Role =  Role.Pupil, Dob = new DateTime(1989,3,1), Gender = Gender.Male  
+                },
                 Allergies = "Sunlight",
                 AdditionalNeeds = "Keep temperature low",
-                GeneralNotes = "",
+                GeneralNotes = "Doesn't have a good ear. Or any ears, for that matter.",
                 InstrumentOne = "Piano",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 0,
@@ -125,19 +136,42 @@ namespace tb.Data.Services
             };
             var student5 = svc.AddStudent(s5); 
 
-            // add students to tutor student list
+            var s6 = new Student
+            {   
+                User = new User { FirstName = "Anna", LastName = "Arendelle", ContactName = "Iduna Arendelle", Email = "anna@mail.com",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
+                AddressLineThree = "", Postcode = "XXXX YYY",  Password =  "anna", 
+                Role =  Role.Pupil, Dob = new DateTime(1995,10,1), Gender = Gender.Female  
+                }, 
+                Allergies = "",
+                AdditionalNeeds = "",
+                GeneralNotes = "Learns by ear, work on sight reading.",
+                InstrumentOne = "Flute",
+                InstrumentTwo = "",
+                CurrentGradeInstOne = 3,
+                CurrentGradeInstTwo = 0,
+                CurrentTheoryGrade = 2,
+                Aurals = Aurals.Yes,
+                LessonFormat = LessonFormat.InPersonOnly,
+                LessonOneDay = Core.Models.DaysOfWeek.Monday,
+                LessonTwoDay = Core.Models.DaysOfWeek.NA
+            };
+            var student6 = svc.AddStudent(s6); 
+
+            // add students to tutor student list- not necessary in development stage but can be used to filter if using multiple tutors
             svc.AssignUserToStudent(tutor.Id, student1.Id);
             svc.AssignUserToStudent(tutor.Id, student2.Id);
             svc.AssignUserToStudent(tutor.Id, student3.Id);
             svc.AssignUserToStudent(tutor.Id, student4.Id); 
-            svc.AssignUserToStudent(tutor.Id, student5.Id);    
-
-            // tutor 1 has no students
-
+            svc.AssignUserToStudent(tutor.Id, student5.Id);
+            svc.AssignUserToStudent(tutor.Id, student6.Id);      
+   
+            // add students 4 and 6 to parent1 student list 
+            svc.AssignUserToStudent(parent1.Id, student4.Id);
+            svc.AssignUserToStudent(parent1.Id, student6.Id);
             
-            // add students 3 and 4 to parent student list
-            svc.AssignUserToStudent(parent.Id, student3.Id);
-            svc.AssignUserToStudent(parent.Id, student4.Id);
+            // add students 1 parent2 student list 
+            svc.AssignUserToStudent(parent2.Id, student1.Id);
 
             //=============now seed progress=============
             var pl1 = new ProgressLog
