@@ -30,7 +30,7 @@ namespace tb.Test
         [Fact]
         public void AddingUsersShouldWork()
         {
-            // arrange
+            // arrange DM may return to this version next iteration
             // service.AddUser( new User { FirstName = "Tutor", Email = "tutor@mail.com", Password = "tutor", Role = Role.Tutor,
             //     LastName = "YYYYY",  Phone = "xxxxxxxxxxxY",  AltPhone = "yyyyyyyyyyX",  
             //     AddressLineOne = "10 Test Way", AddressLineTwo = "Test Road",
@@ -306,6 +306,7 @@ namespace tb.Test
         //         AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
         //         Gender = Gender.Female,
         //     };
+            
 
         //     // create student
         //     var student = new Student
@@ -329,18 +330,18 @@ namespace tb.Test
         //     service.AddStudent(student);
 
         //     // act
-        //     var deleted = service.DeleteUser (pupil.Id, student);
+        //     var deleted = service.DeleteStudent(student, pupil);
 
         //     //attempt to get User from database
         //     var deletedUserCheck= service.GetUser(pupil.Id);
             
         //     //attempt to get Student from database
-        //     var deletedStudentCheck= service.GetStudentByUserId(student.UserId);
+        //     // var deletedStudentCheck= service.GetStudentByUserId(student.UserId);
         
         //     // assert
         //     Assert.True(deleted);
         //     Assert.Null(deletedUserCheck);
-        //     Assert.Null(deletedStudentCheck);
+        //     // Assert.Null(deletedStudentCheck);
 
         // }
 
@@ -402,14 +403,61 @@ namespace tb.Test
         
         }
 
+        [Fact]
+        public void Student_GetStudentsWhenOrderByName_ShouldReturnStudents()
+        {
+            //arrange
+
+            //act - pass in Title parameter to GetAllMovies
+            var students = service.GetStudents("name");
+
+            //assert
+            Assert.NotNull(students);
+        }
+
+        [Fact]
+        public void Student_GetStudentsWhenOrderByInstrument_ShouldReturnStudents()
+        {
+            //arrange
+
+            //act - pass in Title parameter to GetAllMovies
+            var students = service.GetStudents("inst1");
+
+            //assert
+            Assert.NotNull(students);
+        }
+
+        [Fact]
+        public void Student_GetStudentsWhenOrderByAge_ShouldReturnStudents()
+        {
+            //arrange
+
+            //act - pass in Title parameter to GetAllMovies
+            var students = service.GetStudents("age");
+
+            //assert
+            Assert.NotNull(students);
+        }
+
+        [Fact]
+        public void Student_GetStudentsWhenOrderById_ShouldReturnStudents()
+        {
+            //arrange
+
+            //act - pass in Title parameter to GetAllMovies
+            var students = service.GetStudents("id");
+
+            //assert
+            Assert.NotNull(students);
+        }
+
 
         [Fact]
         public void Student_GetStudentsWhenTwoAdded_ShouldReturnTwo()
         {
             // arrange
-            // create dummy student one
+            // create dummy pupil one
 
-            // arrange
             var pupil1 =   new User { 
                 FirstName = "Pupil", Email = "pupil@mail.com", Password = "pupil", Role = Role.Pupil,
                 LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
@@ -417,6 +465,8 @@ namespace tb.Test
                 AddressLineThree = "", Postcode = "XXXX YYY", Dob = new System.DateTime(1965,1,1),
                 Gender = Gender.Female,
             };
+
+            // create dummy pupil two
             var pupil2 =  new User { 
                 FirstName = "Pupil2", Email = "pupil2@mail.com", Password = "pupil2", Role = Role.Pupil,
                 LastName = "XXXX",  Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
@@ -425,7 +475,7 @@ namespace tb.Test
                 Gender = Gender.Male,
             };
 
-            // create student
+            // create student 1
             var ns1 = new Student
             {   User = pupil1,
                 Allergies = "xxx",
@@ -442,6 +492,7 @@ namespace tb.Test
                 LessonTwoDay = DaysOfWeek.NA
             };
 
+            // create student 2
             var ns2 = new Student
             {   
                 User = pupil2,
@@ -466,7 +517,7 @@ namespace tb.Test
 
             // act
             //get students and check count
-            var students = service.GetStudents("");
+            var students = service.GetStudents();
             var sCount = students.Count;
 
             //get users and check count
@@ -856,7 +907,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
-                
+                GeneralNotes= "",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -897,6 +948,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes= "",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,
@@ -942,6 +994,7 @@ namespace tb.Test
                 User = pupil, 
                 Allergies = "xxx",
                 AdditionalNeeds = "ADD",
+                GeneralNotes= "",
                 InstrumentOne = "yyy",
                 InstrumentTwo = "",
                 CurrentGradeInstOne = 3,

@@ -236,7 +236,7 @@ namespace tb.Data.Services
                                 .Include(s => s.User).ToList();
             }
 
-            if (order.ToLower() == "id")//will order by Lesson Format
+            if (order.ToLower() == "id")//will order by Id
             { 
             return ctx.Students.OrderBy(s => s.Id)
                                 .Include(s => s.User).ToList();
