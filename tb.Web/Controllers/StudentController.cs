@@ -147,9 +147,10 @@ namespace tb.Web.Controllers
 
            // GET /student/edit/{id}
         [Authorize]
-        public IActionResult Edit([Bind("Password")]int id, User u) 
+        public IActionResult Edit([Bind("Password")]int id) 
         {   
             var user = GetSignedInUserId();
+            var userU = svc.GetUser(user);
             // load the student using the service
             var s = svc.GetStudentById(id);
             
@@ -161,7 +162,7 @@ namespace tb.Web.Controllers
                 return RedirectToAction(nameof(Index), new { Id = id });
             }   
 
-            if( s.User.Adult != true || user == 0)
+            if( s.User.Adult != true && userU.Adult != true)
             {
                 
                 Alert($"Edits may only be peformed by students aged over 18", AlertType.warning); 
@@ -256,14 +257,17 @@ namespace tb.Web.Controllers
         // POST /Student/assign
         [HttpPost]
         [Authorize(Roles="Tutor,Parent")]
-        public IActionResult Assign(int id, AssignViewModel avm)
-        {
-            if (ModelState.IsValid)
-            {   var student = svc.GetStudentByUserId(id);
-                var assign = svc.AssignUserToStudent(avm.UserId, id);
+        public IActionResult Assign([Bind("StudentId","UserId","Name")] AssignViewModel avm)
+        {  
+            
+
+            if (ModelState.IsValid )
+            {   var student = svc.GetStudentById(avm.StudentId);//id
+                var assign = svc.AssignUserToStudent(avm.UserId, student.Id);
+                var user = svc.GetUser(avm.UserId);
      
-                Alert($"Student {id} Assigned to User {avm.UserId}", AlertType.info);  
-                return RedirectToAction(nameof(Index), new { UserId = avm.UserId, StudentId = avm.StudentId, Id= id });
+                Alert($"Student {student.Name} Assigned to User {avm.UserId}", AlertType.info);  
+                return RedirectToAction(nameof(Index), new { UserId = avm.UserId, StudentId = avm.StudentId});//, Id= id 
             }
             
             // redisplay the form for editing

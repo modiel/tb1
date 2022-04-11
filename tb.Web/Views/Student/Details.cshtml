@@ -41,9 +41,10 @@
                 </a>
 
                 <!-- add navigation link to redirect to Index action -->
-                <a asp-condition=@User.IsInRole("Tutor,Parent") asp-controller="Student" asp-action="Index" class="btn btn-sm btn-light mr-2">
+                <a  asp-condition=@User.IsInRole("Tutor") asp-controller="Student" asp-action="Index" class="btn btn-sm btn-light mr-2">
                     <i class="bi bi-card-list p-1"></i>Student List
                 </a>
+                <a asp-condition=@User.IsInRole("Tutor") asp-controller="Student" asp-action="Assign" asp-route-id="@Model.Id" title="Assign to Parent" class="btn btn-sm btn-outline-dark mr-2">Assign Student<i class="bi bi-diagram-3-fill ms-1"></i></a>
         
 
                 <!-- add navigation link to Delete action, passing the correct route id parameter -->

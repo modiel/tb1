@@ -15,6 +15,9 @@ namespace tb.Web.ViewModels
 
         public int UserId { get; set; } // Collecting UserId  in Form
 
+        public User User { get; set; }
+        public Student Student { get; set;}
+
     
     }
 

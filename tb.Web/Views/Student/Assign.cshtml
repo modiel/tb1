@@ -1,8 +1,8 @@
 @model AssignViewModel
 
-<h3 class="mt-4 mb-4">Assign Student to Parent/Caregiver</h3>
+<h3 class="mt-4 mb-4">Assign Student @Model.StudentId to Parent/Caregiver</h3>
 
-<form asp-action="Assign" asp-controlller=>
+<form asp-action="Assign">
 
     <div asp-validation-summary="ModelOnly"   class="text-danger"></div>
 
@@ -17,12 +17,24 @@
 
     
    
-    <div class="form-group mt-2">
+    @* <div class="form-group mt-2">
         <input type="submit" value="Assign" title="Assign student to user" class="btn btn-primary">
         <a class="btn btn-secondary" asp-action="Index">Cancel</a>
-    </div>
+    </div> *@
+
+     
+
+  
 
 </form>
+ <!-- add navigation link to assign action, passing the correct route id parameter -->
+                <button asp-condition=@User.IsInRole("Tutor")  data-bs-toggle="modal"
+                    data-bs-target="#assignConfirmModal" 
+                    class="btn btn-sm btn-primary mr-2">Assign Student<i class="bi bi-diagram-3-fill ms-1"></i></a>
+        
+                </button>
+                <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+
 
 
 @section Scripts {
