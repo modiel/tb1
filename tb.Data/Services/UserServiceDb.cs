@@ -38,10 +38,11 @@ namespace tb.Data.Services
         }
 
         public User GetUserWithStudents(int id)
-        {
+        { 
+           
             return ctx.Users
-                      .Include(u => u.UserStudents)
-                      .ThenInclude(us => us.Student)
+                      .Include(u => u.UserStudents)  
+                      .ThenInclude(us => us.Student) 
                       .FirstOrDefault(s => s.Id == id);
         }
  // Add a new User checking a User with same email does not exist
@@ -76,7 +77,7 @@ namespace tb.Data.Services
         }
 
         // Add a new User checking a User with same email does not exist - could be used if only adding a particular type of user
-        // public User AddUser(User u)
+        // public User AddUser(User u)- DM may return to this method next iteration
         // {     
         //     var existing = GetUserByEmail(u.Email);
         //     if (existing != null)
@@ -208,6 +209,8 @@ namespace tb.Data.Services
          return ctx.Students.Include(s => s.User).ToList();//will default to order by Id
          }
 
+
+        // retrieve list of Students when using an order
         public IList<Student> GetStudents(string order = null)
 
         { 
@@ -227,7 +230,7 @@ namespace tb.Data.Services
                                 .Include(s => s.User).ToList();
             }
 
-             if (order.ToLower() == "age") //will order by date of birth
+            if (order.ToLower() == "age") //will order by date of birth
             { 
             return ctx.Students.OrderBy(s => s.User.Dob)
                                 .Include(s => s.User).ToList();
@@ -272,7 +275,8 @@ namespace tb.Data.Services
             return ctx.UserStudents                 
                     .Where(us => us.UserId == uId)
                     .Include(us => us.Student.User)
-                    .Select(us => us.Student)               
+                    .Select(us => us.Student)
+                    .Distinct()               
                     .ToList(); 
         }
            

@@ -36,6 +36,7 @@ namespace tb.Web.Controllers
             else if (User.IsInRole(Role.Pupil.ToString()))
             {
                 students.Add(svc.GetStudentByUserId(userId));
+                
             }          
             else // parent
             {
