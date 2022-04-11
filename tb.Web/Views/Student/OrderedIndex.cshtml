@@ -15,7 +15,9 @@
 
 <div asp-condition=@User.IsInRole("Tutor") class="card text-center">
         <div class="card-header">
+            <h5>Order Index by:</h5>
             <ul class="nav nav-tabs card-header-tabs">
+
                 <li class="nav-item">
                     <a asp-controller="Student" asp-action="OrderedIndex" asp-route-order="name" class="nav-link active" aria-current="true" >Last Name</a>
                 </li>
