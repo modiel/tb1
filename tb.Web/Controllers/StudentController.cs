@@ -147,9 +147,10 @@ namespace tb.Web.Controllers
 
            // GET /student/edit/{id}
         [Authorize]
-        public IActionResult Edit([Bind("Password")]int id, User u) 
+        public IActionResult Edit([Bind("Password")]int id) 
         {   
             var user = GetSignedInUserId();
+            var userU = svc.GetUser(user);
             // load the student using the service
             var s = svc.GetStudentById(id);
             
@@ -161,7 +162,7 @@ namespace tb.Web.Controllers
                 return RedirectToAction(nameof(Index), new { Id = id });
             }   
 
-            if( s.User.Adult != true || user == 0)
+            if( s.User.Adult != true && userU.Adult != true)
             {
                 
                 Alert($"Edits may only be peformed by students aged over 18", AlertType.warning); 
