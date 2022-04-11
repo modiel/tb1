@@ -4,15 +4,20 @@
 
 
 
-
 <div class="text-center">
-    <h1 class="display-4">Welcome to the touchBass Student Management Solution!</h1>
+    <h2 class="display-8">Welcome to the</h2>
+    @* logo/text redirects to About page *@
+    <a asp-controller="Home" asp-action="About"><img src="https://live.staticflickr.com/65535/51955764647_219ee1c317.jpg" title="Learn more about touchBass" alt="text logo" style=" height:auto;"class="img-fluid"></a>
+    @* DM- in case the image does not work- use the font version here 
+    <a asp-controller="Home" asp-action="About" title="Learn more about touchBass" style="text-decoration:none;"><h2><span class="logoTouch">touch</span><span class="logoBass">Bass </h2></span></a> *@
+    <h3 class="display-10">Student Management Solution!</h3>
    
 </div>
 
 <div class="row">
-    <div class="col-sm-6 mt-5" >
-        <img src="https://live.staticflickr.com/65535/51910895650_d07163b8ba_b.jpg" title="touchBass logo" alt="music logo" style="width:80%;height:auto;"class="img-fluid">
+    @* logo redirects to About page *@
+    <div class="col-sm-6 mt-5"  >
+        <a asp-controller="Home" asp-action="About"><img src="https://live.staticflickr.com/65535/51910895650_d07163b8ba_b.jpg" title="Learn more about touchBass" alt="music logo" style="width:80%;height:auto;"class="img-fluid"></a>
     </div>
     <div class="col-sm-6" >
         <partial name ="_Login" />
