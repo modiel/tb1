@@ -1,16 +1,27 @@
 
 
-h1,h2,h3
+h1,h2,h3,h5,h6
 {
   color:#0d5b80;
 }
 
-h2 .logoTouch{
+h5 .logoTouch{
   color: #289dd2;
   font-family: 'bahij-janna-bold',sans-serif ;
 }
 
-h2 .logoBass
+h5 .logoBass
+{
+  color: #ffbd59;
+  font-family: 'bahij-janna-bold', sans-serif ;
+}
+
+p .logoTouch{
+  color: #289dd2;
+  font-family: 'bahij-janna-bold',sans-serif ;
+}
+
+p .logoBass
 {
   color: #ffbd59;
   font-family: 'bahij-janna-bold', sans-serif ;

@@ -66,7 +66,7 @@ namespace tb.Web.Controllers
             {
                 return View(m);
             }
-            // add Tutor user via service
+            // add user via service
             var user = _svc.AddUser( m.FirstName, m.LastName, m.ContactName, m.Phone, m.AltPhone,m.Email, m.AddressLineOne, m.AddressLineTwo, m.AddressLineThree, m.Postcode, m.Dob, m.Gender, m.Password, m.Role);
 
             // string fname, string lname, string contactname, string phone, string altphone,string email, string address1, string address2, string address3, string postcode, DateTime dob, Gender gender, string password, Role role
@@ -80,6 +80,10 @@ namespace tb.Web.Controllers
             // check if error adding user and display warning
             if (user == null) {
                 Alert("There was a problem Registering. Please try again", AlertType.warning);
+                return View(m);
+            }
+            if (user.Adult != true) {
+                Alert("You must be over 18 to register", AlertType.warning);
                 return View(m);
             }
 
@@ -121,6 +125,13 @@ namespace tb.Web.Controllers
         {
            // use BaseClass helper method to retrieve Id of signed in user 
             var user = _svc.GetUser(GetSignedInUserId());
+            if( user.Adult != true )
+            {
+                
+                Alert($"Edits may only be peformed by students aged over 18", AlertType.warning); 
+                return Redirect("/");
+            
+            }
             var userViewModel = new UserProfileViewModel { 
                 Id = user.Id, 
                 FirstName = user.FirstName,
@@ -147,7 +158,7 @@ namespace tb.Web.Controllers
         {
             var user = _svc.GetUser(m.Id);
             // check if form is invalid and redisplay
-            if (!ModelState.IsValid || user == null)
+            if (!ModelState.IsValid || user == null )
             {
                 return View(m);
             } 

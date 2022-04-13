@@ -2,16 +2,16 @@
 
 <partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("","About") })>
 
-<div class="card text-center shadow">
-    <div class="card-header bg-warning">
-        <h2>@Model.Title</h2>
+<div class="card text-center shadow ">
+    <div class="card-header bg-warning" id="top">
+        <h2>@Model.Title </h2>
     </div>
     <div class="card-body">
         <div class="card-body">
             <h5 class="card-title">Mission Statement</h5>
             <p><em>@Model.Message</em></p>
-            <h5>What does touchBass do?</h5>
-            <p class="text-start"> touchBass is a student management system to help manage the many aspects of your music lessons, so you can focus on making progress!</p>
+            <h5>What does <span class="logoTouch">touch</span><span class="logoBass">Bass</span> do?</h5>
+            <p> <span class="logoTouch">touch</span><span class="logoBass">Bass</span>  is a student management system to help manage the many aspects of your music lessons, so you can focus on making progress!</p>
             <ul class="text-start">
                 <li><b>Create and update</b> your details for yourself or others- perfect for families!</li>
                 <li>View the <b>Progress Logs</b> to help remember what you covered, or what you need to get for lessons</li>
@@ -20,13 +20,56 @@
                 <li>Only have access to what you need, let's keep things simple!</li>
             </ul>
         </div>
-        For Parents/Caregivers:
-        First register an account. You can do this via the Navigation bar at the top or on the home page, depending on if you are a Parent/Caregiver or a student over 18.    
 
-        You can view, or update your profile details, just click on your name on the Navigation bar drop down list to see your options. You can Update Password or Logout from the drop down too.
-        Create your students. Don't worry if you can't remember every instrumental grade, we can fix that later! You will set a password which can be updated when they log in.
-        Your students can then be found by clicking the Students tab. Click on the View icon to update your student's details (or Edit directly from the pen icon). 
-        In the details page, you can check on progress, ask a Query on behalf of your student and view responses from your tutor.
+        <div>
+            <h5>For Parents/Caregivers:</h5>
+            <ol class="text-start">
+                <li><a asp-controller="User" asp-action="Register">Register</a> for an account if your tutor has not already registered you. You can do this via the Navigation bar at the top or on the home page.</li>
+                    <ul>
+                        <li>Login using the email and password you used to register.</li>
+                        <li>You can then <a asp-controller="User" asp-action="UpdateProfile">view</a>, or update your profile details, just click on your name on the Navigation bar drop down list to see your options.</li>
+                        <li>You can <a asp-controller="User" asp-action="UpdatePassword">update password </a>or Logout from the drop down menu.</li>
+                    </ul><br>
+                <li><a asp-controller="User" asp-action="CreateStudent">Create</a> your student(s). Don't worry if you can't remember every instrumental grade, we can fix that later! You will set a password which can be updated by your student when they log in.</li>
+                <br>
+                <li>Your student(s) can then be found by clicking the <a asp-controller="Student" asp-action="Index">Students</a> tab. Click on the View icon to update your student's details (or Edit directly from the pen icon).</li>
+                <br>
+                <li>In the Details page, you can check on progress, ask a Query on behalf of your student and view responses from your tutor.<br></li>
+                <br>
+                <li>Lessons can be managed via the <a asp-controller="Home" asp-action="Secure">Bookings </a> link</li>
+            </ol> 
+           <p><a href="#top"> Top of page</a></p>
+        </div>
+
+        <div>
+            <h5>For Students (Over 18)</h5>
+            <ol class="text-start">
+                <li><a asp-controller="Student" asp-action="CreateAdult">Register</a> for an account (if your tutor has not already registered you). You can do this via the Login link (in the Navigation bar at the top) or on the home page.</li>
+                    <ul>
+                        <li>Login using the email and password you used to register.
+                        <li>You can then <a asp-controller="User" asp-action="UpdateProfile">view</a>, or update your profile details, just click on your name on the Navigation bar drop down menu to see your options.</li>
+                        <li>You can <a asp-controller="User" asp-action="UpdatePassword">update password </a>or Logout from the drop down too.</li>
+                    </ul><br>
+                <li>Your details can then be found by clicking the <a asp-controller="Student" asp-action="Index">Students</a> tab. Click on the View icon to update your student's details (or Edit directly from the pen icon).</li>
+                <br>
+                <li>In the Details page, you can check on progress, edit your personal or musical information, ask a Query and view responses from your tutor.<br></li>
+            </ol> 
+           <p><a href="#top"> Top of page</a></p>
+        </div>
+         <div>
+            <h5>For Students (Under 18)</h5>
+            <ol class="text-start">
+                <li>Login (found in the Navigation bar at the top or on the home page). Use the email and password your tutor or parent/caregiver have provided for you.
+                    <ul>
+                        <li>You can <a asp-controller="User" asp-action="UpdatePassword">update password</a>(this should be memorable but not easy to guess!) or Logout from the drop down menu.</li>
+                    </ul><br>
+                <li>Your details can then be found by clicking the <a asp-controller="Student" asp-action="Index">Student Page</a> tab. Click on the View icon to update your student's details (or Edit directly from the pen icon).</li>
+                <br>
+                <li>In the Details page, you can check on progress, ask a Query and view responses from your tutor. You parent/caregiver can check all this out too.</li>
+                <br><b>Lessons should only be changed by your tutor or parent/caregiver.</b>
+            </ol> 
+           <p><a href="#top"> Top of page</a></p>
+        </div>
 
         <div class="card-footer text-muted">
             <div>Formed on @Model.Formed </div>
