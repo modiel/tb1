@@ -59,8 +59,7 @@ namespace tb.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        
+        [ValidateAntiForgeryToken] 
         public IActionResult Register(UserRegisterViewModel m)       
         {
             if (!ModelState.IsValid)

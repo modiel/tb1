@@ -35,6 +35,8 @@ namespace tb.Web.Controllers
             return View();
         }
 
+        
+
         public IActionResult About()
         {
             var about = new AboutViewModel

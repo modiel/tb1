@@ -4,7 +4,7 @@
     
     <h3 class="mb-3">Login</h3>
     
-    <form asp-controller="User" asp-action="Login" method="post">
+    <form asp-action="Login" method="post">
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -27,12 +27,9 @@
 
     </form>
 
-    
-
-    
     <div class="mt-4">
         Need an Account? <a asp-controller="User" asp-action="Register">Parents/Caregivers register here</a>
-        <p><a asp-controller="Student" asp-action="CreateAdult">Students (over 18) should register here</a></p>
+        <p>or <a asp-controller="Student" asp-action="CreateAdult">Students (over 18) can register here</a></p>
     </div> 
 </div>
 

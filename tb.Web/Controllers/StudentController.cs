@@ -1,4 +1,7 @@
 using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -20,6 +23,34 @@ namespace tb.Web.Controllers
         {
             svc = ss;
         }
+
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login([Bind("Email,Password")] UserLoginViewModel m)
+        {
+            var student = svc.AuthenticateStudent(m.Id, m.Password);
+            // check if login was unsuccessful and add validation errors
+            if (student == null)
+            {
+                ModelState.AddModelError("Email", "Invalid Login Credentials");
+                ModelState.AddModelError("Password", "Invalid Login Credentials");
+                return View(m);
+            }
+
+            // Login Successful, so sign user in using cookie authentication
+            await SignInCookie(student);
+
+            Alert("Successfully Logged in", AlertType.info);
+
+            return RedirectToAction(nameof(Details));
+        }
+
         
         // GET /student/index
         [Authorize]
@@ -61,7 +92,6 @@ namespace tb.Web.Controllers
         }
         
 
-
         [Authorize(Roles="Pupil,Parent")]
         public IActionResult UserDetails()
          {
@@ -93,7 +123,7 @@ namespace tb.Web.Controllers
         }
 
          // GET: /student/create
-        [Authorize]
+        // [Authorize]
         public IActionResult Create()
         {
             // display blank form to create a student
@@ -104,7 +134,7 @@ namespace tb.Web.Controllers
         // POST /student/create       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        // [Authorize]
         public IActionResult Create(Student student) 
         {
             var userId = GetSignedInUserId();
@@ -130,6 +160,49 @@ namespace tb.Web.Controllers
             // redisplay the form for editing as there are validation errors
             return View(student);
         }
+
+        // GET: /student/create
+        // [Authorize]
+        public IActionResult CreateAdult()
+        {
+            // display blank form to create a student
+            var s = new Student();
+            return View(s);
+        }
+
+        // POST /student/create       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        // [Authorize]
+        public IActionResult CreateAdult(Student student) 
+        {
+
+            // check email is unique for this student
+            if (!svc.IsEmailAvailable(student.User.Email, student.Id))
+            {
+                // add manual validation error
+                ModelState.AddModelError(nameof(student.User.Email),"The email address is already in use");  
+            }
+
+            // validate student
+            if (ModelState.IsValid)
+            {
+                // pass data to service to store 
+                student = svc.AddStudent(student);
+                
+                if (student == null) {
+                Alert("There was a problem Registering. Please try again", AlertType.warning);
+                return View(student);
+            }
+
+            Alert("Successfully Registered. Now login", AlertType.info);
+
+            return Redirect("/");
+            }
+            // redisplay the form for editing as there are validation errors
+            return View(student);
+        }
+
 
         // Change Password
         [Authorize]
@@ -425,6 +498,15 @@ namespace tb.Web.Controllers
             
         
         }
+         // Sign user in using Cookie authentication scheme
+        private async Task SignInCookie(Student student)
+        {
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                AuthBuilder.BuildClaimsPrincipal(student)
+            );
+        }
+        
 
     }
 }

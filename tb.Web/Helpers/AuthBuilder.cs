@@ -31,6 +31,21 @@ namespace tb.Web
             // build principal using claims
             return  new ClaimsPrincipal(claims);
         }
+
+        public static ClaimsPrincipal BuildClaimsPrincipal(Student student)
+        { 
+            // define user claims
+            var claims = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Sid, student.UserId.ToString()),
+                new Claim(ClaimTypes.Email, student.User.Email),
+                new Claim(ClaimTypes.Name, $"{student.User.FirstName} {student.User.LastName}"),
+                new Claim(ClaimTypes.Role, student.User.Role.ToString())                              
+            }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // build principal using claims
+            return  new ClaimsPrincipal(claims);
+        }
                 
     }
 

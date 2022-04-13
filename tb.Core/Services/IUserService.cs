@@ -39,6 +39,7 @@ namespace tb.Core.Services
         IList<Student> GetStudentsQuery(Func<Student,bool> q);
 
         UserStudent AssignUserToStudent(int uId, int sId);
+        Student AuthenticateStudent(int id, string password);
 
         // ---------------- ProgressLog Management --------------
         

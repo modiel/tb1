@@ -202,6 +202,15 @@ namespace tb.Data.Services
         }
 
         // ------------------ Student Related Operations ------------------------
+        public Student AuthenticateStudent(int id, string password)
+        {
+            // retrieve the user based on the EmailAddress (assumes EmailAddress is unique)
+            var student = GetStudentByUserId(id);
+
+            // Verify the user exists and Hashed User password matches the password provided
+            return (student != null && Hasher.ValidateHash(student.User.Password, password)) ? student : null;
+            //return (user != null && user.Password == password ) ? user: null;
+        }
 
         // retrieve list of Students
          public IList<Student> GetStudents()

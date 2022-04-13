@@ -28,8 +28,8 @@
                 
                        
                         <li class="nav-item">
-                        @* <a class="nav-link text-dark " asp-condition=@User.HasOneOfRoles("Admin,Tutor,Parent,Pupil") asp-controller="FullCalendar" asp-action="Index">FullCalendar</a> 
-                        </li> *@
+                        <a class="nav-link text-dark " asp-condition=@User.HasOneOfRoles("Admin,Tutor,Parent,Pupil") asp-controller="Home" asp-action="Secure" >Booking</a> 
+                        </li> 
                         <li class="nav-item">
                         <a class="nav-link text-dark" asp-condition=@User.IsInRole("Tutor")  asp-controller="User" asp-action="Index">Users</a> 
                         </li>
