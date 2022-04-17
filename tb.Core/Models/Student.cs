@@ -23,13 +23,13 @@ namespace tb.Core.Models
 
         public string InstrumentTwo { get; set; }
 
-        [Range(0,8)]
+        [Range(0,8, ErrorMessage ="Grade must be between 0-8")]
         public int CurrentGradeInstOne { get; set; }
 
-        [Required]
+        [Range(0,8, ErrorMessage ="Grade must be between 0-8")]
         public int CurrentGradeInstTwo { get; set; }
 
-        [Required]  [Range(0,8)]
+        [Range(0,8)]
         public int CurrentTheoryGrade { get; set; }
 
         public Aurals Aurals { get; set; }
