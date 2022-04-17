@@ -207,7 +207,7 @@ namespace tb.Data.Services
             // retrieve the user based on the EmailAddress (assumes EmailAddress is unique)
             var student = GetStudentByUserId(id);
 
-            // Verify the user exists and Hashed User password matches the password provided
+            // Verify the student exists and Hashed User password matches the password provided
             return (student != null && Hasher.ValidateHash(student.User.Password, password)) ? student : null;
             //return (user != null && user.Password == password ) ? user: null;
         }
