@@ -47,9 +47,11 @@ namespace tb.Web.Controllers
             // Login Successful, so sign user in using cookie authentication
             await SignInCookie(user);
 
-            Alert("Successfully Logged in", AlertType.info);
+             var userU = _svc.GetUser(GetSignedInUserId());
 
-            return Redirect("/");
+            Alert("Successfully Logged in", AlertType.info);
+            
+            return RedirectToAction("Index","Student");
         }
 
         public IActionResult Register()
@@ -273,8 +275,8 @@ namespace tb.Web.Controllers
 
 
           // GET: /student/create DM ADDED 
-        [Authorize]
-        public IActionResult Create()
+        [Authorize(Roles="Tutor, Parent")]
+        public IActionResult CreateStudent()
         {
             // display blank form to create a student
             var s = new Student();
@@ -285,7 +287,7 @@ namespace tb.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public IActionResult Create(Student student) 
+        public IActionResult CreateStudent(Student student) 
         {
             var userId = GetSignedInUserId();
             var user = _svc.GetUser(userId);

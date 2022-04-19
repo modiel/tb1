@@ -125,7 +125,16 @@ namespace tb.Web.Controllers
          // GET: /student/create
         [Authorize]
         public IActionResult Create()
-        {
+        {var userId = GetSignedInUserId();
+            var user = svc.GetUser(userId);
+
+           if( user.Adult != true )
+            {
+                
+                Alert($"Creating may only be peformed by students aged over 18", AlertType.warning); 
+                return RedirectToAction("About","Home");
+            
+            }
             // display blank form to create a student
             var s = new Student();
             return View(s);
