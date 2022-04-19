@@ -123,7 +123,7 @@ namespace tb.Web.Controllers
         }
 
          // GET: /student/create
-        // [Authorize]
+        [Authorize]
         public IActionResult Create()
         {
             // display blank form to create a student
@@ -134,7 +134,7 @@ namespace tb.Web.Controllers
         // POST /student/create       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // [Authorize]
+        [Authorize]
         public IActionResult Create(Student student) 
         {
             var userId = GetSignedInUserId();
@@ -162,7 +162,7 @@ namespace tb.Web.Controllers
         }
 
         // GET: /student/create
-        // [Authorize]
+        [Authorize]
         public IActionResult CreateAdult()
         {
             // display blank form to create a student
@@ -173,7 +173,7 @@ namespace tb.Web.Controllers
         // POST /student/create       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // [Authorize]
+        [Authorize]
         public IActionResult CreateAdult(Student student) 
         {
 
@@ -219,7 +219,7 @@ namespace tb.Web.Controllers
         }
         
 
-           // GET /student/edit/{id}
+        // GET /student/edit/{id}
         [Authorize]
         public IActionResult Edit([Bind("Password")]int id) 
         {   
