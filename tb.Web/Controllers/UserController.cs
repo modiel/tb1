@@ -70,14 +70,6 @@ namespace tb.Web.Controllers
             }
             // add user via service
             var user = _svc.AddUser( m.FirstName, m.LastName, m.ContactName, m.Phone, m.AltPhone,m.Email, m.AddressLineOne, m.AddressLineTwo, m.AddressLineThree, m.Postcode, m.Dob, m.Gender, m.Password, m.Role);
-
-            // string fname, string lname, string contactname, string phone, string altphone,string email, string address1, string address2, string address3, string postcode, DateTime dob, Gender gender, string password, Role role
-
-                // fname = m.FirstName; 
-                // lname = m.LastName; 
-                // Email = m.Email,
-                // Password = m.Password, 
-                // Role = Role.Tutor
     
             // check if error adding user and display warning
             if (user == null) {

@@ -4,20 +4,27 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using tb.Web.ViewModels;
 
+using tb.Core.Services;
+
+
 namespace tb.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
+        private IUserService _svc;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUserService ss)
         {
             _logger = logger;
+            _svc = ss;
         }
+         
 
         public IActionResult Index()
         {
@@ -25,13 +32,24 @@ namespace tb.Web.Controllers
         }
 
         [Authorize]
-        public IActionResult Secure()
+        public IActionResult Secure(int id)
         {
+        
+            var user = _svc.GetUser(GetSignedInUserId());
+
+           if( user.Adult != true )
+            {
+                
+                Alert($"Bookings may only be peformed by students aged over 18", AlertType.warning); 
+                return RedirectToAction("Index","Student");
+            
+            }
             return View();
         }
 
         public IActionResult Privacy()
         {
+        
             return View();
         }
 
