@@ -8,37 +8,37 @@
     <form asp-action="Register" method="post">
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+        <h5>Required Fields *</h5>
         <div class="row mt-3">
             <div class="col form-group ">
-                <label asp-for="FirstName" class="control-label"><i class="bi-person-fill"></i> First Name</label>
+                <label asp-for="FirstName" class="control-label"><i class="bi-person-fill"></i> First Name*</label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
 
             <div class="col form-group">
-                <label asp-for="LastName" class="control-label"> Last Name</label>
+                <label asp-for="LastName" class="control-label"> Last Name*</label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
 
-            <div class="col form-group">
+            @* <div class="col form-group">
                 <label asp-for="ContactName" class="control-label"> Contact Name (if under 18)</label>
                 <input asp-for="ContactName" class="form-control" />
                 <span asp-validation-for="ContactName" class="text-danger"></span>
-            </div>
+            </div> *@
         </div>
         <div class="row mt-3">
 
             <div class="col form-group">
-                <label asp-for="Phone" class="control-label"> Phone</label>
+                <label asp-for="Phone" class="control-label"> Phone*</label>
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
 
 
             <div class="col form-group">
-                <label asp-for="AltPhone" class="control-label"> Alternative Phone</label>
+                <label asp-for="AltPhone" class="control-label"> Alternative Phone*</label>
                 <input asp-for="AltPhone" class="form-control" />
                 <span asp-validation-for="AltPhone" class="text-danger"></span>
             </div>
@@ -47,7 +47,7 @@
 
 
             <div class="col form-group">
-                <label asp-for="AddressLineOne" class="control-label"> Address Line 1</label>
+                <label asp-for="AddressLineOne" class="control-label"> Address Line 1*</label>
                 <input asp-for="AddressLineOne" class="form-control" />
                 <span asp-validation-for="AddressLineOne" class="text-danger"></span>
             </div>
@@ -66,24 +66,23 @@
 
 
             <div class="form-group">
-                <label asp-for="Postcode" class="control-label">Postcode</label>
+                <label asp-for="Postcode" class="control-label">Postcode*</label>
                 <input asp-for="Postcode" class="form-control" />
                 <span asp-validation-for="Postcode" class="text-danger"></span>
             </div>
         </div>
 
 
-        @* <!--move Dob and Gender input groups in 2 columns in single row. This not required for parents --> DM NOT
-            SURE THIS WILL STAY HERE *@
+        @* <!--move Dob and Gender input groups in 2 columns in single row.  --> DM this is to confirm user is over 18 for certain functions*@
         <div class="row">
             <div class="form-group col-5">
-                <label asp-for="Dob" class="control-label">Date of Birth</label>
+                <label asp-for="Dob" class="control-label">Date of Birth*</label>
                 <input type="date"  asp-for="Dob" class="form-control" />
                 <span asp-validation-for="Dob" class="text-danger"></span>
             </div>
 
             <div class="form-group col-7">
-                <label asp-for="Gender" class="control-label"></label>
+                <label asp-for="Gender" class="control-label">Gender*</label>
                 <select asp-for="Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()">
                     <option>Select Gender</option>
                 </select>
@@ -95,27 +94,27 @@
 
 
         <div class="form-group mt-3">
-            <label asp-for="Email" class="control-label"><i class="bi-envelope-fill"></i> Email</label>
+            <label asp-for="Email" class="control-label"><i class="bi-envelope-fill"></i> Email*</label>
             <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
         <div class="row">
             <div class="col form-group mt-3">
-                <label asp-for="Password" class="control-label"><i class="bi-shield-lock-fill"></i> Password</label>
+                <label asp-for="Password" class="control-label"><i class="bi-shield-lock-fill"></i> Password*</label>
                 <input type="password" asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
             <div class="col form-group mt-3">
-                <label asp-for="PasswordConfirm" class="control-label">Password Confirm</label>
+                <label asp-for="PasswordConfirm" class="control-label">Password Confirm*</label>
                 <input type="password" asp-for="PasswordConfirm" class="form-control" />
                 <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
             </div>
         </div>
 
         <div class="form-group mt-3">
-            <label asp-for="Role" class="control-label"><i class="bi-person-badge-fill"></i> Role</label>
+            <label asp-for="Role" class="control-label"><i class="bi-person-badge-fill"></i> Role*</label>
             <select asp-for="Role" class="form-control">
                 <option>Select Role</option>
                 @* <option value="Tutor">Tutor</option> *@

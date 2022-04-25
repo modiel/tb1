@@ -171,7 +171,7 @@ namespace tb.Web.Controllers
         }
 
         // GET: /student/create
-        [Authorize]
+       
         public IActionResult CreateAdult()
         {
             // display blank form to create a student
@@ -182,16 +182,18 @@ namespace tb.Web.Controllers
         // POST /student/create       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public IActionResult CreateAdult(Student student) 
+        
+        public IActionResult CreateAdult (Student student) 
         {
-
+            
             // check email is unique for this student
             if (!svc.IsEmailAvailable(student.User.Email, student.Id))
             {
                 // add manual validation error
                 ModelState.AddModelError(nameof(student.User.Email),"The email address is already in use");  
             }
+
+            
 
             // validate student
             if (ModelState.IsValid)
@@ -201,6 +203,10 @@ namespace tb.Web.Controllers
                 
                 if (student == null) {
                 Alert("There was a problem Registering. Please try again", AlertType.warning);
+                return View(student);
+            }
+             if (student.User.Adult != true) {
+                Alert("You must be over 18 to register", AlertType.warning);
                 return View(student);
             }
 
