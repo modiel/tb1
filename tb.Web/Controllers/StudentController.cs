@@ -268,6 +268,7 @@ namespace tb.Web.Controllers
                 return RedirectToAction(nameof(Index), new { Id = id });
             }   
 
+            //check student to edit and signed in user are over 18
             if( s.User.Adult != true && user.Adult != true)
             {
                 
