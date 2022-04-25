@@ -4,16 +4,16 @@
 
 
 <!-- FirstName and LastName  input groups in 2 columns in single row -->
-
-<div class="row">
+<div><h5>Required fields *</h5> 
+<div class="row" >
     <div class="form-group col">
-        <label asp-for="User.FirstName" class="control-label">First Name</label>
+        <label asp-for="User.FirstName" class="control-label">First Name*</label>
         <input asp-for="User.FirstName" class="form-control" />
         <span asp-validation-for="User.FirstName" class="text-danger"></span>
     </div>
 
     <div class="form-group col">
-        <label asp-for="User.LastName" class="control-label">Last Name</label>
+        <label asp-for="User.LastName" class="control-label">Last Name*</label>
         <input asp-for="User.LastName" class="form-control" />
         <span asp-validation-for="User.LastName" class="text-danger"></span>
     </div>
@@ -24,9 +24,10 @@
     <input asp-for="User.ContactName" class="form-control" />
     <span asp-validation-for="User.ContactName" class="text-danger"></span>
 </div>
+</div>
 
 <div class="form-group">
-    <label asp-for="User.Email" class="control-label">Email<font color="red"> (Must be different if creating for a Student)</font></label>
+    <label asp-for="User.Email" class="control-label">Email*<font color="red"> (Must be different if creating for a Student)</font></label>
     <input asp-for="User.Email" class="form-control" />
     <span asp-validation-for="User.Email" class="text-danger"></span>
 </div>
@@ -34,20 +35,20 @@
 <!--move Phone and AltPhone  input groups in 2 columns in single row -->
 <div class="row">
     <div class="form-group col">
-        <label asp-for="User.Phone" class="control-label"></label>
+        <label asp-for="User.Phone" class="control-label">Phone*</label>
         <input asp-for="User.Phone" class="form-control" />
         <span asp-validation-for="User.Phone" class="text-danger"></span>
     </div>
 
     <div class="form-group col">
-        <label asp-for="User.AltPhone" class="control-label">Alternative Phone</label>
+        <label asp-for="User.AltPhone" class="control-label">Alternative Phone*</label>
         <input asp-for="User.AltPhone" class="form-control" />
         <span asp-validation-for="User.AltPhone" class="text-danger"></span>
     </div>
 </div>
 
 <div class="form-group">
-    <label asp-for="User.AddressLineOne" class="control-label">Address Line 1</label>
+    <label asp-for="User.AddressLineOne" class="control-label">Address Line 1*</label>
     <input asp-for="User.AddressLineOne" class="form-control" />
     <span asp-validation-for="User.AddressLineOne" class="text-danger"></span>
 </div>
@@ -65,7 +66,7 @@
 </div>
 
 <div class="form-group">
-    <label asp-for="User.Postcode" class="control-label"></label>
+    <label asp-for="User.Postcode" class="control-label">Postcode*</label>
     <input asp-for="User.Postcode" class="form-control" />
     <span asp-validation-for="User.Postcode" class="text-danger"></span>
 </div>
@@ -73,13 +74,13 @@
 <!--move Dob  Age and Gender input groups in 3 columns in single row -->
 <div class="row">
     <div class="form-group col">
-        <label asp-for="User.Dob" class="control-label">Date of Birth</label>
+        <label asp-for="User.Dob" class="control-label">Date of Birth*</label>
         <input type="date" asp-for="User.Dob" class="form-control" />
         <span asp-validation-for="User.Dob" class="text-danger"></span>
     </div>
 
     <div class="form-group col">
-        <label asp-for="User.Gender" class="control-label"></label>
+        <label asp-for="User.Gender" class="control-label">Gender*</label>
         <select asp-for="User.Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()">
             <option>Select Gender</option>
         </select>
@@ -105,7 +106,7 @@
 
 <div class="form-group">
     <label asp-for="Allergies" class="control-label"></label>
-    <textarea rows="2" asp-for="Allergies" class="form-control" placeholder="Add information here"></textarea>
+    <textarea rows="2" asp-for="Allergies" class="form-control" placeholder="Add information here">Allergies</textarea>
     <span asp-validation-for="Allergies" class="text-danger"></span>
 </div>
 
@@ -123,7 +124,7 @@
 
 <div class="row">
     <div class="form-group col">
-        <label asp-for="InstrumentOne" class="control-label">Instrument One</label>
+        <label asp-for="InstrumentOne" class="control-label">Instrument One*</label>
         <input asp-for="InstrumentOne" class="form-control" />
         <span asp-validation-for="InstrumentOne" class="text-danger"></span>
     </div>
