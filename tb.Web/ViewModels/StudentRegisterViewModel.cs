@@ -21,7 +21,5 @@ namespace tb.Web.ViewModels
         public User User { get; set; }
 
         
-        
-
     }
 }

@@ -106,10 +106,14 @@ namespace tb.Web.Controllers
 
 
         // GET /student/details/{id}
+        [Authorize]
         public IActionResult Details(int id)
         {
+
             // retrieve the student with specified id from the service
             var s = svc.GetStudentById(id);
+            var user = svc.GetUser(GetSignedInUserId());
+            var UserStudents = svc.GetStudentsForUser(user.Id);
 
             // check if s is null and return NotFound()
             if (s == null)
@@ -118,14 +122,25 @@ namespace tb.Web.Controllers
                 return RedirectToAction(nameof(Index), new { Id = id });
             }
 
-            // pass student as parameter to the view
+            if (user.Role == Role.Tutor || UserStudents.Contains(s))
+            {
+                // pass student as parameter to the view
             return View(s);
+            }
+            else 
+             {
+                Alert("Student cannot be accessed", AlertType.warning);
+                return RedirectToAction(nameof(Index), new { Id = id });
+            }
+            
+
+            
         }
 
-         // GET: /student/create
-        [Authorize]
+        // GET: /student/create
         public IActionResult Create()
-        {var userId = GetSignedInUserId();
+        {
+            var userId = GetSignedInUserId();
             var user = svc.GetUser(userId);
 
            if( user.Adult != true )
@@ -238,8 +253,10 @@ namespace tb.Web.Controllers
         [Authorize]
         public IActionResult Edit([Bind("Password")]int id) 
         {   
-            var user = GetSignedInUserId();
-            var userU = svc.GetUser(user);
+           //check user and what load students they have access to
+            var user = svc.GetUser(GetSignedInUserId());
+            var UserStudents = svc.GetStudentsForUser(user.Id);
+        
             // load the student using the service
             var s = svc.GetStudentById(id);
             
@@ -251,17 +268,28 @@ namespace tb.Web.Controllers
                 return RedirectToAction(nameof(Index), new { Id = id });
             }   
 
-            if( s.User.Adult != true && userU.Adult != true)
+            if( s.User.Adult != true && user.Adult != true)
             {
                 
                 Alert($"Edits may only be peformed by students aged over 18", AlertType.warning); 
                 return RedirectToAction(nameof(Details), new { Id = id });
             
             }
-
-
-            // pass student to view for editing
+            
+            //additional checks (prevents access through address bar)
+            if (user.Role == Role.Tutor || UserStudents.Contains(s))
+            {
+            // pass student as parameter to the view
             return View(s);
+            }
+
+            else 
+            {
+                Alert("Student cannot be accessed", AlertType.warning);
+                return RedirectToAction(nameof(Index), new { Id = id });
+            }
+
+            
         }
 
         // POST /student/edit/{id}
