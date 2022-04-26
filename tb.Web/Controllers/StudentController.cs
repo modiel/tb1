@@ -121,8 +121,9 @@ namespace tb.Web.Controllers
                 Alert("Student Not Found", AlertType.warning);
                 return RedirectToAction(nameof(Index), new { Id = id });
             }
-
-            if (user.Role == Role.Tutor || UserStudents.Contains(s))
+            
+            //additonal authorisation checks
+            if (user.Role == Role.Tutor || UserStudents.Contains(s)|| user.Id == s.UserId)
             {
                 // pass student as parameter to the view
             return View(s);
@@ -278,7 +279,7 @@ namespace tb.Web.Controllers
             }
             
             //additional checks (prevents access through address bar)
-            if (user.Role == Role.Tutor || UserStudents.Contains(s))
+            if (user.Role == Role.Tutor || UserStudents.Contains(s) || user.Id == s.UserId)
             {
             // pass student as parameter to the view
             return View(s);
