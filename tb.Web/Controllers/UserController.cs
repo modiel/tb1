@@ -102,6 +102,9 @@ namespace tb.Web.Controllers
         {
             // retrieve the student with specified id from the service
             var u = _svc.GetUser(id);
+            
+            //retrieve signed in user for additional checks
+            var user = _svc.GetUser(GetSignedInUserId());
 
             // check if s is null and return NotFound()
             if (u == null)
@@ -110,8 +113,18 @@ namespace tb.Web.Controllers
                 return RedirectToAction(nameof(Index), new { Id = id });
             }
 
+            //additional checks (prevents access through address bar)
+            if (user.Role == Role.Tutor || user.Id == u.Id)
+            {
             // pass user as parameter to the view
             return View(u);
+            }
+            
+            else 
+            {
+                Alert("User cannot be accessed", AlertType.warning);
+                return RedirectToAction(nameof(Index), new { Id = id });
+            }
         }
 
         [Authorize]
