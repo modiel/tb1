@@ -12,8 +12,6 @@
 
         <input asp-for="Id" type="hidden" />
         <input asp-for="Role" type="hidden" />
-        <input asp-for="Dob" type="hidden" />
-        <input asp-for="Gender" type="hidden" />
 
 
         <div class="row mt-3">
@@ -29,6 +27,7 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
         </div> 
+
         <div class="row mt-3">
 
             <div class="col form-group">
@@ -44,8 +43,8 @@
                 <span asp-validation-for="AltPhone" class="text-danger"></span>
             </div>
         </div>
-        <div class="row mt-3">
 
+        <div class="row mt-3">
 
             <div class="col form-group">
                 <label asp-for="AddressLineOne" class="control-label"> Address Line 1*</label>
