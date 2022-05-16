@@ -53,10 +53,10 @@ namespace tb.Data.Services
 
             var s2 = new Student
             {   
-                User = new User { FirstName = "Sven", LastName = "Reindeer", ContactName = "Kristof Trollson", Email = "pupil2@mail.com", Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
+                User = new User { FirstName = "Sven", LastName = "Reindeer", ContactName = "Kristof Trollson", Email = "sven@mail.com", Phone = "xxxxxxxxxxxx",  AltPhone = "yyyyyyyyyyy",  
                 AddressLineOne = "1 Test Way", AddressLineTwo = "Test Street",
                 AddressLineThree = "", Postcode = "XXXX YYY",   
-                Role =  Role.Pupil, Dob = new DateTime(2008,1,1), Password =  "pupil2", Gender = Gender.Male 
+                Role =  Role.Pupil, Dob = new DateTime(2008,1,1), Password =  "sven", Gender = Gender.Male 
                 },
                 Allergies = "Tree nuts",
                 AdditionalNeeds = "ADD - mild but check if meds have been taken",
